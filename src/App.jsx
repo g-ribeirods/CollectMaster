@@ -1,86 +1,51 @@
-import { useState } from 'react'
-import Header from './components/Header/Header.jsx'
-import Dashboard from './pages/Dashboard/Dashboard.jsx'
-import './App.css'
+import React from 'react'
+import { ThemeProvider, createTheme } from '@mui/material/styles'
+import { CssBaseline } from '@mui/material'
+import Home from './pages/Home/Home'
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: '#2563eb',
+      light: '#3b82f6',
+      dark: '#1d4ed8',
+    },
+    secondary: {
+      main: '#7c3aed',
+      light: '#8b5cf6',
+      dark: '#6d28d9',
+    },
+    background: {
+      default: '#f8fafc',
+      paper: '#ffffff',
+    },
+  },
+  typography: {
+    fontFamily: '"Inter", "Roboto", "Helvetica", "Arial", sans-serif',
+    h1: {
+      fontWeight: 700,
+      fontSize: '3.5rem',
+    },
+    h2: {
+      fontWeight: 600,
+      fontSize: '2.5rem',
+    },
+    h3: {
+      fontWeight: 600,
+      fontSize: '2rem',
+    },
+  },
+  shape: {
+    borderRadius: 12,
+  },
+})
 
 function App() {
-  const [currentPage, setCurrentPage] = useState('dashboard')
-  const [collections, setCollections] = useState([
-    {
-      id: 1,
-      name: 'Action Figures',
-      category: 'Brinquedos',
-      itemCount: 15,
-      value: 1250.00,
-      image: 'https://via.placeholder.com/300x200/4f46e5/ffffff?text=Action+Figures'
-    },
-    {
-      id: 2,
-      name: 'Moedas Raras',
-      category: 'Numismática',
-      itemCount: 42,
-      value: 8900.00,
-      image: 'https://via.placeholder.com/300x200/10b981/ffffff?text=Moedas+Raras'
-    },
-    {
-      id: 3,
-      name: 'Vinil Clássico',
-      category: 'Música',
-      itemCount: 28,
-      value: 3200.00,
-      image: 'https://via.placeholder.com/300x200/f59e0b/ffffff?text=Vinil+Clássico'
-    }
-  ])
-
-  const [items, setItems] = useState([
-    {
-      id: 1,
-      name: 'Superman Action Figure',
-      collectionId: 1,
-      value: 89.90,
-      condition: 'Excelente',
-      acquiredDate: '2024-01-15',
-      image: 'https://via.placeholder.com/200x200/3b82f6/ffffff?text=Superman'
-    },
-    {
-      id: 2,
-      name: 'Moeda Real 1743',
-      collectionId: 2,
-      value: 450.00,
-      condition: 'Rara',
-      acquiredDate: '2024-02-10',
-      image: 'https://via.placeholder.com/200x200/10b981/ffffff?text=Moeda+1743'
-    }
-  ])
-
-  const renderPage = () => {
-    switch (currentPage) {
-      case 'dashboard':
-        return <Dashboard collections={collections} items={items} />
-      case 'collections':
-        return <Collections 
-          collections={collections} 
-          setCollections={setCollections}
-          items={items}
-        />
-      case 'items':
-        return <Items 
-          items={items} 
-          setItems={setItems}
-          collections={collections}
-        />
-      default:
-        return <Dashboard collections={collections} items={items} />
-    }
-  }
-
   return (
-    <div className="App">
-      <Header currentPage={currentPage} onPageChange={setCurrentPage} />
-      <main className="main-content">
-        {renderPage()}
-      </main>
-    </div>
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <Home />
+    </ThemeProvider>
   )
 }
 
