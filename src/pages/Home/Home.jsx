@@ -22,6 +22,7 @@ import {
   Security as SecurityIcon,
   Share as ShareIcon,
 } from '@mui/icons-material'
+import { Link as RouterLink } from 'react-router-dom'
 
 const Home = () => {
   const theme = useTheme()
@@ -122,9 +123,11 @@ const Home = () => {
             <Button 
               variant="outlined" 
               color="inherit"
+              // 2. Atualizar o botão Entrar (para uma futura rota /login)
+              component={RouterLink}
+              to="/login"
               sx={{ 
-                borderColor: 'rgba(255,255,255,0.3)',
-                '&:hover': { borderColor: 'white' }
+                // ... (estilos)
               }}
             >
               Entrar
@@ -132,10 +135,11 @@ const Home = () => {
             <Button 
               variant="contained" 
               color="secondary"
+              // 3. Atualizar o botão Cadastrar
+              component={RouterLink}
+              to="/register"
               sx={{ 
-                bgcolor: 'white',
-                color: 'primary.main',
-                '&:hover': { bgcolor: 'grey.100' }
+                // ... (estilos)
               }}
             >
               Cadastrar

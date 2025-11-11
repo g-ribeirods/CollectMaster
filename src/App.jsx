@@ -1,8 +1,9 @@
 import React from 'react'
 import { ThemeProvider, createTheme } from '@mui/material/styles'
 import { CssBaseline } from '@mui/material'
+import { Routes, Route } from 'react-router-dom'
 import Home from './pages/Home/Home'
-
+import Register from './pages/Auth/Register'
 const theme = createTheme({
   palette: {
     primary: {
@@ -44,7 +45,13 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <Home />
+      {/* 3. Definir as rotas */}
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/register" element={<Register />} />
+        {/* Você pode adicionar a de login aqui também depois */}
+        {/* <Route path="/login" element={<Login />} /> */}
+      </Routes>
     </ThemeProvider>
   )
 }
