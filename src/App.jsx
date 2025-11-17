@@ -5,6 +5,7 @@ import { Routes, Route } from 'react-router-dom'
 import Home from './pages/Home/Home'
 import Register from './pages/Auth/Register'
 import Login from './pages/Auth/Login'; 
+import Dashboard from './pages/Dashboard/Dashboard';
 
 const theme = createTheme({
   palette: {
@@ -52,7 +53,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/dashboard" element={<div>Dashboard (em construção)</div>} />
+        <Route path="/dashboard" element={<Dashboard />} />
       </Routes>
     </ThemeProvider>
   )

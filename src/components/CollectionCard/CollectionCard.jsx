@@ -34,7 +34,8 @@ function CollectionCard({ collection }) {
     }}>
       <CardMedia
         component="img"
-        image={collection.image}
+        // CORREÇÃO AQUI: Garante que haja uma imagem ou um placeholder
+        image={collection.image || `https://via.placeholder.com/300x200/4F518C/FFFFFF?text=Sem+Foto`}
         alt={collection.name}
         sx={{ 
           height: { xs: 140, sm: 160, md: 180 },
@@ -64,7 +65,8 @@ function CollectionCard({ collection }) {
         
         <Box>
           <Chip 
-            label={collection.category} 
+            // CORREÇÃO AQUI: Garante que a categoria não seja nula
+            label={collection.category ?? 'Sem Categoria'} 
             color="secondary" 
             variant="outlined"
             size={isMobile ? "small" : "medium"}
@@ -88,7 +90,8 @@ function CollectionCard({ collection }) {
             flexGrow: 1
           }}
         >
-          {collection.description}
+          {/* CORREÇÃO AQUI: Garante que a descrição não seja nula */}
+          {collection.description ?? 'Sem descrição'}
         </Typography>
 
         {/* Stats */}
@@ -118,7 +121,8 @@ function CollectionCard({ collection }) {
                 fontSize: { xs: '0.9rem', sm: '1rem', md: '1.1rem' }
               }}
             >
-              {collection.itemCount}
+              {/* CORREÇÃO AQUI: Mostra '0' se 'itemCount' for nulo */}
+              {collection.itemCount ?? 0}
             </Typography>
           </Box>
           <Box textAlign="center" sx={{ flex: 1 }}>
@@ -138,7 +142,8 @@ function CollectionCard({ collection }) {
                 fontSize: { xs: '0.8rem', sm: '0.9rem', md: '1rem' }
               }}
             >
-              R$ {collection.value.toLocaleString('pt-BR', { minimumFractionDigits: 0 })}
+              {/* CORREÇÃO AQUI: Usa '0' se 'value' for nulo */}
+              R$ {(collection.value ?? 0).toLocaleString('pt-BR', { minimumFractionDigits: 0 })}
             </Typography>
           </Box>
         </Box>

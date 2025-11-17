@@ -1,283 +1,183 @@
-import React from 'react'
+import React from 'react';
 import {
-  Grid,
-  Card,
-  CardContent,
-  Typography,
-  Box,
-  Chip,
-  Avatar,
-  List,
-  ListItem,
-  ListItemAvatar,
-  ListItemText,
-  Divider,
-  useTheme,
-  useMediaQuery,
-} from '@mui/material'
-import {
-  AttachMoney as MoneyIcon,
-  Collections as CollectionsIcon,
-  Inventory as ItemsIcon,
-  TrendingUp as TrendingIcon,
-  NewReleases as NewIcon,
-} from '@mui/icons-material'
-import CollectionCard from '../../components/CollectionCard/CollectionCard'
+  AppBar, Toolbar, Typography, IconButton, Avatar, Box, Container,
+  Card, CardActionArea, CardContent,
+  // --- Novos imports para o Modal ---
+  Dialog, DialogTitle, DialogContent, DialogActions, TextField,
+  Button, FormControlLabel, Checkbox, Slide
+} from '@mui/material';
+import { Search as SearchIcon, Add as AddIcon, PhotoCamera } from '@mui/icons-material';
 
-function Dashboard({ collections, items }) {
-  const theme = useTheme()
-  const isMobile = useMediaQuery(theme.breakpoints.down('md'))
-  const isSmallMobile = useMediaQuery(theme.breakpoints.down('sm'))
+import { useDashboard } from '../../hooks/useDashboard';
+// 1. Importe o CollectionCard para mostrar as coleções criadas
+import CollectionCard from '../../components/CollectionCard/CollectionCard';
 
-  const totalValue = collections.reduce((sum, collection) => sum + collection.value, 0)
-  const totalItems = collections.reduce((sum, collection) => sum + collection.itemCount, 0)
-  const totalCollections = collections.length
+// 2. Transição do Modal (opcional, mas elegante)
+const ModalTransition = React.forwardRef(function Transition(props, ref) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
 
-  const stats = [
-    {
-      icon: <MoneyIcon />,
-      label: 'Valor Total',
-      value: `R$ ${totalValue.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`,
-      color: '#10b981'
-    },
-    {
-      icon: <CollectionsIcon />,
-      label: 'Coleções',
-      value: totalCollections.toString(),
-      color: '#3b82f6'
-    },
-    {
-      icon: <ItemsIcon />,
-      label: 'Itens',
-      value: totalItems.toString(),
-      color: '#f59e0b'
-    },
-    {
-      icon: <TrendingIcon />,
-      label: 'Valor Médio',
-      value: `R$ ${(totalValue / totalItems || 0).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`,
-      color: '#ef4444'
-    }
-  ]
+// 3. O componente visual "burro"
+const DashboardView = ({
+  user,
+  collections,
+  openCreateModal,
+  newCollectionName,
+  setNewCollectionName,
+  isPublic,
+  setIsPublic,
+  handleOpenCreateModal,
+  handleCloseCreateModal,
+  handleSubmitCollection,
+}) => (
+  <Box sx={{ flexGrow: 1, minHeight: '100vh', bgcolor: 'grey.100' }}>
+    {/* ... (Seu AppBar e Toolbar continuam iguais) ... */}
+    <AppBar 
+      position="static" 
+      elevation={1} 
+      sx={{ bgcolor: '#343a40' /* Um cinza escuro */ }}
+    >
+      <Toolbar>
+         <IconButton edge="start" color="inherit" sx={{ mr: 1.5 }}>
+          <Avatar sx={{ width: 32, height: 32 }}>
+            {user?.name ? user.name[0].toUpperCase() : '?'}
+          </Avatar>
+        </IconButton>
+        <Typography variant="h6" component="div" sx={{ mr: 3, fontWeight: 'bold', borderBottom: '2px solid white' }}>
+          Suas coleções
+        </Typography>
+        <Typography variant="h6" component="div" sx={{ mr: 3, color: 'grey.400', cursor: 'pointer' }}>
+          Amigos
+        </Typography>
+        <Box sx={{ flexGrow: 1 }} />
+        <IconButton color="inherit">
+          <SearchIcon />
+        </IconButton>
+      </Toolbar>
+    </AppBar>
 
-  const recentItems = items.slice(0, 5)
+    {/* Conteúdo Principal */}
+    <Container maxWidth="lg" sx={{ py: 4 }}>
+      <Typography variant="h4" component="h1" gutterBottom fontWeight="bold">
+        Suas coleções
+      </Typography>
 
-  return (
-    <Box>
-      {/* Header */}
-      <Box textAlign="center" mb={4}>
-        <Typography 
-          variant="h3" 
-          component="h1" 
-          gutterBottom
+      <Box sx={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(240px, 1fr))', gap: 3 }}>
+        
+        {/* Card de "Criar coleção" - Agora chama handleOpenCreateModal */}
+        <Card 
           sx={{ 
-            fontSize: { xs: '1.75rem', sm: '2rem', md: '2.5rem' },
-            fontWeight: 'bold'
+            border: '2px dashed', borderColor: 'grey.400', bgcolor: 'transparent',
+            boxShadow: 'none', minHeight: 360, // Altura mínima
           }}
         >
-          📊 Dashboard
-        </Typography>
-        <Typography 
-          variant="h6" 
-          color="text.secondary"
-          sx={{ fontSize: { xs: '0.9rem', sm: '1rem', md: '1.1rem' } }}
-        >
-          Visão geral das suas coleções
-        </Typography>
-      </Box>
-
-      {/* Stats Grid - CORREÇÃO PRINCIPAL */}
-      <Grid container spacing={2} mb={4}>
-        {stats.map((stat, index) => (
-          <Grid item xs={12} sm={6} md={3} key={index} sx={{ display: 'flex' }}>
-            <Card sx={{ 
-              flex: 1,
-              transition: 'transform 0.2s', 
-              '&:hover': { transform: 'translateY(-2px)' } 
-            }}>
-              <CardContent sx={{ 
-                display: 'flex', 
-                alignItems: 'center', 
-                gap: 2,
-                p: { xs: 2, sm: 2.5 }
-              }}>
-                <Avatar 
-                  sx={{ 
-                    bgcolor: stat.color, 
-                    width: { xs: 50, sm: 60 }, 
-                    height: { xs: 50, sm: 60 } 
-                  }}
-                >
-                  {React.cloneElement(stat.icon, { 
-                    sx: { fontSize: { xs: 24, sm: 28 } } 
-                  })}
-                </Avatar>
-                <Box sx={{ flex: 1, minWidth: 0 }}>
-                  <Typography 
-                    variant="body2" 
-                    color="text.secondary" 
-                    gutterBottom
-                    sx={{ fontSize: { xs: '0.75rem', sm: '0.875rem' } }}
-                  >
-                    {stat.label}
-                  </Typography>
-                  <Typography 
-                    variant="h6" 
-                    component="div" 
-                    fontWeight="bold"
-                    sx={{ 
-                      fontSize: { xs: '1rem', sm: '1.1rem', md: '1.25rem' },
-                      wordBreak: 'break-word'
-                    }}
-                  >
-                    {stat.value}
-                  </Typography>
-                </Box>
-              </CardContent>
-            </Card>
-          </Grid>
-        ))}
-      </Grid>
-
-      {/* Content Grid */}
-      <Grid container spacing={3}>
-        {/* Collections Section */}
-        <Grid item xs={12} xl={8}>
-          <Box sx={{ mb: 3 }}>
-            <Typography 
-              variant="h4" 
-              component="h2" 
-              gutterBottom 
-              sx={{ 
-                display: 'flex', 
-                alignItems: 'center', 
-                gap: 1,
-                fontSize: { xs: '1.25rem', sm: '1.5rem', md: '1.75rem' }
-              }}
-            >
-              <CollectionsIcon /> 
-              Suas Coleções
-            </Typography>
-          </Box>
-          
-          <Grid container spacing={2}>
-            {collections.map((collection) => (
-              <Grid 
-                item 
-                xs={12} 
-                sm={6} 
-                lg={4} 
-                key={collection.id}
-                sx={{ display: 'flex' }}
-              >
-                <CollectionCard collection={collection} />
-              </Grid>
-            ))}
-          </Grid>
-        </Grid>
-
-        {/* Recent Items Section */}
-        <Grid item xs={12} xl={4}>
-          <Card sx={{ position: { xl: 'sticky' }, top: { xl: 100 } }}>
-            <CardContent sx={{ p: { xs: 2, sm: 3 } }}>
-              <Typography 
-                variant="h5" 
-                component="h2" 
-                gutterBottom 
-                sx={{ 
-                  display: 'flex', 
-                  alignItems: 'center', 
-                  gap: 1,
-                  fontSize: { xs: '1.1rem', sm: '1.25rem', md: '1.5rem' }
-                }}
-              >
-                <NewIcon /> 
-                Itens Recentes
+          <CardActionArea 
+            onClick={handleOpenCreateModal} // ATUALIZADO
+            sx={{ 
+              height: '100%', display: 'flex', flexDirection: 'column',
+              justifyContent: 'center', alignItems: 'center', color: 'grey.700'
+            }}
+          >
+            <CardContent sx={{ textAlign: 'center' }}>
+              <AddIcon sx={{ fontSize: 60 }} />
+              <Typography variant="h6" fontWeight="600">
+                Criar coleção
               </Typography>
-              
-              <List sx={{ p: 0 }}>
-                {recentItems.map((item, index) => (
-                  <Box key={item.id}>
-                    <ListItem 
-                      alignItems="flex-start" 
-                      sx={{ 
-                        px: 0,
-                        flexDirection: { xs: 'column', sm: 'row' },
-                        alignItems: { xs: 'flex-start', sm: 'center' }
-                      }}
-                    >
-                      <ListItemAvatar sx={{ 
-                        minWidth: { xs: 'auto', sm: 56 },
-                        mb: { xs: 1, sm: 0 }
-                      }}>
-                        <Avatar 
-                          variant="rounded" 
-                          src={item.image} 
-                          alt={item.name}
-                          sx={{ 
-                            width: { xs: 48, sm: 56 }, 
-                            height: { xs: 48, sm: 56 } 
-                          }}
-                        />
-                      </ListItemAvatar>
-                      <ListItemText
-                        sx={{ ml: { xs: 0, sm: 2 } }}
-                        primary={
-                          <Typography 
-                            variant="subtitle2" 
-                            fontWeight="bold"
-                            sx={{ 
-                              fontSize: { xs: '0.875rem', sm: '0.9rem' },
-                              mb: 0.5
-                            }}
-                          >
-                            {item.name}
-                          </Typography>
-                        }
-                        secondary={
-                          <Box>
-                            <Typography 
-                              variant="body2" 
-                              color="success.main" 
-                              fontWeight="bold"
-                              sx={{ fontSize: { xs: '0.8rem', sm: '0.875rem' } }}
-                            >
-                              R$ {item.value.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
-                            </Typography>
-                            <Chip 
-                              label={item.condition} 
-                              size="small" 
-                              color="primary" 
-                              variant="outlined"
-                              sx={{ 
-                                mt: 0.5, 
-                                fontSize: { xs: '0.7rem', sm: '0.75rem' },
-                                height: { xs: 20, sm: 24 }
-                              }}
-                            />
-                          </Box>
-                        }
-                      />
-                    </ListItem>
-                    {index < recentItems.length - 1 && (
-                      <Divider 
-                        variant="inset" 
-                        component="li" 
-                        sx={{ 
-                          ml: { xs: 0, sm: 9 },
-                          my: 1 
-                        }}
-                      />
-                    )}
-                  </Box>
-                ))}
-              </List>
             </CardContent>
-          </Card>
-        </Grid>
-      </Grid>
-    </Box>
-  )
-}
+          </CardActionArea>
+        </Card>
 
-export default Dashboard
+        {/* 4. Renderiza as coleções reais */}
+        {collections.map((collection) => (
+          <CollectionCard key={collection.id} collection={collection} />
+        ))}
+      </Box>
+    </Container>
+
+    {/* 5. O MODAL (Dialog) para criar coleção */}
+    <Dialog
+      open={openCreateModal}
+      onClose={handleCloseCreateModal}
+      TransitionComponent={ModalTransition}
+      PaperProps={{
+        sx: {
+          bgcolor: '#343a40', // Fundo escuro como na imagem
+          color: 'white',
+          borderRadius: 2,
+        }
+      }}
+    >
+      <DialogTitle sx={{ textAlign: 'center', fontWeight: 'bold' }}>
+        Nova Coleção
+      </DialogTitle>
+      <DialogContent sx={{ display: 'flex', flexDirection: 'column', gap: 3, width: 300 }}>
+        {/* Campo "Nome" */}
+        <TextField
+          autoFocus
+          label="Nome"
+          type="text"
+          fullWidth
+          variant="outlined"
+          value={newCollectionName}
+          onChange={(e) => setNewCollectionName(e.target.value)}
+          InputLabelProps={{ sx: { color: 'grey.400' } }}
+          InputProps={{ sx: { color: 'white', '& .MuiOutlinedInput-notchedOutline': { borderColor: 'grey.500' } } }}
+        />
+        
+        {/* Botão "Inserir Foto" */}
+        <Box textAlign="center">
+          <IconButton 
+            component="label" // Permite clique para upload de arquivo
+            sx={{ 
+              border: '2px dashed grey', 
+              borderRadius: '50%', 
+              width: 150, 
+              height: 150,
+              display: 'flex',
+              flexDirection: 'column',
+              color: 'grey.400'
+            }}
+          >
+            <PhotoCamera sx={{ fontSize: 40 }} />
+            <Typography variant="caption">inserir foto</Typography>
+            <input type="file" hidden />
+          </IconButton>
+        </Box>
+
+        {/* Checkbox "Pública?" */}
+        <Box sx={{ display: 'flex', justifyContent: 'center', gap: 1 }}>
+          <FormControlLabel
+            label="Pública"
+            control={<Checkbox 
+              checked={isPublic} 
+              onChange={(e) => setIsPublic(e.target.checked)}
+              sx={{ color: 'primary.light' }}
+            />}
+          />
+        </Box>
+
+      </DialogContent>
+      <DialogActions sx={{ p: 2 }}>
+        <Button onClick={handleCloseCreateModal} sx={{ color: 'grey.400' }}>
+          Cancelar
+        </Button>
+        <Button 
+          onClick={handleSubmitCollection} 
+          variant="contained"
+          disabled={!newCollectionName} // Desabilita se não tiver nome
+        >
+          Criar
+        </Button>
+      </DialogActions>
+    </Dialog>
+  </Box>
+);
+
+// 6. O componente "Pai" (Container) - Nenhuma mudança aqui
+const Dashboard = () => {
+  const logic = useDashboard();
+  
+  return <DashboardView {...logic} />;
+};
+
+export default Dashboard;
