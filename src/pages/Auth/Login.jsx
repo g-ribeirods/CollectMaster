@@ -17,17 +17,17 @@ import {
 import {
   Visibility,
   VisibilityOff,
-  Person,
   Email,
   Lock,
   Google,
-  Facebook,
 } from '@mui/icons-material';
 import { Link as RouterLink } from 'react-router-dom';
 
-import { useRegisterForm } from '../../hooks/useRegisterForm.js';
+// 1. Importe o novo Hook de LÓGICA
+import { useLoginForm } from '../../hooks/useLoginForm';
 
-const RegisterView = ({
+// 2. Componente "burro" (apenas VISUAL)
+const LoginView = ({
   formData,
   errors,
   showPassword,
@@ -45,7 +45,7 @@ const RegisterView = ({
       py: 4,
     }}
   >
-    <Container maxWidth="sm">
+    <Container maxWidth="xs"> {/* Mais estreito que o de cadastro */}
       <Card elevation={8} sx={{ borderRadius: 3, overflow: 'hidden' }}>
         <CardContent sx={{ p: 4 }}>
           {/* Header */}
@@ -60,19 +60,12 @@ const RegisterView = ({
                 backgroundClip: 'text',
                 WebkitBackgroundClip: 'text',
                 color: 'transparent',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                gap: 1,
               }}
             >
               🏆 CollectMaster
             </Typography>
             <Typography variant="h5" component="h2" gutterBottom fontWeight="600">
-              Crie sua conta
-            </Typography>
-            <Typography variant="body1" color="text.secondary">
-              Junte-se a milhares de colecionadores
+              Bem-vindo de volta!
             </Typography>
           </Box>
 
@@ -89,32 +82,12 @@ const RegisterView = ({
               <Grid item xs={12}>
                 <TextField
                   fullWidth
-                  label="Nome completo"
-                  name="name"
-                  value={formData.name}
-                  onChange={handleChange}
-                  error={!!errors.name}
-                  helperText={errors.name}
-                  InputProps={{
-                    startAdornment: (
-                      <InputAdornment position="start">
-                        <Person color="action" />
-                      </InputAdornment>
-                    ),
-                  }}
-                  placeholder="Digite seu nome completo"
-                />
-              </Grid>
-
-              <Grid item xs={12}>
-                <TextField
-                  fullWidth
                   label="Email"
                   name="email"
                   type="email"
                   value={formData.email}
                   onChange={handleChange}
-                  error={!!errors.email}
+                  error={!!errors.email} // (Pode adicionar validação no hook se quiser)
                   helperText={errors.email}
                   InputProps={{
                     startAdornment: (
@@ -127,7 +100,7 @@ const RegisterView = ({
                 />
               </Grid>
 
-              <Grid item xs={12} sm={6}>
+              <Grid item xs={12}>
                 <TextField
                   fullWidth
                   label="Senha"
@@ -154,31 +127,25 @@ const RegisterView = ({
                       </InputAdornment>
                     ),
                   }}
-                  placeholder="Mínimo 6 caracteres"
-                />
-              </Grid>
-
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  fullWidth
-                  label="Confirmar Senha"
-                  name="confirmPassword"
-                  type={showPassword ? 'text' : 'password'}
-                  value={formData.confirmPassword}
-                  onChange={handleChange}
-                  error={!!errors.confirmPassword}
-                  helperText={errors.confirmPassword}
-                  InputProps={{
-                    startAdornment: (
-                      <InputAdornment position="start">
-                        <Lock color="action" />
-                      </InputAdornment>
-                    ),
-                  }}
-                  placeholder="Digite novamente"
+                  placeholder="Sua senha"
                 />
               </Grid>
             </Grid>
+            
+            <Link
+                href="#"
+                variant="body2"
+                sx={{
+                  display: 'block',
+                  textAlign: 'right',
+                  mt: 1,
+                  mb: 2,
+                  textDecoration: 'none',
+                  '&:hover': { textDecoration: 'underline' }
+                }}
+              >
+                Esqueceu a senha?
+              </Link>
 
             <Button
               type="submit"
@@ -186,34 +153,62 @@ const RegisterView = ({
               variant="contained"
               size="large"
               sx={{
-                mt: 3,
-                mb: 2,
                 py: 1.5,
                 background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
                 fontSize: '1.1rem',
                 fontWeight: '600',
-                '&:hover': {
-                  transform: 'translateY(-2px)',
-                  boxShadow: 4,
-                },
-                transition: 'all 0.3s ease',
               }}
             >
-              Criar Conta
+              Entrar
             </Button>
           </Box>
 
+          <Box sx={{ my: 3 }}>
+            <Divider>
+              <Typography variant="body2" color="text.secondary">
+                ou
+              </Typography>
+            </Divider>
+          </Box>
+
+          {/* Botão Google (exemplo) */}
+          <Button
+            fullWidth
+            variant="outlined"
+            startIcon={<Google />}
+            sx={{ py: 1.5, borderColor: 'grey.300', color: 'text.primary' }}
+          >
+            Continuar com Google
+          </Button>
+
+          {/* Link para Cadastro */}
+          <Box textAlign="center" mt={3}>
+            <Typography variant="body2" color="text.secondary">
+              Não tem uma conta?{' '}
+              <Link
+                component={RouterLink}
+                to="/register" // Link para a página de cadastro
+                sx={{
+                  fontWeight: '600',
+                  textDecoration: 'none',
+                  '&:hover': { textDecoration: 'underline' },
+                }}
+              >
+                Cadastre-se
+              </Link>
+            </Typography>
+          </Box>
         </CardContent>
       </Card>
     </Container>
   </Box>
 );
 
-
-const Register = () => {
-  const logic = useRegisterForm();
+// 3. Componente "Pai" (Container) que junta Lógica e Visual
+const Login = () => {
+  const logic = useLoginForm();
   
-  return <RegisterView {...logic} />;
+  return <LoginView {...logic} />;
 };
 
-export default Register;
+export default Login;

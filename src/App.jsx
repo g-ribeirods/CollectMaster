@@ -4,6 +4,8 @@ import { CssBaseline } from '@mui/material'
 import { Routes, Route } from 'react-router-dom'
 import Home from './pages/Home/Home'
 import Register from './pages/Auth/Register'
+import Login from './pages/Auth/Login'; 
+
 const theme = createTheme({
   palette: {
     primary: {
@@ -49,8 +51,8 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/register" element={<Register />} />
-        {/* Você pode adicionar a de login aqui também depois */}
-        {/* <Route path="/login" element={<Login />} /> */}
+        <Route path="/login" element={<Login />} />
+        <Route path="/dashboard" element={<div>Dashboard (em construção)</div>} />
       </Routes>
     </ThemeProvider>
   )
