@@ -3,23 +3,18 @@ import {
   Box,
   Typography,
   Button,
-  Grid,
+  Container,
   TextField,
   MenuItem,
   Dialog,
   DialogTitle,
   DialogContent,
   DialogActions,
-  useTheme,
-  useMediaQuery,
 } from '@mui/material'
 import { Add as AddIcon } from '@mui/icons-material'
 import CollectionCard from '../../components/CollectionCard/CollectionCard'
 
 function Collections({ collections, setCollections }) {
-  const theme = useTheme()
-  const isMobile = useMediaQuery(theme.breakpoints.down('md'))
-  const isSmallMobile = useMediaQuery(theme.breakpoints.down('sm'))
 
   const [openDialog, setOpenDialog] = useState(false)
   const [newCollection, setNewCollection] = useState({
@@ -54,43 +49,79 @@ function Collections({ collections, setCollections }) {
   }
 
   return (
-    <Box sx={{ px: { xs: 1, sm: 2 } }}>
-      {/* Header */}
-      <Box sx={{ 
-        display: 'flex', 
-        justifyContent: 'space-between', 
-        alignItems: { xs: 'flex-start', sm: 'center' },
-        flexDirection: { xs: 'column', sm: 'row' },
-        gap: 2,
-        mb: 4 
-      }}>
-        <Box>
-          <Typography variant={isMobile ? "h3" : "h1"} gutterBottom>
-            📚 Coleções
-          </Typography>
-          <Typography variant={isMobile ? "body1" : "h6"} color="text.secondary">
-            Gerencie todas as suas coleções
-          </Typography>
+    <Box sx={{ 
+      minHeight: '100vh',
+      bgcolor: '#2F4F4F',
+      py: 4,
+    }}>
+      <Container maxWidth="lg">
+        {/* Header */}
+        <Box sx={{ 
+          display: 'flex', 
+          justifyContent: 'space-between', 
+          alignItems: 'center',
+          mb: 6,
+        }}>
+          <Box>
+            <Typography 
+              variant="h2" 
+              gutterBottom
+              sx={{ 
+                color: '#F5F5DC',
+                fontWeight: 'bold',
+                display: 'flex',
+                alignItems: 'center',
+                gap: 1,
+              }}
+            >
+              📚 Coleções
+            </Typography>
+            <Typography 
+              variant="h6" 
+              sx={{ 
+                color: 'rgba(245, 245, 220, 0.8)',
+              }}
+            >
+              Gerencie todas as suas coleções
+            </Typography>
+          </Box>
+          <Button
+            variant="contained"
+            startIcon={<AddIcon />}
+            onClick={() => setOpenDialog(true)}
+            size="large"
+            sx={{
+              bgcolor: '#D4AF37',
+              color: '#2F4F4F',
+              fontWeight: 'bold',
+              px: 4,
+              py: 1.5,
+              '&:hover': {
+                bgcolor: '#e5c55a',
+                transform: 'translateY(-2px)',
+                boxShadow: 4,
+              },
+              transition: 'all 0.3s ease',
+            }}
+          >
+            Nova Coleção
+          </Button>
         </Box>
-        <Button
-          variant="contained"
-          startIcon={<AddIcon />}
-          onClick={() => setOpenDialog(true)}
-          size={isMobile ? "medium" : "large"}
-          fullWidth={isSmallMobile}
-        >
-          Nova Coleção
-        </Button>
-      </Box>
 
-      {/* Collections Grid */}
-      <Grid container spacing={2}>
-        {collections.map((collection) => (
-          <Grid item xs={12} sm={6} lg={4} key={collection.id}>
-            <CollectionCard collection={collection} />
-          </Grid>
-        ))}
-      </Grid>
+        {/* Collections Grid */}
+        <Box
+          sx={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))',
+            gap: 4,
+            justifyContent: 'center',
+          }}
+        >
+          {collections.map((collection) => (
+            <CollectionCard key={collection.id} collection={collection} />
+          ))}
+        </Box>
+      </Container>
 
       {/* Add Collection Dialog */}
       <Dialog 
@@ -98,17 +129,42 @@ function Collections({ collections, setCollections }) {
         onClose={() => setOpenDialog(false)} 
         maxWidth="sm" 
         fullWidth
-        fullScreen={isSmallMobile}
+        PaperProps={{
+          sx: {
+            bgcolor: '#F5F5DC',
+          }
+        }}
       >
-        <DialogTitle>Adicionar Nova Coleção</DialogTitle>
+        <DialogTitle sx={{ color: '#2F4F4F', fontWeight: 'bold' }}>
+          Adicionar Nova Coleção
+        </DialogTitle>
         <DialogContent>
-          <Box display="flex" flexDirection="column" gap={2} mt={1}>
+          <Box display="flex" flexDirection="column" gap={2.5} mt={1}>
             <TextField
               label="Nome da Coleção"
               value={newCollection.name}
               onChange={(e) => setNewCollection({ ...newCollection, name: e.target.value })}
               fullWidth
-              size={isSmallMobile ? "small" : "medium"}
+              sx={{
+                '& .MuiOutlinedInput-root': {
+                  bgcolor: '#ffffff',
+                  '& fieldset': {
+                    borderColor: '#2F4F4F',
+                  },
+                  '&:hover fieldset': {
+                    borderColor: '#D4AF37',
+                  },
+                  '&.Mui-focused fieldset': {
+                    borderColor: '#D4AF37',
+                  },
+                },
+                '& .MuiInputLabel-root': {
+                  color: '#2F4F4F',
+                },
+                '& .MuiInputLabel-root.Mui-focused': {
+                  color: '#D4AF37',
+                },
+              }}
             />
             <TextField
               select
@@ -116,7 +172,26 @@ function Collections({ collections, setCollections }) {
               value={newCollection.category}
               onChange={(e) => setNewCollection({ ...newCollection, category: e.target.value })}
               fullWidth
-              size={isSmallMobile ? "small" : "medium"}
+              sx={{
+                '& .MuiOutlinedInput-root': {
+                  bgcolor: '#ffffff',
+                  '& fieldset': {
+                    borderColor: '#2F4F4F',
+                  },
+                  '&:hover fieldset': {
+                    borderColor: '#D4AF37',
+                  },
+                  '&.Mui-focused fieldset': {
+                    borderColor: '#D4AF37',
+                  },
+                },
+                '& .MuiInputLabel-root': {
+                  color: '#2F4F4F',
+                },
+                '& .MuiInputLabel-root.Mui-focused': {
+                  color: '#D4AF37',
+                },
+              }}
             >
               {categories.map((category) => (
                 <MenuItem key={category} value={category}>
@@ -129,9 +204,28 @@ function Collections({ collections, setCollections }) {
               value={newCollection.description}
               onChange={(e) => setNewCollection({ ...newCollection, description: e.target.value })}
               multiline
-              rows={isSmallMobile ? 2 : 3}
+              rows={3}
               fullWidth
-              size={isSmallMobile ? "small" : "medium"}
+              sx={{
+                '& .MuiOutlinedInput-root': {
+                  bgcolor: '#ffffff',
+                  '& fieldset': {
+                    borderColor: '#2F4F4F',
+                  },
+                  '&:hover fieldset': {
+                    borderColor: '#D4AF37',
+                  },
+                  '&.Mui-focused fieldset': {
+                    borderColor: '#D4AF37',
+                  },
+                },
+                '& .MuiInputLabel-root': {
+                  color: '#2F4F4F',
+                },
+                '& .MuiInputLabel-root.Mui-focused': {
+                  color: '#D4AF37',
+                },
+              }}
             />
             <TextField
               label="Valor Inicial"
@@ -139,14 +233,38 @@ function Collections({ collections, setCollections }) {
               value={newCollection.value}
               onChange={(e) => setNewCollection({ ...newCollection, value: parseFloat(e.target.value) || 0 })}
               fullWidth
-              size={isSmallMobile ? "small" : "medium"}
+              sx={{
+                '& .MuiOutlinedInput-root': {
+                  bgcolor: '#ffffff',
+                  '& fieldset': {
+                    borderColor: '#2F4F4F',
+                  },
+                  '&:hover fieldset': {
+                    borderColor: '#D4AF37',
+                  },
+                  '&.Mui-focused fieldset': {
+                    borderColor: '#D4AF37',
+                  },
+                },
+                '& .MuiInputLabel-root': {
+                  color: '#2F4F4F',
+                },
+                '& .MuiInputLabel-root.Mui-focused': {
+                  color: '#D4AF37',
+                },
+              }}
             />
           </Box>
         </DialogContent>
         <DialogActions sx={{ p: 2 }}>
           <Button 
-            onClick={() => setOpenDialog(false)} 
-            size={isSmallMobile ? "small" : "medium"}
+            onClick={() => setOpenDialog(false)}
+            sx={{
+              color: '#2F4F4F',
+              '&:hover': {
+                bgcolor: 'rgba(47, 79, 79, 0.1)',
+              }
+            }}
           >
             Cancelar
           </Button>
@@ -154,7 +272,18 @@ function Collections({ collections, setCollections }) {
             onClick={handleAddCollection} 
             variant="contained"
             disabled={!newCollection.name || !newCollection.category}
-            size={isSmallMobile ? "small" : "medium"}
+            sx={{
+              bgcolor: '#D4AF37',
+              color: '#2F4F4F',
+              fontWeight: 'bold',
+              '&:hover': {
+                bgcolor: '#e5c55a',
+              },
+              '&.Mui-disabled': {
+                bgcolor: 'rgba(212, 175, 55, 0.3)',
+                color: 'rgba(47, 79, 79, 0.5)',
+              }
+            }}
           >
             Adicionar
           </Button>

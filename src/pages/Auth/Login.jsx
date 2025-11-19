@@ -42,7 +42,7 @@ const LoginView = ({
     <Box
       sx={{
         minHeight: '100vh',
-        background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+        bgcolor: '#2F4F4F',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
@@ -50,22 +50,21 @@ const LoginView = ({
         position: 'relative',
       }}
     >
-      <Container maxWidth="xs"> {/* Mais estreito que o de cadastro */}
+      <Container maxWidth="xs" sx={{ position: 'relative' }}>
         {/* Botão Voltar */}
         <Button
           variant="outlined"
-          color="inherit"
           startIcon={<ArrowBack />}
           onClick={() => navigate('/')}
           sx={{
             position: 'absolute',
-            top: { xs: 16, sm: 24 },
-            left: { xs: 16, sm: 24 },
-            borderColor: 'rgba(255,255,255,0.3)',
-            color: 'white',
+            top: -60,
+            left: 0,
+            borderColor: '#D4AF37',
+            color: '#D4AF37',
             '&:hover': {
-              borderColor: 'white',
-              bgcolor: 'rgba(255,255,255,0.1)',
+              borderColor: '#e5c55a',
+              bgcolor: 'rgba(212, 175, 55, 0.1)',
               transform: 'translateY(-2px)',
             },
             transition: 'all 0.3s ease',
@@ -74,7 +73,14 @@ const LoginView = ({
           Voltar
         </Button>
 
-        <Card elevation={8} sx={{ borderRadius: 3, overflow: 'hidden' }}>
+        <Card 
+          elevation={8} 
+          sx={{ 
+            borderRadius: 3, 
+            overflow: 'hidden',
+            bgcolor: '#F5F5DC',
+          }}
+        >
           <CardContent sx={{ p: 4 }}>
             {/* Header */}
             <Box textAlign="center" mb={4}>
@@ -84,81 +90,140 @@ const LoginView = ({
               gutterBottom
               sx={{
                 fontWeight: 'bold',
-                background: 'linear-gradient(45deg, #667eea, #764ba2)',
-                backgroundClip: 'text',
-                WebkitBackgroundClip: 'text',
-                color: 'transparent',
+                color: '#2F4F4F',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: 1,
+                '&::before': {
+                  content: '"🏆"',
+                  fontSize: '2.5rem',
+                  filter: 'drop-shadow(0 0 8px #D4AF37)',
+                }
               }}
             >
-              🏆 CollectMaster
+              CollectMaster
             </Typography>
-            <Typography variant="h5" component="h2" gutterBottom fontWeight="600">
+            <Typography 
+              variant="h5" 
+              component="h2" 
+              gutterBottom 
+              fontWeight="600"
+              sx={{ color: '#2F4F4F', mt: 2 }}
+            >
               Bem-vindo de volta!
             </Typography>
           </Box>
 
           {/* Alert de erro */}
           {errors.submit && (
-            <Alert severity="error" sx={{ mb: 3 }}>
+            <Alert 
+              severity="error" 
+              sx={{ 
+                mb: 3,
+                bgcolor: '#ffebee',
+                color: '#c62828',
+                '& .MuiAlert-icon': {
+                  color: '#c62828',
+                }
+              }}
+            >
               {errors.submit}
             </Alert>
           )}
 
           {/* Formulário */}
           <Box component="form" onSubmit={handleSubmit} noValidate>
-            <Grid container spacing={2}>
-              <Grid item xs={12}>
-                <TextField
-                  fullWidth
-                  label="Email"
-                  name="email"
-                  type="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  error={!!errors.email} // (Pode adicionar validação no hook se quiser)
-                  helperText={errors.email}
-                  InputProps={{
-                    startAdornment: (
-                      <InputAdornment position="start">
-                        <Email color="action" />
-                      </InputAdornment>
-                    ),
-                  }}
-                  placeholder="seu@email.com"
-                />
-              </Grid>
+            <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2.5, mb: 2 }}>
+              <TextField
+                fullWidth
+                label="Email"
+                name="email"
+                type="email"
+                value={formData.email}
+                onChange={handleChange}
+                error={!!errors.email}
+                helperText={errors.email}
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <Email sx={{ color: '#2F4F4F' }} />
+                    </InputAdornment>
+                  ),
+                }}
+                placeholder="seu@email.com"
+                sx={{
+                  '& .MuiOutlinedInput-root': {
+                    bgcolor: '#ffffff',
+                    '& fieldset': {
+                      borderColor: '#2F4F4F',
+                    },
+                    '&:hover fieldset': {
+                      borderColor: '#D4AF37',
+                    },
+                    '&.Mui-focused fieldset': {
+                      borderColor: '#D4AF37',
+                    },
+                  },
+                  '& .MuiInputLabel-root': {
+                    color: '#2F4F4F',
+                  },
+                  '& .MuiInputLabel-root.Mui-focused': {
+                    color: '#D4AF37',
+                  },
+                }}
+              />
 
-              <Grid item xs={12}>
-                <TextField
-                  fullWidth
-                  label="Senha"
-                  name="password"
-                  type={showPassword ? 'text' : 'password'}
-                  value={formData.password}
-                  onChange={handleChange}
-                  error={!!errors.password}
-                  helperText={errors.password}
-                  InputProps={{
-                    startAdornment: (
-                      <InputAdornment position="start">
-                        <Lock color="action" />
-                      </InputAdornment>
-                    ),
-                    endAdornment: (
-                      <InputAdornment position="end">
-                        <IconButton
-                          onClick={() => setShowPassword(!showPassword)}
-                          edge="end"
-                        >
-                          {showPassword ? <VisibilityOff /> : <Visibility />}
-                        </IconButton>
-                      </InputAdornment>
-                    ),
-                  }}
-                  placeholder="Sua senha"
-                />
-              </Grid>
-            </Grid>
+              <TextField
+                fullWidth
+                label="Senha"
+                name="password"
+                type={showPassword ? 'text' : 'password'}
+                value={formData.password}
+                onChange={handleChange}
+                error={!!errors.password}
+                helperText={errors.password}
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <Lock sx={{ color: '#2F4F4F' }} />
+                    </InputAdornment>
+                  ),
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton
+                        onClick={() => setShowPassword(!showPassword)}
+                        edge="end"
+                        sx={{ color: '#2F4F4F' }}
+                      >
+                        {showPassword ? <VisibilityOff /> : <Visibility />}
+                      </IconButton>
+                    </InputAdornment>
+                  ),
+                }}
+                placeholder="Sua senha"
+                sx={{
+                  '& .MuiOutlinedInput-root': {
+                    bgcolor: '#ffffff',
+                    '& fieldset': {
+                      borderColor: '#2F4F4F',
+                    },
+                    '&:hover fieldset': {
+                      borderColor: '#D4AF37',
+                    },
+                    '&.Mui-focused fieldset': {
+                      borderColor: '#D4AF37',
+                    },
+                  },
+                  '& .MuiInputLabel-root': {
+                    color: '#2F4F4F',
+                  },
+                  '& .MuiInputLabel-root.Mui-focused': {
+                    color: '#D4AF37',
+                  },
+                }}
+              />
+            </Box>
             
             <Link
                 href="#"
@@ -166,10 +231,13 @@ const LoginView = ({
                 sx={{
                   display: 'block',
                   textAlign: 'right',
-                  mt: 1,
-                  mb: 2,
+                  mb: 3,
+                  color: '#2F4F4F',
                   textDecoration: 'none',
-                  '&:hover': { textDecoration: 'underline' }
+                  '&:hover': { 
+                    textDecoration: 'underline',
+                    color: '#D4AF37',
+                  }
                 }}
               >
                 Esqueceu a senha?
@@ -182,9 +250,17 @@ const LoginView = ({
               size="large"
               sx={{
                 py: 1.5,
-                background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                bgcolor: '#D4AF37',
+                color: '#2F4F4F',
                 fontSize: '1.1rem',
-                fontWeight: '600',
+                fontWeight: 'bold',
+                mb: 2,
+                '&:hover': {
+                  bgcolor: '#e5c55a',
+                  transform: 'translateY(-2px)',
+                  boxShadow: 4,
+                },
+                transition: 'all 0.3s ease',
               }}
             >
               Entrar
@@ -193,7 +269,7 @@ const LoginView = ({
 
           <Box sx={{ my: 3 }}>
             <Divider>
-              <Typography variant="body2" color="text.secondary">
+              <Typography variant="body2" sx={{ color: '#2F4F4F' }}>
                 ou
               </Typography>
             </Divider>
@@ -204,22 +280,34 @@ const LoginView = ({
             fullWidth
             variant="outlined"
             startIcon={<Google />}
-            sx={{ py: 1.5, borderColor: 'grey.300', color: 'text.primary' }}
+            sx={{ 
+              py: 1.5, 
+              borderColor: '#2F4F4F',
+              color: '#2F4F4F',
+              '&:hover': {
+                borderColor: '#D4AF37',
+                bgcolor: 'rgba(212, 175, 55, 0.1)',
+              }
+            }}
           >
             Continuar com Google
           </Button>
 
           {/* Link para Cadastro */}
           <Box textAlign="center" mt={3}>
-            <Typography variant="body2" color="text.secondary">
+            <Typography variant="body2" sx={{ color: '#2F4F4F' }}>
               Não tem uma conta?{' '}
               <Link
                 component={RouterLink}
-                to="/register" // Link para a página de cadastro
+                to="/register"
                 sx={{
                   fontWeight: '600',
+                  color: '#D4AF37',
                   textDecoration: 'none',
-                  '&:hover': { textDecoration: 'underline' },
+                  '&:hover': { 
+                    textDecoration: 'underline',
+                    color: '#e5c55a',
+                  },
                 }}
               >
                 Cadastre-se

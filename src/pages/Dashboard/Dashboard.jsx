@@ -33,9 +33,6 @@ const DashboardView = ({
   handleCloseCreateModal,
   handleSubmitCollection,
 }) => {
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
-  const isSmallMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -47,158 +44,229 @@ const DashboardView = ({
   const totalValue = collections.reduce((sum, col) => sum + (col.value || 0), 0);
 
   return (
-    <Box sx={{ flexGrow: 1, minHeight: '100vh', bgcolor: 'background.default' }}>
+    <Box sx={{ flexGrow: 1, minHeight: '100vh', bgcolor: '#2F4F4F' }}>
       {/* AppBar Moderno */}
       <AppBar 
         position="static" 
         elevation={0}
         sx={{ 
-          background: 'linear-gradient(135deg, rgba(37, 99, 235, 0.95) 0%, rgba(124, 58, 237, 0.95) 100%)',
-          backdropFilter: 'blur(20px)',
+          bgcolor: '#2F4F4F',
         }}
       >
-        <Toolbar sx={{ py: { xs: 1.5, sm: 2 } }}>
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, flexGrow: 1 }}>
-            <IconButton edge="start" color="inherit" sx={{ mr: 1 }}>
+        <Container maxWidth="lg">
+          <Toolbar sx={{ py: 2, px: { xs: 2, sm: 3 } }}>
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, flexGrow: 1 }}>
               <Avatar sx={{ 
-                width: { xs: 36, sm: 40 }, 
-                height: { xs: 36, sm: 40 },
-                bgcolor: 'rgba(255,255,255,0.2)'
+                width: 40, 
+                height: 40,
+                bgcolor: '#D4AF37',
+                color: '#2F4F4F',
+                fontWeight: 'bold',
               }}>
                 {user?.name ? user.name[0].toUpperCase() : '?'}
               </Avatar>
-            </IconButton>
-            <Box>
-              <Typography variant="h6" component="div" sx={{ fontWeight: 'bold', lineHeight: 1.2 }}>
-                {user?.name || 'Usuário'}
-              </Typography>
-              <Typography variant="caption" sx={{ opacity: 0.9, fontSize: '0.75rem' }}>
-                Colecionador
-              </Typography>
+              <Box>
+                <Typography 
+                  variant="h6" 
+                  component="div" 
+                  sx={{ 
+                    fontWeight: 'bold', 
+                    lineHeight: 1.2,
+                    color: '#F5F5DC',
+                  }}
+                >
+                  {user?.name || 'Usuário'}
+                </Typography>
+                <Typography 
+                  variant="caption" 
+                  sx={{ 
+                    color: 'rgba(245, 245, 220, 0.8)',
+                    fontSize: '0.75rem' 
+                  }}
+                >
+                  Colecionador
+                </Typography>
+              </Box>
             </Box>
-          </Box>
 
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: { xs: 1, sm: 2 } }}>
-            <Chip
-              icon={<CollectionsIcon />}
-              label="Suas coleções"
-              sx={{
-                bgcolor: 'rgba(255,255,255,0.2)',
-                color: 'white',
-                fontWeight: 'bold',
-                border: '1px solid rgba(255,255,255,0.3)',
-                display: { xs: 'none', sm: 'flex' }
-              }}
-            />
-            <IconButton 
-              color="inherit" 
-              sx={{ 
-                display: { xs: 'none', sm: 'flex' },
-                '&:hover': { bgcolor: 'rgba(255,255,255,0.1)' }
-              }}
-            >
-              <SearchIcon />
-            </IconButton>
-            <IconButton 
-              color="inherit"
-              onClick={handleLogout}
-              sx={{ '&:hover': { bgcolor: 'rgba(255,255,255,0.1)' } }}
-            >
-              <LogoutIcon />
-            </IconButton>
-          </Box>
-        </Toolbar>
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+              <Chip
+                icon={<CollectionsIcon sx={{ color: '#D4AF37' }} />}
+                label="Suas coleções"
+                sx={{
+                  bgcolor: 'rgba(212, 175, 55, 0.2)',
+                  color: '#F5F5DC',
+                  fontWeight: 'bold',
+                  border: '1px solid #D4AF37',
+                  '& .MuiChip-icon': {
+                    color: '#D4AF37',
+                  },
+                  display: { xs: 'none', sm: 'flex' }
+                }}
+              />
+              <IconButton 
+                sx={{ 
+                  color: '#D4AF37',
+                  display: { xs: 'none', sm: 'flex' },
+                  '&:hover': { 
+                    bgcolor: 'rgba(212, 175, 55, 0.1)',
+                  }
+                }}
+              >
+                <SearchIcon />
+              </IconButton>
+              <IconButton 
+                onClick={handleLogout}
+                sx={{ 
+                  color: '#D4AF37',
+                  '&:hover': { 
+                    bgcolor: 'rgba(212, 175, 55, 0.1)',
+                  }
+                }}
+              >
+                <LogoutIcon />
+              </IconButton>
+            </Box>
+          </Toolbar>
+        </Container>
       </AppBar>
 
       {/* Conteúdo Principal */}
-      <Container maxWidth="lg" sx={{ py: { xs: 3, sm: 4, md: 5 } }}>
+      <Container maxWidth="lg" sx={{ py: 5 }}>
         {/* Header Section */}
-        <Box sx={{ mb: { xs: 3, sm: 4 } }}>
+        <Box sx={{ mb: 4 }}>
           <Typography 
-            variant={isMobile ? "h3" : "h2"} 
+            variant="h2" 
             component="h1" 
             gutterBottom 
             sx={{ 
               fontWeight: 'bold',
-              background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-              backgroundClip: 'text',
-              WebkitBackgroundClip: 'text',
-              color: 'transparent',
+              color: '#F5F5DC',
               mb: 1
             }}
           >
             Suas Coleções
           </Typography>
-          <Typography variant="body1" color="text.secondary" sx={{ mb: 3 }}>
+          <Typography 
+            variant="body1" 
+            sx={{ 
+              color: 'rgba(245, 245, 220, 0.8)',
+              mb: 4 
+            }}
+          >
             Gerencie e organize todas as suas coleções em um só lugar
           </Typography>
 
           {/* Estatísticas */}
-          <Grid container spacing={2} sx={{ mb: 3 }}>
-            <Grid item xs={6} sm={4} md={3}>
+          <Grid container spacing={3} sx={{ mb: 4 }}>
+            <Grid item xs={6} sm={3}>
               <Card sx={{ 
-                bgcolor: 'primary.main', 
-                color: 'white',
-                p: 2,
+                bgcolor: '#2F4F4F', 
+                color: '#F5F5DC',
+                border: '2px solid #D4AF37',
+                p: 3,
                 textAlign: 'center',
+                height: '140px',
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'center',
+                alignItems: 'center',
                 transition: 'all 0.3s ease',
-                '&:hover': { transform: 'translateY(-4px)', boxShadow: 4 }
+                '&:hover': { 
+                  transform: 'translateY(-4px)', 
+                  boxShadow: '0 8px 24px rgba(212, 175, 55, 0.3)',
+                  borderColor: '#e5c55a',
+                }
               }}>
-                <Typography variant="h4" fontWeight="bold">
+                <CollectionsIcon sx={{ fontSize: 32, color: '#D4AF37', mb: 1 }} />
+                <Typography variant="h4" fontWeight="bold" sx={{ color: '#F5F5DC' }}>
                   {collections.length}
                 </Typography>
-                <Typography variant="caption" sx={{ opacity: 0.9 }}>
+                <Typography variant="caption" sx={{ color: 'rgba(245, 245, 220, 0.8)' }}>
                   Coleções
                 </Typography>
               </Card>
             </Grid>
-            <Grid item xs={6} sm={4} md={3}>
+            <Grid item xs={6} sm={3}>
               <Card sx={{ 
-                bgcolor: 'secondary.main', 
-                color: 'white',
-                p: 2,
+                bgcolor: '#2F4F4F', 
+                color: '#F5F5DC',
+                border: '2px solid #D4AF37',
+                p: 3,
                 textAlign: 'center',
+                height: '140px',
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'center',
+                alignItems: 'center',
                 transition: 'all 0.3s ease',
-                '&:hover': { transform: 'translateY(-4px)', boxShadow: 4 }
+                '&:hover': { 
+                  transform: 'translateY(-4px)', 
+                  boxShadow: '0 8px 24px rgba(212, 175, 55, 0.3)',
+                  borderColor: '#e5c55a',
+                }
               }}>
-                <Typography variant="h4" fontWeight="bold">
+                <Box sx={{ fontSize: 32, color: '#D4AF37', mb: 1 }}>📦</Box>
+                <Typography variant="h4" fontWeight="bold" sx={{ color: '#F5F5DC' }}>
                   {totalItems}
                 </Typography>
-                <Typography variant="caption" sx={{ opacity: 0.9 }}>
+                <Typography variant="caption" sx={{ color: 'rgba(245, 245, 220, 0.8)' }}>
                   Itens
                 </Typography>
               </Card>
             </Grid>
-            <Grid item xs={12} sm={4} md={3}>
+            <Grid item xs={6} sm={3}>
               <Card sx={{ 
-                bgcolor: 'success.main', 
-                color: 'white',
-                p: 2,
+                bgcolor: '#2F4F4F', 
+                color: '#F5F5DC',
+                border: '2px solid #D4AF37',
+                p: 3,
                 textAlign: 'center',
+                height: '140px',
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'center',
+                alignItems: 'center',
                 transition: 'all 0.3s ease',
-                '&:hover': { transform: 'translateY(-4px)', boxShadow: 4 }
+                '&:hover': { 
+                  transform: 'translateY(-4px)', 
+                  boxShadow: '0 8px 24px rgba(212, 175, 55, 0.3)',
+                  borderColor: '#e5c55a',
+                }
               }}>
-                <Typography variant="h4" fontWeight="bold">
-                  R$ {totalValue.toLocaleString('pt-BR', { minimumFractionDigits: 0 })}
+                <Box sx={{ fontSize: 32, color: '#D4AF37', mb: 1 }}>💰</Box>
+                <Typography variant="h4" fontWeight="bold" sx={{ color: '#D4AF37' }}>
+                  R$ {totalValue.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                 </Typography>
-                <Typography variant="caption" sx={{ opacity: 0.9 }}>
+                <Typography variant="caption" sx={{ color: 'rgba(245, 245, 220, 0.8)' }}>
                   Valor Total
                 </Typography>
               </Card>
             </Grid>
-            <Grid item xs={12} sm={4} md={3}>
+            <Grid item xs={6} sm={3}>
               <Card sx={{ 
-                bgcolor: 'warning.main', 
-                color: 'white',
-                p: 2,
+                bgcolor: '#2F4F4F', 
+                color: '#F5F5DC',
+                border: '2px solid #D4AF37',
+                p: 3,
                 textAlign: 'center',
+                height: '140px',
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'center',
+                alignItems: 'center',
                 transition: 'all 0.3s ease',
-                '&:hover': { transform: 'translateY(-4px)', boxShadow: 4 }
+                '&:hover': { 
+                  transform: 'translateY(-4px)', 
+                  boxShadow: '0 8px 24px rgba(212, 175, 55, 0.3)',
+                  borderColor: '#e5c55a',
+                }
               }}>
-                <Typography variant="h4" fontWeight="bold">
+                <Box sx={{ fontSize: 32, color: '#D4AF37', mb: 1 }}>🌐</Box>
+                <Typography variant="h4" fontWeight="bold" sx={{ color: '#F5F5DC' }}>
                   {collections.filter(c => c.isPublic).length}
                 </Typography>
-                <Typography variant="caption" sx={{ opacity: 0.9 }}>
+                <Typography variant="caption" sx={{ color: 'rgba(245, 245, 220, 0.8)' }}>
                   Públicas
                 </Typography>
               </Card>
@@ -207,91 +275,113 @@ const DashboardView = ({
         </Box>
 
         {/* Grid de Coleções */}
-        <Grid container spacing={3}>
+        <Box
+          sx={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))',
+            gap: 4,
+            justifyContent: 'center',
+          }}
+        >
           {/* Card de "Criar coleção" */}
-          <Grid item xs={12} sm={6} md={4} lg={3}>
-            <Card 
+          <Card 
+            sx={{ 
+              border: '2px dashed',
+              borderColor: '#D4AF37',
+              bgcolor: '#F5F5DC',
+              boxShadow: 'none',
+              height: '480px',
+              transition: 'all 0.3s ease',
+              '&:hover': {
+                borderColor: '#e5c55a',
+                bgcolor: 'rgba(212, 175, 55, 0.1)',
+                transform: 'translateY(-4px)',
+                boxShadow: '0 8px 24px rgba(212, 175, 55, 0.3)',
+              }
+            }}
+          >
+            <CardActionArea 
+              onClick={handleOpenCreateModal}
               sx={{ 
-                border: '2px dashed',
-                borderColor: 'primary.main',
-                bgcolor: 'transparent',
-                boxShadow: 'none',
-                minHeight: { xs: 280, sm: 360 },
-                transition: 'all 0.3s ease',
-                '&:hover': {
-                  borderColor: 'primary.dark',
-                  bgcolor: 'rgba(102, 126, 234, 0.05)',
-                  transform: 'translateY(-4px)',
-                }
+                height: '100%', 
+                display: 'flex', 
+                flexDirection: 'column',
+                justifyContent: 'center', 
+                alignItems: 'center', 
+                p: 3
               }}
             >
-              <CardActionArea 
-                onClick={handleOpenCreateModal}
-                sx={{ 
-                  height: '100%', 
-                  display: 'flex', 
-                  flexDirection: 'column',
-                  justifyContent: 'center', 
-                  alignItems: 'center', 
-                  color: 'primary.main',
-                  p: 3
-                }}
-              >
-                <CardContent sx={{ textAlign: 'center' }}>
-                  <Box
-                    sx={{
-                      width: 80,
-                      height: 80,
-                      borderRadius: '50%',
-                      bgcolor: 'primary.light',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      mx: 'auto',
-                      mb: 2,
-                      transition: 'all 0.3s ease',
-                      '&:hover': {
-                        transform: 'scale(1.1)',
-                        bgcolor: 'primary.main',
-                        color: 'white'
-                      }
-                    }}
-                  >
-                    <AddIcon sx={{ fontSize: 40 }} />
-                  </Box>
-                  <Typography variant="h6" fontWeight="600" gutterBottom>
-                    Criar Coleção
-                  </Typography>
-                  <Typography variant="body2" color="text.secondary">
-                    Adicione uma nova coleção
-                  </Typography>
-                </CardContent>
-              </CardActionArea>
-            </Card>
-          </Grid>
+              <CardContent sx={{ textAlign: 'center' }}>
+                <Box
+                  sx={{
+                    width: 90,
+                    height: 90,
+                    borderRadius: '50%',
+                    bgcolor: 'rgba(212, 175, 55, 0.2)',
+                    border: '2px solid #D4AF37',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    mx: 'auto',
+                    mb: 3,
+                    transition: 'all 0.3s ease',
+                    '&:hover': {
+                      transform: 'scale(1.1)',
+                      bgcolor: '#D4AF37',
+                    }
+                  }}
+                >
+                  <AddIcon sx={{ fontSize: 45, color: '#D4AF37' }} />
+                </Box>
+                <Typography 
+                  variant="h6" 
+                  fontWeight="bold" 
+                  gutterBottom
+                  sx={{ color: '#2F4F4F', mb: 1 }}
+                >
+                  Criar Coleção
+                </Typography>
+                <Typography 
+                  variant="body2" 
+                  sx={{ color: 'rgba(47, 79, 79, 0.8)' }}
+                >
+                  Adicione uma nova coleção
+                </Typography>
+              </CardContent>
+            </CardActionArea>
+          </Card>
 
           {/* Coleções existentes */}
           {collections.map((collection) => (
-            <Grid item xs={12} sm={6} md={4} lg={3} key={collection.id}>
-              <CollectionCard collection={collection} />
-            </Grid>
+            <CollectionCard key={collection.id} collection={collection} />
           ))}
-        </Grid>
+        </Box>
 
         {/* Mensagem quando não há coleções */}
         {collections.length === 0 && (
           <Box sx={{ 
             textAlign: 'center', 
             py: 8,
-            bgcolor: 'grey.50',
+            bgcolor: '#F5F5DC',
             borderRadius: 2,
-            mt: 3
+            mt: 3,
+            border: '2px dashed #D4AF37',
           }}>
-            <CollectionsIcon sx={{ fontSize: 80, color: 'grey.400', mb: 2 }} />
-            <Typography variant="h5" color="text.secondary" gutterBottom>
+            <CollectionsIcon sx={{ fontSize: 80, color: '#D4AF37', mb: 2 }} />
+            <Typography 
+              variant="h5" 
+              gutterBottom
+              sx={{ color: '#2F4F4F', mb: 1 }}
+            >
               Nenhuma coleção ainda
             </Typography>
-            <Typography variant="body1" color="text.secondary" sx={{ mb: 3 }}>
+            <Typography 
+              variant="body1" 
+              sx={{ 
+                color: 'rgba(47, 79, 79, 0.8)',
+                mb: 3 
+              }}
+            >
               Comece criando sua primeira coleção!
             </Typography>
             <Button
@@ -299,6 +389,16 @@ const DashboardView = ({
               startIcon={<AddIcon />}
               onClick={handleOpenCreateModal}
               size="large"
+              sx={{
+                bgcolor: '#D4AF37',
+                color: '#2F4F4F',
+                fontWeight: 'bold',
+                '&:hover': {
+                  bgcolor: '#e5c55a',
+                  transform: 'translateY(-2px)',
+                  boxShadow: 4,
+                }
+              }}
             >
               Criar Primeira Coleção
             </Button>
@@ -313,20 +413,20 @@ const DashboardView = ({
         TransitionComponent={ModalTransition}
         maxWidth="sm"
         fullWidth
-        fullScreen={isSmallMobile}
         PaperProps={{
           sx: {
-            borderRadius: { xs: 0, sm: 3 },
-            background: 'linear-gradient(135deg, rgba(37, 99, 235, 0.98) 0%, rgba(124, 58, 237, 0.98) 100%)',
-            color: 'white',
+            borderRadius: 3,
+            bgcolor: '#F5F5DC',
+            boxShadow: '0 8px 32px rgba(0, 0, 0, 0.3)',
           }
         }}
       >
         <DialogTitle sx={{ 
           textAlign: 'center', 
           fontWeight: 'bold',
-          fontSize: { xs: '1.5rem', sm: '1.75rem' },
-          pt: 3
+          fontSize: '1.75rem',
+          pt: 3,
+          color: '#2F4F4F',
         }}>
           Nova Coleção
         </DialogTitle>
@@ -334,7 +434,7 @@ const DashboardView = ({
           display: 'flex', 
           flexDirection: 'column', 
           gap: 3, 
-          px: { xs: 2, sm: 3 },
+          px: 3,
           pb: 2
         }}>
           {/* Campo "Nome" */}
@@ -346,24 +446,26 @@ const DashboardView = ({
             variant="outlined"
             value={newCollectionName}
             onChange={(e) => setNewCollectionName(e.target.value)}
-            InputLabelProps={{ 
-              sx: { color: 'rgba(255,255,255,0.7)' } 
-            }}
-            InputProps={{ 
-              sx: { 
-                color: 'white',
-                '& .MuiOutlinedInput-notchedOutline': { 
-                  borderColor: 'rgba(255,255,255,0.3)' 
+            sx={{
+              '& .MuiOutlinedInput-root': {
+                bgcolor: '#ffffff',
+                '& fieldset': {
+                  borderColor: '#2F4F4F',
                 },
-                '&:hover .MuiOutlinedInput-notchedOutline': {
-                  borderColor: 'rgba(255,255,255,0.5)'
+                '&:hover fieldset': {
+                  borderColor: '#D4AF37',
                 },
-                '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-                  borderColor: 'white'
-                }
-              } 
+                '&.Mui-focused fieldset': {
+                  borderColor: '#D4AF37',
+                },
+              },
+              '& .MuiInputLabel-root': {
+                color: '#2F4F4F',
+              },
+              '& .MuiInputLabel-root.Mui-focused': {
+                color: '#D4AF37',
+              },
             }}
-            size={isSmallMobile ? "small" : "medium"}
           />
           
           {/* Botão "Inserir Foto" */}
@@ -371,23 +473,23 @@ const DashboardView = ({
             <IconButton 
               component="label"
               sx={{ 
-                border: '2px dashed rgba(255,255,255,0.5)', 
+                border: '2px dashed #D4AF37', 
                 borderRadius: '50%', 
-                width: { xs: 120, sm: 150 }, 
-                height: { xs: 120, sm: 150 },
+                width: 150, 
+                height: 150,
                 display: 'flex',
                 flexDirection: 'column',
-                color: 'rgba(255,255,255,0.8)',
+                color: '#2F4F4F',
                 transition: 'all 0.3s ease',
                 '&:hover': {
-                  borderColor: 'white',
-                  bgcolor: 'rgba(255,255,255,0.1)',
+                  borderColor: '#e5c55a',
+                  bgcolor: 'rgba(212, 175, 55, 0.1)',
                   transform: 'scale(1.05)'
                 }
               }}
             >
-              <PhotoCamera sx={{ fontSize: { xs: 32, sm: 40 }, mb: 1 }} />
-              <Typography variant="caption" sx={{ fontSize: { xs: '0.7rem', sm: '0.75rem' } }}>
+              <PhotoCamera sx={{ fontSize: 40, mb: 1, color: '#D4AF37' }} />
+              <Typography variant="caption" sx={{ fontSize: '0.75rem', color: '#2F4F4F' }}>
                 Inserir Foto
               </Typography>
               <input type="file" hidden accept="image/*" />
@@ -398,7 +500,7 @@ const DashboardView = ({
           <Box sx={{ display: 'flex', justifyContent: 'center' }}>
             <FormControlLabel
               label={
-                <Typography variant="body1" sx={{ fontWeight: 500 }}>
+                <Typography variant="body1" sx={{ fontWeight: 500, color: '#2F4F4F' }}>
                   Coleção Pública
                 </Typography>
               }
@@ -407,37 +509,34 @@ const DashboardView = ({
                   checked={isPublic} 
                   onChange={(e) => setIsPublic(e.target.checked)}
                   sx={{ 
-                    color: 'rgba(255,255,255,0.7)',
+                    color: '#2F4F4F',
                     '&.Mui-checked': {
-                      color: 'white'
+                      color: '#D4AF37'
                     },
                     '& .MuiSvgIcon-root': {
-                      fontSize: { xs: 24, sm: 28 }
+                      fontSize: 28
                     }
                   }}
                 />
               }
-              sx={{ color: 'white' }}
             />
           </Box>
         </DialogContent>
         <DialogActions sx={{ 
-          p: { xs: 2, sm: 3 },
-          gap: 1,
-          flexDirection: { xs: 'column', sm: 'row' }
+          p: 3,
+          gap: 2,
         }}>
           <Button 
-            onClick={handleCloseCreateModal} 
-            variant="outlined"
-            fullWidth={isSmallMobile}
+            onClick={handleCloseCreateModal}
             sx={{ 
-              color: 'white',
-              borderColor: 'rgba(255,255,255,0.5)',
+              color: '#2F4F4F',
+              borderColor: '#2F4F4F',
               '&:hover': {
-                borderColor: 'white',
-                bgcolor: 'rgba(255,255,255,0.1)'
+                borderColor: '#D4AF37',
+                bgcolor: 'rgba(212, 175, 55, 0.1)',
               }
             }}
+            variant="outlined"
           >
             Cancelar
           </Button>
@@ -445,19 +544,18 @@ const DashboardView = ({
             onClick={handleSubmitCollection} 
             variant="contained"
             disabled={!newCollectionName}
-            fullWidth={isSmallMobile}
             sx={{
-              bgcolor: 'white',
-              color: 'primary.main',
+              bgcolor: '#D4AF37',
+              color: '#2F4F4F',
               fontWeight: 'bold',
               '&:hover': {
-                bgcolor: 'rgba(255,255,255,0.9)',
+                bgcolor: '#e5c55a',
                 transform: 'translateY(-2px)',
                 boxShadow: 4
               },
               '&:disabled': {
-                bgcolor: 'rgba(255,255,255,0.3)',
-                color: 'rgba(255,255,255,0.5)'
+                bgcolor: 'rgba(212, 175, 55, 0.3)',
+                color: 'rgba(47, 79, 79, 0.5)'
               }
             }}
           >
