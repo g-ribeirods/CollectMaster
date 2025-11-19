@@ -10,18 +10,22 @@ import Dashboard from './pages/Dashboard/Dashboard';
 const theme = createTheme({
   palette: {
     primary: {
-      main: '#2563eb',
-      light: '#3b82f6',
-      dark: '#1d4ed8',
+      main: '#2F4F4F', // Verde Escuro Profundo
+      light: '#3d6b6b',
+      dark: '#1f3535',
     },
     secondary: {
-      main: '#7c3aed',
-      light: '#8b5cf6',
-      dark: '#6d28d9',
+      main: '#D4AF37', // Amarelo Ouro/Dourado
+      light: '#e5c55a',
+      dark: '#b8941f',
     },
     background: {
-      default: '#f8fafc',
-      paper: '#ffffff',
+      default: '#2F4F4F', // Verde Escuro Profundo
+      paper: '#F5F5DC', // Creme Suave para cards
+    },
+    text: {
+      primary: '#F5F5DC', // Creme Suave para texto principal
+      secondary: 'rgba(245, 245, 220, 0.7)', // Creme com opacidade
     },
   },
   typography: {
@@ -29,14 +33,17 @@ const theme = createTheme({
     h1: {
       fontWeight: 700,
       fontSize: '3.5rem',
+      color: '#F5F5DC',
     },
     h2: {
       fontWeight: 600,
       fontSize: '2.5rem',
+      color: '#F5F5DC',
     },
     h3: {
       fontWeight: 600,
       fontSize: '2rem',
+      color: '#F5F5DC',
     },
   },
   shape: {

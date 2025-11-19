@@ -30,40 +30,34 @@ const Home = () => {
 
   const features = [
     {
-      icon: <CollectionsIcon sx={{ fontSize: 40 }} />,
+      Icon: CollectionsIcon,
       title: 'Organize suas Coleções',
       description: 'Categorize e organize itens de forma intuitiva com metadados personalizáveis.',
-      color: '#3b82f6'
     },
     {
-      icon: <ChartIcon sx={{ fontSize: 40 }} />,
+      Icon: ChartIcon,
       title: 'Acompanhe Valores',
       description: 'Monitore o valor de mercado e histórico de preços dos seus itens.',
-      color: '#10b981'
     },
     {
-      icon: <SearchIcon sx={{ fontSize: 40 }} />,
+      Icon: SearchIcon,
       title: 'Busca Avançada',
       description: 'Encontre rapidamente qualquer item com nosso sistema de busca inteligente.',
-      color: '#f59e0b'
     },
     {
-      icon: <SecurityIcon sx={{ fontSize: 40 }} />,
+      Icon: SecurityIcon,
       title: 'Backup Seguro',
       description: 'Seus dados protegidos com criptografia e backup automático na nuvem.',
-      color: '#ef4444'
     },
     {
-      icon: <ShareIcon sx={{ fontSize: 40 }} />,
+      Icon: ShareIcon,
       title: 'Compartilhamento',
       description: 'Compartilhe suas coleções com outros entusiastas de forma controlada.',
-      color: '#8b5cf6'
     },
     {
-      icon: <GroupIcon sx={{ fontSize: 40 }} />,
+      Icon: GroupIcon,
       title: 'Comunidade',
       description: 'Conecte-se com outros colecionadores e troque experiências.',
-      color: '#ec4899'
     }
   ]
 
@@ -71,198 +65,255 @@ const Home = () => {
     {
       title: 'Action Figures',
       items: '1.2K coleções',
-      gradient: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'
     },
     {
       title: 'Moedas Raras',
       items: '856 coleções',
-      gradient: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)'
     },
     {
       title: 'Vinil e CDs',
       items: '2.3K coleções',
-      gradient: 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)'
+    },
+    {
+      title: 'Cartas Pokémon/Magic',
+      items: '3.5K coleções',
+    },
+    {
+      title: 'Camisas de Futebol',
+      items: '2.1K coleções',
+    },
+    {
+      title: 'Selos',
+      items: '1.8K coleções',
     }
   ]
 
   return (
-    <Box sx={{ minHeight: '100vh', bgcolor: 'background.default' }}>
+    <Box sx={{ minHeight: '100vh', bgcolor: '#2F4F4F' }}>
       {/* Header */}
       <AppBar 
         position="static" 
         elevation={0}
         sx={{ 
-          bgcolor: 'transparent',
-          background: 'linear-gradient(135deg, rgba(37, 99, 235, 0.95) 0%, rgba(124, 58, 237, 0.95) 100%)',
-          backdropFilter: 'blur(20px)',
+          bgcolor: '#2F4F4F', // Verde Escuro Profundo
         }}
       >
-        <Toolbar sx={{ py: 2 }}>
-          <Typography 
-            variant="h4" 
-            component="div" 
-            sx={{ 
-              flexGrow: 1, 
-              fontWeight: 'bold',
-              display: 'flex',
-              alignItems: 'center',
-              gap: 1
-            }}
-          >
-            🏆 CollectMaster
-          </Typography>
-          
-          <Box sx={{ display: { xs: 'none', md: 'flex' }, gap: 2 }}>
-            <Button color="inherit">Recursos</Button>
-            <Button color="inherit">Preços</Button>
-            <Button color="inherit">Sobre</Button>
-            <Button color="inherit">Contato</Button>
-          </Box>
+        <Container maxWidth="lg">
+          <Toolbar sx={{ py: 2, justifyContent: 'space-between' }}>
+            <Typography 
+              variant="h4" 
+              component="div" 
+              sx={{ 
+                fontWeight: 'bold',
+                display: 'flex',
+                alignItems: 'center',
+                gap: 1,
+                color: '#F5F5DC',
+                '&::before': {
+                  content: '"🏆"',
+                  fontSize: '2rem',
+                  filter: 'drop-shadow(0 0 8px #D4AF37)',
+                }
+              }}
+            >
+              CollectMaster
+            </Typography>
+            
+            <Box sx={{ display: { xs: 'none', md: 'flex' }, gap: 2 }}>
+              <Button 
+                sx={{ color: '#F5F5DC', '&:hover': { color: '#D4AF37' } }}
+              >
+                Recursos
+              </Button>
+              <Button 
+                sx={{ color: '#F5F5DC', '&:hover': { color: '#D4AF37' } }}
+              >
+                Preços
+              </Button>
+              <Button 
+                sx={{ color: '#F5F5DC', '&:hover': { color: '#D4AF37' } }}
+              >
+                Sobre
+              </Button>
+              <Button 
+                sx={{ color: '#F5F5DC', '&:hover': { color: '#D4AF37' } }}
+              >
+                Contato
+              </Button>
+            </Box>
 
-          <Box sx={{ display: 'flex', gap: 1, ml: 2 }}>
-            <Button 
-              variant="outlined" 
-              color="inherit"
-              // 2. Atualizar o botão Entrar (para uma futura rota /login)
-              component={RouterLink}
-              to="/login"
-              sx={{ 
-                // ... (estilos)
-              }}
-            >
-              Entrar
-            </Button>
-            <Button 
-              variant="contained" 
-              color="secondary"
-              // 3. Atualizar o botão Cadastrar
-              component={RouterLink}
-              to="/register"
-              sx={{ 
-                // ... (estilos)
-              }}
-            >
-              Cadastrar
-            </Button>
-          </Box>
-        </Toolbar>
+            <Box sx={{ display: 'flex', gap: 1, ml: 2 }}>
+              <Button 
+                variant="outlined" 
+                component={RouterLink}
+                to="/login"
+                sx={{ 
+                  color: '#F5F5DC',
+                  borderColor: '#D4AF37',
+                  '&:hover': {
+                    borderColor: '#D4AF37',
+                    bgcolor: 'rgba(212, 175, 55, 0.1)',
+                  }
+                }}
+              >
+                Entrar
+              </Button>
+              <Button 
+                variant="contained" 
+                component={RouterLink}
+                to="/register"
+                sx={{ 
+                  bgcolor: '#D4AF37',
+                  color: '#2F4F4F',
+                  fontWeight: 'bold',
+                  '&:hover': {
+                    bgcolor: '#e5c55a',
+                    transform: 'translateY(-2px)',
+                    boxShadow: 4,
+                  },
+                  transition: 'all 0.3s ease',
+                }}
+              >
+                Cadastrar
+              </Button>
+            </Box>
+          </Toolbar>
+        </Container>
       </AppBar>
 
       {/* Hero Section */}
       <Box
         sx={{
-          background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-          color: 'white',
+          bgcolor: '#2F4F4F',
+          color: '#F5F5DC',
           py: { xs: 8, md: 12 },
           position: 'relative',
           overflow: 'hidden',
         }}
       >
         <Container maxWidth="lg">
-          <Grid container spacing={6} alignItems="center">
+          <Grid container spacing={6} alignItems="center" justifyContent="center">
             <Grid item xs={12} md={6}>
-              <Typography
-                variant={isMobile ? "h2" : "h1"}
-                component="h1"
-                gutterBottom
-                sx={{
-                  fontWeight: 'bold',
-                  fontSize: { xs: '2.5rem', md: '3.5rem' },
-                  lineHeight: 1.1,
-                }}
-              >
-                Organize suas coleções como um{' '}
-                <Box
-                  component="span"
+              <Box sx={{ textAlign: { xs: 'center', md: 'left' } }}>
+                <Typography
+                  variant={isMobile ? "h2" : "h1"}
+                  component="h1"
+                  gutterBottom
                   sx={{
-                    background: 'linear-gradient(45deg, #fbbf24, #f59e0b)',
-                    backgroundClip: 'text',
-                    WebkitBackgroundClip: 'text',
-                    color: 'transparent',
+                    fontWeight: 'bold',
+                    fontSize: { xs: '2.5rem', md: '3.5rem' },
+                    lineHeight: 1.1,
+                    color: '#F5F5DC',
+                    mb: 2,
                   }}
                 >
-                  verdadeiro expert
-                </Box>
-              </Typography>
-              
-              <Typography
-                variant="h5"
-                component="p"
-                gutterBottom
-                sx={{
-                  opacity: 0.9,
+                  Organize suas coleções como um{' '}
+                  <Box
+                    component="span"
+                    sx={{
+                      color: '#D4AF37',
+                      textShadow: '0 0 20px rgba(212, 175, 55, 0.5)',
+                    }}
+                  >
+                    verdadeiro expert
+                  </Box>
+                </Typography>
+                
+                <Typography
+                  variant="h5"
+                  component="p"
+                  gutterBottom
+                  sx={{
+                    color: 'rgba(245, 245, 220, 0.9)',
+                    mb: 4,
+                    fontSize: { xs: '1.1rem', md: '1.25rem' },
+                  }}
+                >
+                  A plataforma definitiva para colecionadores organizarem, valorarem e compartilharem suas coleções mais preciosas.
+                </Typography>
+
+                <Box sx={{ 
+                  display: 'flex', 
+                  gap: 2, 
+                  flexWrap: 'wrap',
+                  justifyContent: { xs: 'center', md: 'flex-start' },
                   mb: 4,
-                  fontSize: { xs: '1.1rem', md: '1.25rem' },
-                }}
-              >
-                A plataforma definitiva para colecionadores organizarem, valorarem e compartilharem suas coleções mais preciosas.
-              </Typography>
-
-              <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap' }}>
-                <Button
-                  variant="contained"
-                  size="large"
-                  startIcon={<AddIcon />}
-                  sx={{
-                    bgcolor: 'white',
-                    color: 'primary.main',
-                    px: 4,
-                    py: 1.5,
-                    fontSize: '1.1rem',
-                    '&:hover': {
-                      bgcolor: 'grey.100',
-                      transform: 'translateY(-2px)',
-                    },
-                    transition: 'all 0.3s ease',
-                  }}
-                >
-                  Começar Agora
-                </Button>
-                <Button
-                  variant="outlined"
-                  size="large"
-                  color="inherit"
-                  sx={{
-                    borderColor: 'rgba(255,255,255,0.3)',
-                    px: 4,
-                    py: 1.5,
-                    fontSize: '1.1rem',
-                    '&:hover': {
-                      borderColor: 'white',
-                      bgcolor: 'rgba(255,255,255,0.1)',
-                      transform: 'translateY(-2px)',
-                    },
-                    transition: 'all 0.3s ease',
-                  }}
-                >
-                  Ver Demonstração
-                </Button>
-              </Box>
-
-              <Box sx={{ display: 'flex', gap: 4, mt: 4, flexWrap: 'wrap' }}>
-                <Box>
-                  <Typography variant="h4" fontWeight="bold">
-                    10K+
-                  </Typography>
-                  <Typography variant="body2" sx={{ opacity: 0.8 }}>
-                    Colecionadores
-                  </Typography>
+                }}>
+                  <Button
+                    variant="contained"
+                    size="large"
+                    startIcon={<AddIcon />}
+                    component={RouterLink}
+                    to="/register"
+                    sx={{
+                      bgcolor: '#D4AF37',
+                      color: '#2F4F4F',
+                      px: 4,
+                      py: 1.5,
+                      fontSize: '1.1rem',
+                      fontWeight: 'bold',
+                      '&:hover': {
+                        bgcolor: '#e5c55a',
+                        transform: 'translateY(-2px)',
+                        boxShadow: 6,
+                      },
+                      transition: 'all 0.3s ease',
+                    }}
+                  >
+                    Começar Agora
+                  </Button>
+                  <Button
+                    variant="outlined"
+                    size="large"
+                    sx={{
+                      borderColor: '#D4AF37',
+                      color: '#D4AF37',
+                      px: 4,
+                      py: 1.5,
+                      fontSize: '1.1rem',
+                      '&:hover': {
+                        borderColor: '#e5c55a',
+                        bgcolor: 'rgba(212, 175, 55, 0.1)',
+                        transform: 'translateY(-2px)',
+                      },
+                      transition: 'all 0.3s ease',
+                    }}
+                  >
+                    Ver Demonstração
+                  </Button>
                 </Box>
-                <Box>
-                  <Typography variant="h4" fontWeight="bold">
-                    50K+
-                  </Typography>
-                  <Typography variant="body2" sx={{ opacity: 0.8 }}>
-                    Coleções
-                  </Typography>
-                </Box>
-                <Box>
-                  <Typography variant="h4" fontWeight="bold">
-                    1M+
-                  </Typography>
-                  <Typography variant="body2" sx={{ opacity: 0.8 }}>
-                    Itens Catalogados
-                  </Typography>
+
+                <Box sx={{ 
+                  display: 'flex', 
+                  gap: 4, 
+                  mt: 4, 
+                  flexWrap: 'wrap',
+                  justifyContent: { xs: 'center', md: 'flex-start' },
+                }}>
+                  <Box sx={{ textAlign: 'center' }}>
+                    <Typography variant="h4" fontWeight="bold" sx={{ color: '#D4AF37' }}>
+                      10K+
+                    </Typography>
+                    <Typography variant="body2" sx={{ color: 'rgba(245, 245, 220, 0.8)' }}>
+                      Colecionadores
+                    </Typography>
+                  </Box>
+                  <Box sx={{ textAlign: 'center' }}>
+                    <Typography variant="h4" fontWeight="bold" sx={{ color: '#D4AF37' }}>
+                      50K+
+                    </Typography>
+                    <Typography variant="body2" sx={{ color: 'rgba(245, 245, 220, 0.8)' }}>
+                      Coleções
+                    </Typography>
+                  </Box>
+                  <Box sx={{ textAlign: 'center' }}>
+                    <Typography variant="h4" fontWeight="bold" sx={{ color: '#D4AF37' }}>
+                      1M+
+                    </Typography>
+                    <Typography variant="body2" sx={{ color: 'rgba(245, 245, 220, 0.8)' }}>
+                      Itens Catalogados
+                    </Typography>
+                  </Box>
                 </Box>
               </Box>
             </Grid>
@@ -270,56 +321,53 @@ const Home = () => {
             <Grid item xs={12} md={6}>
               <Box
                 sx={{
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
                   position: 'relative',
-                  '&::before': {
-                    content: '""',
-                    position: 'absolute',
-                    top: -20,
-                    left: -20,
-                    right: -20,
-                    bottom: -20,
-                    background: 'radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%)',
-                    borderRadius: 4,
-                  },
                 }}
               >
                 <Card
                   elevation={8}
                   sx={{
-                    background: 'rgba(255, 255, 255, 0.1)',
-                    backdropFilter: 'blur(20px)',
-                    border: '1px solid rgba(255, 255, 255, 0.2)',
+                    bgcolor: '#F5F5DC',
                     borderRadius: 4,
                     overflow: 'hidden',
+                    maxWidth: 500,
+                    width: '100%',
                   }}
                 >
-                  <CardContent sx={{ p: 0 }}>
+                  <CardContent sx={{ p: 4 }}>
                     <Box
                       sx={{
-                        height: 300,
-                        background: 'linear-gradient(135deg, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0.1) 100%)',
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
                         flexDirection: 'column',
                         gap: 2,
+                        py: 4,
                       }}
                     >
                       <Box
                         sx={{
                           width: 120,
                           height: 120,
-                          background: 'radial-gradient(circle, rgba(255,255,255,0.3) 0%, transparent 70%)',
                           borderRadius: '50%',
                           display: 'flex',
                           alignItems: 'center',
                           justifyContent: 'center',
-                          fontSize: 48,
+                          fontSize: 64,
+                          filter: 'drop-shadow(0 0 20px #D4AF37)',
                         }}
                       >
                         🏆
                       </Box>
-                      <Typography variant="h5" fontWeight="bold" textAlign="center">
+                      <Typography 
+                        variant="h5" 
+                        fontWeight="bold" 
+                        textAlign="center"
+                        sx={{ color: '#2F4F4F' }}
+                      >
                         Sua Coleção em um só lugar
                       </Typography>
                     </Box>
@@ -332,98 +380,205 @@ const Home = () => {
       </Box>
 
       {/* Features Section */}
-      <Container maxWidth="lg" sx={{ py: { xs: 8, md: 12 } }}>
-        <Box textAlign="center" mb={8}>
-          <Chip 
-            label="RECURSOS" 
-            color="primary" 
-            variant="outlined"
-            sx={{ mb: 2 }}
-          />
-          <Typography variant="h2" component="h2" gutterBottom>
-            Tudo que você precisa para sua coleção
-          </Typography>
-          <Typography variant="h6" color="text.secondary" sx={{ maxWidth: 600, mx: 'auto' }}>
-            Ferramentas poderosas desenvolvidas especificamente para colecionadores
-          </Typography>
-        </Box>
+      <Box sx={{ bgcolor: '#F5F5DC', py: { xs: 8, md: 12 } }}>
+        <Container maxWidth="lg">
+          <Box textAlign="center" mb={8}>
+            <Chip 
+              label="RECURSOS" 
+              variant="outlined"
+              sx={{ 
+                mb: 2,
+                borderColor: '#D4AF37',
+                color: '#2F4F4F',
+                fontWeight: 'bold',
+              }}
+            />
+            <Typography 
+              variant="h2" 
+              component="h2" 
+              gutterBottom
+              sx={{ color: '#2F4F4F' }}
+            >
+              Tudo que você precisa para sua coleção
+            </Typography>
+            <Typography 
+              variant="h6" 
+              sx={{ 
+                maxWidth: 600, 
+                mx: 'auto',
+                color: '#2F4F4F',
+                opacity: 0.8,
+              }}
+            >
+              Ferramentas poderosas desenvolvidas especificamente para colecionadores
+            </Typography>
+          </Box>
 
-        <Grid container spacing={4}>
-          {features.map((feature, index) => (
-            <Grid item xs={12} sm={6} md={4} key={index}>
-              <Card
-                elevation={2}
+          <Box
+            sx={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(3, 1fr)',
+              gap: 4,
+              maxWidth: '1200px',
+              mx: 'auto',
+              width: '100%',
+            }}
+          >
+            {features.map((feature, index) => (
+              <Box
+                key={index}
                 sx={{
-                  height: '100%',
-                  transition: 'all 0.3s ease',
-                  '&:hover': {
-                    transform: 'translateY(-8px)',
-                    boxShadow: 8,
-                  },
+                  display: 'flex',
+                  justifyContent: 'center',
                 }}
               >
-                <CardContent sx={{ p: 4, textAlign: 'center' }}>
-                  <Box
-                    sx={{
-                      width: 80,
-                      height: 80,
-                      background: `linear-gradient(135deg, ${feature.color}20 0%, ${feature.color}40 100%)`,
-                      borderRadius: '50%',
+                <Card
+                  elevation={2}
+                  sx={{
+                    width: '100%',
+                    height: '360px',
+                    bgcolor: '#2F4F4F',
+                    transition: 'all 0.3s ease',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    '&:hover': {
+                      transform: 'translateY(-8px)',
+                      boxShadow: 8,
+                      border: '1px solid rgba(212, 175, 55, 0.3)',
+                    },
+                  }}
+                >
+                  <CardContent 
+                    sx={{ 
+                      p: 4,
+                      textAlign: 'center',
                       display: 'flex',
+                      flexDirection: 'column',
                       alignItems: 'center',
                       justifyContent: 'center',
-                      mx: 'auto',
-                      mb: 3,
-                      color: feature.color,
+                      height: '100%',
+                      flexGrow: 1,
                     }}
                   >
-                    {feature.icon}
-                  </Box>
-                  <Typography variant="h5" component="h3" gutterBottom fontWeight="bold">
-                    {feature.title}
-                  </Typography>
-                  <Typography variant="body1" color="text.secondary">
-                    {feature.description}
-                  </Typography>
-                </CardContent>
-              </Card>
-            </Grid>
-          ))}
-        </Grid>
-      </Container>
+                    <Box
+                      sx={{
+                        width: 90,
+                        height: 90,
+                        background: 'rgba(212, 175, 55, 0.2)',
+                        borderRadius: '50%',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        mb: 3,
+                        color: '#D4AF37',
+                        flexShrink: 0,
+                      }}
+                    >
+                      <feature.Icon sx={{ fontSize: 45 }} />
+                    </Box>
+                    <Typography 
+                      variant="h5" 
+                      component="h3" 
+                      gutterBottom 
+                      fontWeight="bold"
+                      sx={{ 
+                        color: '#F5F5DC',
+                        fontSize: '1.5rem',
+                        mb: 2,
+                        lineHeight: 1.3,
+                      }}
+                    >
+                      {feature.title}
+                    </Typography>
+                    <Typography 
+                      variant="body1" 
+                      sx={{ 
+                        color: 'rgba(245, 245, 220, 0.8)',
+                        fontSize: '1rem',
+                        lineHeight: 1.6,
+                        flexGrow: 1,
+                        display: 'flex',
+                        alignItems: 'center',
+                      }}
+                    >
+                      {feature.description}
+                    </Typography>
+                  </CardContent>
+                </Card>
+              </Box>
+            ))}
+          </Box>
+        </Container>
+      </Box>
 
       {/* Collection Types Section */}
-      <Box sx={{ bgcolor: 'grey.50', py: { xs: 8, md: 12 } }}>
+      <Box sx={{ bgcolor: '#2F4F4F', py: 12 }}>
         <Container maxWidth="lg">
           <Box textAlign="center" mb={8}>
             <Chip 
               label="CATEGORIAS" 
-              color="primary" 
               variant="outlined"
-              sx={{ mb: 2 }}
+              sx={{ 
+                mb: 2,
+                borderColor: '#D4AF37',
+                color: '#D4AF37',
+                fontWeight: 'bold',
+              }}
             />
-            <Typography variant="h2" component="h2" gutterBottom>
+            <Typography 
+              variant="h2" 
+              component="h2" 
+              gutterBottom
+              sx={{ color: '#F5F5DC' }}
+            >
               Tipos de Coleção Populares
             </Typography>
-            <Typography variant="h6" color="text.secondary" sx={{ maxWidth: 600, mx: 'auto' }}>
+            <Typography 
+              variant="h6" 
+              sx={{ 
+                maxWidth: 600, 
+                mx: 'auto',
+                color: 'rgba(245, 245, 220, 0.8)',
+              }}
+            >
               Descubra como outros colecionadores estão usando o CollectMaster
             </Typography>
           </Box>
 
-          <Grid container spacing={3}>
+          <Box
+            sx={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(3, 1fr)',
+              gap: 4,
+              maxWidth: '1200px',
+              mx: 'auto',
+              width: '100%',
+            }}
+          >
             {collectionTypes.map((collection, index) => (
-              <Grid item xs={12} md={4} key={index}>
+              <Box
+                key={index}
+                sx={{
+                  display: 'flex',
+                  justifyContent: 'center',
+                }}
+              >
                 <Card
                   sx={{
-                    height: 280,
-                    background: collection.gradient,
-                    color: 'white',
+                    width: '100%',
+                    height: '320px',
+                    background: `linear-gradient(135deg, #2F4F4F 0%, #1f3535 100%)`,
+                    border: '2px solid #D4AF37',
+                    color: '#F5F5DC',
                     position: 'relative',
                     overflow: 'hidden',
                     transition: 'all 0.3s ease',
+                    display: 'flex',
+                    flexDirection: 'column',
                     '&:hover': {
                       transform: 'translateY(-8px)',
-                      boxShadow: 8,
+                      boxShadow: `0 8px 24px rgba(212, 175, 55, 0.4)`,
+                      borderColor: '#e5c55a',
                     },
                   }}
                 >
@@ -436,23 +591,44 @@ const Home = () => {
                       p: 4,
                       position: 'relative',
                       zIndex: 2,
+                      flexGrow: 1,
                     }}
                   >
-                    <Typography variant="h4" component="h3" gutterBottom fontWeight="bold">
+                    <Typography 
+                      variant="h4" 
+                      component="h3" 
+                      gutterBottom 
+                      fontWeight="bold" 
+                      sx={{ 
+                        color: '#D4AF37',
+                        fontSize: '1.75rem',
+                        mb: 1.5,
+                        lineHeight: 1.3,
+                        wordBreak: 'break-word',
+                      }}
+                    >
                       {collection.title}
                     </Typography>
-                    <Typography variant="body1" sx={{ opacity: 0.9, mb: 2 }}>
+                    <Typography 
+                      variant="body1" 
+                      sx={{ 
+                        color: 'rgba(245, 245, 220, 0.9)', 
+                        mb: 2,
+                        fontSize: '1rem',
+                      }}
+                    >
                       {collection.items}
                     </Typography>
                     <Button
                       variant="outlined"
-                      color="inherit"
                       sx={{
-                        borderColor: 'rgba(255,255,255,0.3)',
+                        borderColor: '#D4AF37',
+                        color: '#D4AF37',
                         alignSelf: 'flex-start',
+                        mt: 'auto',
                         '&:hover': {
-                          borderColor: 'white',
-                          bgcolor: 'rgba(255,255,255,0.1)',
+                          borderColor: '#e5c55a',
+                          bgcolor: 'rgba(212, 175, 55, 0.1)',
                         },
                       }}
                     >
@@ -460,73 +636,104 @@ const Home = () => {
                     </Button>
                   </CardContent>
                 </Card>
-              </Grid>
+              </Box>
             ))}
-          </Grid>
+          </Box>
         </Container>
       </Box>
 
       {/* CTA Section */}
-      <Container maxWidth="md" sx={{ py: { xs: 8, md: 12 }, textAlign: 'center' }}>
-        <Typography variant="h2" component="h2" gutterBottom>
-          Pronto para organizar sua coleção?
-        </Typography>
-        <Typography variant="h6" color="text.secondary" sx={{ mb: 4, maxWidth: 600, mx: 'auto' }}>
-          Junte-se a milhares de colecionadores que já transformaram sua paixão em organização
-        </Typography>
-        <Button
-          variant="contained"
-          size="large"
-          startIcon={<AddIcon />}
-          sx={{
-            px: 6,
-            py: 2,
-            fontSize: '1.1rem',
-            background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-            '&:hover': {
-              transform: 'translateY(-2px)',
-              boxShadow: 8,
-            },
-            transition: 'all 0.3s ease',
-          }}
-        >
-          Começar Gratuitamente
-        </Button>
-      </Container>
+      <Box sx={{ bgcolor: '#F5F5DC', py: { xs: 8, md: 12 } }}>
+        <Container maxWidth="md" sx={{ textAlign: 'center' }}>
+          <Typography 
+            variant="h2" 
+            component="h2" 
+            gutterBottom
+            sx={{ color: '#2F4F4F', mb: 2 }}
+          >
+            Pronto para organizar sua coleção?
+          </Typography>
+          <Typography 
+            variant="h6" 
+            sx={{ 
+              mb: 4, 
+              maxWidth: 600, 
+              mx: 'auto',
+              color: '#2F4F4F',
+              opacity: 0.8,
+            }}
+          >
+            Junte-se a milhares de colecionadores que já transformaram sua paixão em organização
+          </Typography>
+          <Button
+            variant="contained"
+            size="large"
+            startIcon={<AddIcon />}
+            component={RouterLink}
+            to="/register"
+            sx={{
+              px: 6,
+              py: 2,
+              fontSize: '1.1rem',
+              bgcolor: '#D4AF37',
+              color: '#2F4F4F',
+              fontWeight: 'bold',
+              '&:hover': {
+                bgcolor: '#e5c55a',
+                transform: 'translateY(-2px)',
+                boxShadow: 8,
+              },
+              transition: 'all 0.3s ease',
+            }}
+          >
+            Começar Gratuitamente
+          </Button>
+        </Container>
+      </Box>
 
       {/* Footer */}
-      <Box sx={{ bgcolor: 'grey.900', color: 'white', py: 6 }}>
+      <Box sx={{ bgcolor: '#1f3535', color: '#F5F5DC', py: 6 }}>
         <Container maxWidth="lg">
           <Grid container spacing={4}>
             <Grid item xs={12} md={6}>
-              <Typography variant="h4" component="div" gutterBottom sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+              <Typography 
+                variant="h4" 
+                component="div" 
+                gutterBottom 
+                sx={{ 
+                  display: 'flex', 
+                  alignItems: 'center', 
+                  gap: 1,
+                  color: '#D4AF37',
+                }}
+              >
                 🏆 CollectMaster
               </Typography>
-              <Typography variant="body1" color="grey.400" sx={{ mb: 2 }}>
+              <Typography variant="body1" sx={{ color: 'rgba(245, 245, 220, 0.8)', mb: 2 }}>
                 A plataforma definitiva para colecionadores organizarem e valorarem suas coleções.
               </Typography>
             </Grid>
             <Grid item xs={6} sm={3} md={2}>
-              <Typography variant="h6" gutterBottom>Produto</Typography>
-              <Typography variant="body2" color="grey.400" sx={{ display: 'block', mb: 1 }}>Recursos</Typography>
-              <Typography variant="body2" color="grey.400" sx={{ display: 'block', mb: 1 }}>Preços</Typography>
-              <Typography variant="body2" color="grey.400" sx={{ display: 'block', mb: 1 }}>Casos de Uso</Typography>
+              <Typography variant="h6" gutterBottom sx={{ color: '#D4AF37' }}>Produto</Typography>
+              <Typography variant="body2" sx={{ color: 'rgba(245, 245, 220, 0.7)', display: 'block', mb: 1 }}>Recursos</Typography>
+              <Typography variant="body2" sx={{ color: 'rgba(245, 245, 220, 0.7)', display: 'block', mb: 1 }}>Preços</Typography>
+              <Typography variant="body2" sx={{ color: 'rgba(245, 245, 220, 0.7)', display: 'block', mb: 1 }}>Casos de Uso</Typography>
             </Grid>
             <Grid item xs={6} sm={3} md={2}>
-              <Typography variant="h6" gutterBottom>Empresa</Typography>
-              <Typography variant="body2" color="grey.400" sx={{ display: 'block', mb: 1 }}>Sobre</Typography>
-              <Typography variant="body2" color="grey.400" sx={{ display: 'block', mb: 1 }}>Blog</Typography>
-              <Typography variant="body2" color="grey.400" sx={{ display: 'block', mb: 1 }}>Carreiras</Typography>
+              <Typography variant="h6" gutterBottom sx={{ color: '#D4AF37' }}>Empresa</Typography>
+              <Typography variant="body2" sx={{ color: 'rgba(245, 245, 220, 0.7)', display: 'block', mb: 1 }}>Sobre</Typography>
+              <Typography variant="body2" sx={{ color: 'rgba(245, 245, 220, 0.7)', display: 'block', mb: 1 }}>Blog</Typography>
+              <Typography variant="body2" sx={{ color: 'rgba(245, 245, 220, 0.7)', display: 'block', mb: 1 }}>Carreiras</Typography>
             </Grid>
             <Grid item xs={6} sm={3} md={2}>
-              <Typography variant="h6" gutterBottom>Suporte</Typography>
-              <Typography variant="body2" color="grey.400" sx={{ display: 'block', mb: 1 }}>Ajuda</Typography>
-              <Typography variant="body2" color="grey.400" sx={{ display: 'block', mb: 1 }}>Contato</Typography>
-              <Typography variant="body2" color="grey.400" sx={{ display: 'block', mb: 1 }}>FAQ</Typography>
+              <Typography variant="h6" gutterBottom sx={{ color: '#D4AF37' }}>Suporte</Typography>
+              <Typography variant="body2" sx={{ color: 'rgba(245, 245, 220, 0.7)', display: 'block', mb: 1 }}>Ajuda</Typography>
+              <Typography variant="body2" sx={{ color: 'rgba(245, 245, 220, 0.7)', display: 'block', mb: 1 }}>Contato</Typography>
+              <Typography variant="body2" sx={{ color: 'rgba(245, 245, 220, 0.7)', display: 'block', mb: 1 }}>FAQ</Typography>
             </Grid>
           </Grid>
-          <Box sx={{ borderTop: 1, borderColor: 'grey.800', mt: 4, pt: 4, textAlign: 'center' }}>
-            <Typography variant="body2" color="grey.400">
+          <Box sx={{ borderTop: 1, borderColor: 'rgba(212, 175, 55, 0.3)', mt: 4, pt: 4, textAlign: 'center' }}>
+            <Typography variant="body2" sx={{ color: 'rgba(245, 245, 220, 0.7)' }}>
               © 2024 CollectMaster. Todos os direitos reservados.
             </Typography>
           </Box>
