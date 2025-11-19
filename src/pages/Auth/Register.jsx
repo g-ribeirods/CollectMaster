@@ -22,8 +22,9 @@ import {
   Lock,
   Google,
   Facebook,
+  ArrowBack,
 } from '@mui/icons-material';
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink, useNavigate } from 'react-router-dom';
 
 import { useRegisterForm } from '../../hooks/useRegisterForm.js';
 
@@ -34,22 +35,49 @@ const RegisterView = ({
   handleChange,
   handleSubmit,
   setShowPassword,
-}) => (
-  <Box
-    sx={{
-      minHeight: '100vh',
-      background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      py: 4,
-    }}
-  >
-    <Container maxWidth="sm">
-      <Card elevation={8} sx={{ borderRadius: 3, overflow: 'hidden' }}>
-        <CardContent sx={{ p: 4 }}>
-          {/* Header */}
-          <Box textAlign="center" mb={4}>
+}) => {
+  const navigate = useNavigate();
+
+  return (
+    <Box
+      sx={{
+        minHeight: '100vh',
+        background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        py: 4,
+        position: 'relative',
+      }}
+    >
+      <Container maxWidth="sm">
+        {/* Botão Voltar */}
+        <Button
+          variant="outlined"
+          color="inherit"
+          startIcon={<ArrowBack />}
+          onClick={() => navigate('/')}
+          sx={{
+            position: 'absolute',
+            top: { xs: 16, sm: 24 },
+            left: { xs: 16, sm: 24 },
+            borderColor: 'rgba(255,255,255,0.3)',
+            color: 'white',
+            '&:hover': {
+              borderColor: 'white',
+              bgcolor: 'rgba(255,255,255,0.1)',
+              transform: 'translateY(-2px)',
+            },
+            transition: 'all 0.3s ease',
+          }}
+        >
+          Voltar
+        </Button>
+
+        <Card elevation={8} sx={{ borderRadius: 3, overflow: 'hidden' }}>
+          <CardContent sx={{ p: 4 }}>
+            {/* Header */}
+            <Box textAlign="center" mb={4}>
             <Typography
               variant="h3"
               component="h1"
@@ -207,7 +235,8 @@ const RegisterView = ({
       </Card>
     </Container>
   </Box>
-);
+  );
+};
 
 
 const Register = () => {
