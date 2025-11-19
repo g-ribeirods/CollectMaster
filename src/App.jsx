@@ -6,6 +6,8 @@ import Home from './pages/Home/Home'
 import Register from './pages/Auth/Register'
 import Login from './pages/Auth/Login'; 
 import Dashboard from './pages/Dashboard/Dashboard';
+import Social from './pages/Social/Social';
+import ProfilePage from './pages/Profile/ProfilePage';
 
 const theme = createTheme({
   palette: {
@@ -61,6 +63,8 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
         <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/social" element={<Social />} />
+        <Route path="/perfil" element={<ProfilePage />} />
       </Routes>
     </ThemeProvider>
   )

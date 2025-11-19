@@ -20,11 +20,16 @@ function CollectionCard({ collection }) {
     <Card sx={{ 
       width: '100%',
       height: '480px',
+      minHeight: '480px',
+      maxHeight: '480px',
       display: 'flex', 
       flexDirection: 'column',
       bgcolor: '#F5F5DC',
+      borderRadius: 2,
       transition: 'all 0.3s ease',
       border: '1px solid rgba(212, 175, 55, 0.3)',
+      boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
+      boxSizing: 'border-box',
       '&:hover': {
         transform: 'translateY(-4px)',
         boxShadow: '0 8px 24px rgba(212, 175, 55, 0.3)',

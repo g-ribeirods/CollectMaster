@@ -118,31 +118,8 @@ const Home = () => {
             >
               CollectMaster
             </Typography>
-            
-            <Box sx={{ display: { xs: 'none', md: 'flex' }, gap: 2 }}>
-              <Button 
-                sx={{ color: '#F5F5DC', '&:hover': { color: '#D4AF37' } }}
-              >
-                Recursos
-              </Button>
-              <Button 
-                sx={{ color: '#F5F5DC', '&:hover': { color: '#D4AF37' } }}
-              >
-                Preços
-              </Button>
-              <Button 
-                sx={{ color: '#F5F5DC', '&:hover': { color: '#D4AF37' } }}
-              >
-                Sobre
-              </Button>
-              <Button 
-                sx={{ color: '#F5F5DC', '&:hover': { color: '#D4AF37' } }}
-              >
-                Contato
-              </Button>
-            </Box>
 
-            <Box sx={{ display: 'flex', gap: 1, ml: 2 }}>
+            <Box sx={{ display: 'flex', gap: 1 }}>
               <Button 
                 variant="outlined" 
                 component={RouterLink}
@@ -261,25 +238,6 @@ const Home = () => {
                     }}
                   >
                     Começar Agora
-                  </Button>
-                  <Button
-                    variant="outlined"
-                    size="large"
-                    sx={{
-                      borderColor: '#D4AF37',
-                      color: '#D4AF37',
-                      px: 4,
-                      py: 1.5,
-                      fontSize: '1.1rem',
-                      '&:hover': {
-                        borderColor: '#e5c55a',
-                        bgcolor: 'rgba(212, 175, 55, 0.1)',
-                        transform: 'translateY(-2px)',
-                      },
-                      transition: 'all 0.3s ease',
-                    }}
-                  >
-                    Ver Demonstração
                   </Button>
                 </Box>
 
