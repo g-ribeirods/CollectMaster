@@ -13,8 +13,14 @@ import {
   Edit as EditIcon,
   Delete as DeleteIcon,
 } from '@mui/icons-material'
+import { useNavigate } from 'react-router-dom'
 
 function CollectionCard({ collection }) {
+  const navigate = useNavigate()
+
+  const handleViewDetails = () => {
+    navigate(`/collections/${collection.id}`)
+  }
 
   return (
     <Card sx={{ 
@@ -177,6 +183,7 @@ function CollectionCard({ collection }) {
           variant="contained" 
           size="small"
           fullWidth
+          onClick={handleViewDetails}
           sx={{ 
             bgcolor: '#D4AF37',
             color: '#2F4F4F',
