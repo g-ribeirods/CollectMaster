@@ -13,7 +13,7 @@ import {
   Logout as LogoutIcon,
   People as PeopleIcon
 } from '@mui/icons-material';
-import { useNavigate, Link as RouterLink } from 'react-router-dom';
+import { useNavigate, Link as RouterLink, useLocation } from 'react-router-dom';
 
 import { useDashboard } from '../../hooks/useDashboard';
 import CollectionCard from '../../components/CollectionCard/CollectionCard';
@@ -35,6 +35,8 @@ const DashboardView = ({
   handleSubmitCollection,
 }) => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const hideSearch = location.pathname === '/dashboard';
 
   const handleLogout = () => {
     localStorage.removeItem('user');
@@ -157,18 +159,20 @@ const DashboardView = ({
             </Box>
 
             {/* 6. Ícone de Busca */}
-            <IconButton 
-              sx={{ 
-                color: '#D4AF37',
-                display: { xs: 'none', sm: 'flex' },
-                ml: 1,
-                '&:hover': { 
-                  bgcolor: 'rgba(212, 175, 55, 0.1)',
-                }
-              }}
-            >
-              <SearchIcon />
-            </IconButton>
+            {!hideSearch && (
+              <IconButton 
+                sx={{ 
+                  color: '#D4AF37',
+                  display: { xs: 'none', sm: 'flex' },
+                  ml: 1,
+                  '&:hover': { 
+                    bgcolor: 'rgba(212, 175, 55, 0.1)',
+                  }
+                }}
+              >
+                <SearchIcon />
+              </IconButton>
+            )}
 
             {/* 7. Botão de Logout */}
             <IconButton 

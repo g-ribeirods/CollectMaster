@@ -577,21 +577,6 @@ const Home = () => {
                     >
                       {collection.items}
                     </Typography>
-                    <Button
-                      variant="outlined"
-                      sx={{
-                        borderColor: '#D4AF37',
-                        color: '#D4AF37',
-                        alignSelf: 'flex-start',
-                        mt: 'auto',
-                        '&:hover': {
-                          borderColor: '#e5c55a',
-                          bgcolor: 'rgba(212, 175, 55, 0.1)',
-                        },
-                      }}
-                    >
-                      Explorar
-                    </Button>
                   </CardContent>
                 </Card>
               </Box>
@@ -670,24 +655,6 @@ const Home = () => {
               <Typography variant="body1" sx={{ color: 'rgba(245, 245, 220, 0.8)', mb: 2 }}>
                 A plataforma definitiva para colecionadores organizarem e valorarem suas coleções.
               </Typography>
-            </Grid>
-            <Grid item xs={6} sm={3} md={2}>
-              <Typography variant="h6" gutterBottom sx={{ color: '#D4AF37' }}>Produto</Typography>
-              <Typography variant="body2" sx={{ color: 'rgba(245, 245, 220, 0.7)', display: 'block', mb: 1 }}>Recursos</Typography>
-              <Typography variant="body2" sx={{ color: 'rgba(245, 245, 220, 0.7)', display: 'block', mb: 1 }}>Preços</Typography>
-              <Typography variant="body2" sx={{ color: 'rgba(245, 245, 220, 0.7)', display: 'block', mb: 1 }}>Casos de Uso</Typography>
-            </Grid>
-            <Grid item xs={6} sm={3} md={2}>
-              <Typography variant="h6" gutterBottom sx={{ color: '#D4AF37' }}>Empresa</Typography>
-              <Typography variant="body2" sx={{ color: 'rgba(245, 245, 220, 0.7)', display: 'block', mb: 1 }}>Sobre</Typography>
-              <Typography variant="body2" sx={{ color: 'rgba(245, 245, 220, 0.7)', display: 'block', mb: 1 }}>Blog</Typography>
-              <Typography variant="body2" sx={{ color: 'rgba(245, 245, 220, 0.7)', display: 'block', mb: 1 }}>Carreiras</Typography>
-            </Grid>
-            <Grid item xs={6} sm={3} md={2}>
-              <Typography variant="h6" gutterBottom sx={{ color: '#D4AF37' }}>Suporte</Typography>
-              <Typography variant="body2" sx={{ color: 'rgba(245, 245, 220, 0.7)', display: 'block', mb: 1 }}>Ajuda</Typography>
-              <Typography variant="body2" sx={{ color: 'rgba(245, 245, 220, 0.7)', display: 'block', mb: 1 }}>Contato</Typography>
-              <Typography variant="body2" sx={{ color: 'rgba(245, 245, 220, 0.7)', display: 'block', mb: 1 }}>FAQ</Typography>
             </Grid>
           </Grid>
           <Box sx={{ borderTop: 1, borderColor: 'rgba(212, 175, 55, 0.3)', mt: 4, pt: 4, textAlign: 'center' }}>
