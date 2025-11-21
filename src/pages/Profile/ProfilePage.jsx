@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import {
   AppBar, Toolbar, Typography, IconButton, Avatar, Box, Container,
-  Card, CardContent, Button, Grid, TextField, Switch, FormControlLabel,
+  Card, Button, TextField,
   List, ListItem, ListItemText, Divider, Chip
 } from '@mui/material';
 import { 
@@ -10,11 +10,7 @@ import {
   Logout as LogoutIcon,
   People as PeopleIcon,
   Edit as EditIcon,
-  PhotoCamera as PhotoCameraIcon,
-  Lock as LockIcon,
-  Security as SecurityIcon,
-  Notifications as NotificationsIcon,
-  Brightness4 as Brightness4Icon
+  PhotoCamera as PhotoCameraIcon
 } from '@mui/icons-material';
 import { useNavigate, Link as RouterLink, useLocation } from 'react-router-dom';
 import { useDashboard } from '../../hooks/useDashboard';
@@ -201,10 +197,17 @@ const ProfilePage = () => {
         </Container>
       </AppBar>
 
-      {/* Conteúdo Principal */}
-      <Container maxWidth="lg" sx={{ py: 5 }}>
+      {/* Conteúdo Principal - Container centralizado para desktop */}
+      <Box
+        sx={{
+          maxWidth: '1200px',
+          margin: '0 auto',
+          px: 4,
+          py: 5,
+        }}
+      >
         {/* Título e Subtítulo */}
-        <Box sx={{ mb: 4, textAlign: 'center' }}>
+        <Box sx={{ mb: 5, textAlign: 'center' }}>
           <Typography 
             variant="h2" 
             component="h1" 
@@ -227,71 +230,89 @@ const ProfilePage = () => {
           </Typography>
         </Box>
 
-        {/* Row com 3 Cards */}
-        <Grid container spacing={3} sx={{ mb: 3 }}>
+        {/* Grid Principal: 3 colunas na mesma linha */}
+        <Box
+          sx={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(3, 1fr)',
+            gap: '24px',
+            width: '100%',
+          }}
+        >
           {/* Card 1: Informações Pessoais */}
-          <Grid item xs={12} md={4}>
-            <Card sx={{ 
-              bgcolor: '#2F4F4F',
-              border: '2px solid #D4AF37',
-              borderRadius: 2,
-              p: 3,
-              height: '100%'
-            }}>
-              <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', mb: 3 }}>
-                <Avatar sx={{ 
-                  width: 120, 
-                  height: 120,
+          <Card sx={{ 
+            bgcolor: '#2F4F4F',
+            border: '2px solid #D4AF37',
+            borderRadius: 2,
+            p: 3,
+            height: '100%',
+            minHeight: '600px',
+            display: 'flex',
+            flexDirection: 'column',
+          }}>
+            <Typography variant="h6" sx={{ color: '#F5F5DC', mb: 2, fontWeight: 'bold', textAlign: 'left' }}>
+              Informações Pessoais
+            </Typography>
+            <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', mb: 2 }}>
+              <Avatar sx={{ 
+                width: 80, 
+                height: 80,
+                bgcolor: '#D4AF37',
+                color: '#2F4F4F',
+                fontWeight: 'bold',
+                fontSize: '2rem',
+                mb: 1.5,
+                border: '2px solid #D4AF37',
+                boxShadow: '0 0 10px rgba(212, 175, 55, 0.3)'
+              }}>
+                {user?.name ? user.name[0].toUpperCase() : '?'}
+              </Avatar>
+              <Typography variant="h6" sx={{ color: '#F5F5DC', mb: 0.5, fontWeight: 'bold', textAlign: 'left' }}>
+                {formData.name || user?.name || 'Usuário'}
+              </Typography>
+              <Chip 
+                label="Colecionador" 
+                sx={{ 
                   bgcolor: '#D4AF37',
                   color: '#2F4F4F',
                   fontWeight: 'bold',
-                  fontSize: '3rem',
-                  mb: 2,
-                  border: '4px solid #D4AF37',
-                  boxShadow: '0 0 20px rgba(212, 175, 55, 0.5)'
-                }}>
-                  {user?.name ? user.name[0].toUpperCase() : '?'}
-                </Avatar>
-                <Typography variant="h5" sx={{ color: '#F5F5DC', mb: 0.5, fontWeight: 'bold' }}>
-                  {formData.name || user?.name || 'Usuário'}
-                </Typography>
-                <Chip 
-                  label="Colecionador" 
-                  sx={{ 
-                    bgcolor: '#D4AF37',
-                    color: '#2F4F4F',
-                    fontWeight: 'bold',
-                    fontSize: '0.75rem'
-                  }}
-                  size="small"
-                />
-                <Button
-                  variant="outlined"
-                  startIcon={<PhotoCameraIcon />}
-                  sx={{
-                    mt: 2,
-                    color: '#D4AF37',
-                    borderColor: '#D4AF37',
-                    '&:hover': {
-                      borderColor: '#e5c55a',
-                      bgcolor: 'rgba(212, 175, 55, 0.1)',
-                    }
-                  }}
-                  size="small"
-                >
-                  Alterar Foto
-                </Button>
-              </Box>
+                  fontSize: '0.7rem',
+                  mb: 1.5
+                }}
+                size="small"
+              />
+              <Button
+                variant="outlined"
+                startIcon={<PhotoCameraIcon />}
+                sx={{
+                  color: '#D4AF37',
+                  borderColor: '#D4AF37',
+                  fontSize: '0.75rem',
+                  py: 0.5,
+                  '&:hover': {
+                    borderColor: '#e5c55a',
+                    bgcolor: 'rgba(212, 175, 55, 0.1)',
+                  }
+                }}
+                size="small"
+              >
+                Alterar Foto
+              </Button>
+            </Box>
 
-              <Divider sx={{ borderColor: '#D4AF37', mb: 3 }} />
+            <Divider sx={{ borderColor: '#D4AF37', mb: 2 }} />
 
-              <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+            <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.5 }}>
                 <TextField
                   label="Nome completo"
                   value={formData.name}
                   onChange={handleInputChange('name')}
                   fullWidth
                   size="small"
+                  variant="outlined"
+                  InputLabelProps={{
+                    shrink: false,
+                  }}
                   sx={{
                     '& .MuiOutlinedInput-root': {
                       bgcolor: '#F5F5DC',
@@ -307,9 +328,24 @@ const ProfilePage = () => {
                     },
                     '& .MuiInputLabel-root': {
                       color: '#2F4F4F',
+                      position: 'absolute',
+                      left: '14px',
+                      top: '50%',
+                      transform: 'translateY(-50%)',
+                      pointerEvents: 'none',
+                      transition: 'all 0.2s',
                     },
                     '& .MuiInputLabel-root.Mui-focused': {
                       color: '#D4AF37',
+                      transform: 'translate(14px, -9px) scale(0.75)',
+                      top: '0',
+                    },
+                    '& .MuiInputLabel-root.MuiInputLabel-shrink': {
+                      transform: 'translate(14px, -9px) scale(0.75)',
+                      top: '0',
+                    },
+                    '& .MuiOutlinedInput-input': {
+                      padding: '8.5px 14px',
                     },
                   }}
                 />
@@ -320,6 +356,10 @@ const ProfilePage = () => {
                   onChange={handleInputChange('email')}
                   fullWidth
                   size="small"
+                  variant="outlined"
+                  InputLabelProps={{
+                    shrink: false,
+                  }}
                   sx={{
                     '& .MuiOutlinedInput-root': {
                       bgcolor: '#F5F5DC',
@@ -335,9 +375,24 @@ const ProfilePage = () => {
                     },
                     '& .MuiInputLabel-root': {
                       color: '#2F4F4F',
+                      position: 'absolute',
+                      left: '14px',
+                      top: '50%',
+                      transform: 'translateY(-50%)',
+                      pointerEvents: 'none',
+                      transition: 'all 0.2s',
                     },
                     '& .MuiInputLabel-root.Mui-focused': {
                       color: '#D4AF37',
+                      transform: 'translate(14px, -9px) scale(0.75)',
+                      top: '0',
+                    },
+                    '& .MuiInputLabel-root.MuiInputLabel-shrink': {
+                      transform: 'translate(14px, -9px) scale(0.75)',
+                      top: '0',
+                    },
+                    '& .MuiOutlinedInput-input': {
+                      padding: '8.5px 14px',
                     },
                   }}
                 />
@@ -347,6 +402,10 @@ const ProfilePage = () => {
                   onChange={handleInputChange('username')}
                   fullWidth
                   size="small"
+                  variant="outlined"
+                  InputLabelProps={{
+                    shrink: false,
+                  }}
                   sx={{
                     '& .MuiOutlinedInput-root': {
                       bgcolor: '#F5F5DC',
@@ -362,9 +421,24 @@ const ProfilePage = () => {
                     },
                     '& .MuiInputLabel-root': {
                       color: '#2F4F4F',
+                      position: 'absolute',
+                      left: '14px',
+                      top: '50%',
+                      transform: 'translateY(-50%)',
+                      pointerEvents: 'none',
+                      transition: 'all 0.2s',
                     },
                     '& .MuiInputLabel-root.Mui-focused': {
                       color: '#D4AF37',
+                      transform: 'translate(14px, -9px) scale(0.75)',
+                      top: '0',
+                    },
+                    '& .MuiInputLabel-root.MuiInputLabel-shrink': {
+                      transform: 'translate(14px, -9px) scale(0.75)',
+                      top: '0',
+                    },
+                    '& .MuiOutlinedInput-input': {
+                      padding: '8.5px 14px',
                     },
                   }}
                 />
@@ -373,11 +447,12 @@ const ProfilePage = () => {
                   value={formData.bio}
                   onChange={handleInputChange('bio')}
                   multiline
-                  rows={3}
+                  rows={2}
                   inputProps={{ maxLength: 120 }}
                   helperText={`${formData.bio.length}/120 caracteres`}
                   fullWidth
                   size="small"
+                  variant="outlined"
                   sx={{
                     '& .MuiOutlinedInput-root': {
                       bgcolor: '#F5F5DC',
@@ -397,8 +472,12 @@ const ProfilePage = () => {
                     '& .MuiInputLabel-root.Mui-focused': {
                       color: '#D4AF37',
                     },
+                    '& .MuiInputLabel-root.MuiInputLabel-shrink': {
+                      transform: 'translate(14px, -9px) scale(0.75)',
+                    },
                     '& .MuiFormHelperText-root': {
                       color: 'rgba(245, 245, 220, 0.6)',
+                      fontSize: '0.7rem',
                     },
                   }}
                 />
@@ -410,7 +489,8 @@ const ProfilePage = () => {
                     bgcolor: '#D4AF37',
                     color: '#2F4F4F',
                     fontWeight: 'bold',
-                    mt: 1,
+                    mt: 0.5,
+                    py: 1,
                     '&:hover': {
                       bgcolor: '#e5c55a',
                       transform: 'translateY(-2px)',
@@ -423,21 +503,22 @@ const ProfilePage = () => {
                 </Button>
               </Box>
             </Card>
-          </Grid>
 
           {/* Card 2: Estatísticas */}
-          <Grid item xs={12} md={4}>
-            <Card sx={{ 
-              bgcolor: '#2F4F4F',
-              border: '2px solid #D4AF37',
-              borderRadius: 2,
-              p: 3,
-              height: '100%'
-            }}>
-              <Typography variant="h6" sx={{ color: '#F5F5DC', mb: 3, fontWeight: 'bold' }}>
-                Estatísticas
-              </Typography>
-              <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
+          <Card sx={{ 
+            bgcolor: '#2F4F4F',
+            border: '2px solid #D4AF37',
+            borderRadius: 2,
+            p: 3,
+            height: '100%',
+            minHeight: '500px',
+            display: 'flex',
+            flexDirection: 'column',
+          }}>
+            <Typography variant="h6" sx={{ color: '#F5F5DC', mb: 2, fontWeight: 'bold', textAlign: 'left' }}>
+              Estatísticas
+            </Typography>
+            <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
                 <Box>
                   <Typography variant="h4" sx={{ color: '#D4AF37', fontWeight: 'bold', mb: 0.5 }}>
                     {collections.length}
@@ -484,141 +565,52 @@ const ProfilePage = () => {
                 </Box>
               </Box>
             </Card>
-          </Grid>
 
-          {/* Card 3: Configurações Básicas */}
-          <Grid item xs={12} md={4}>
-            <Card sx={{ 
-              bgcolor: '#2F4F4F',
-              border: '2px solid #D4AF37',
-              borderRadius: 2,
-              p: 3,
-              height: '100%'
-            }}>
-              <Typography variant="h6" sx={{ color: '#F5F5DC', mb: 3, fontWeight: 'bold' }}>
-                Configurações
-              </Typography>
-              <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-                <FormControlLabel
-                  control={
-                    <Switch
-                      checked={darkMode}
-                      onChange={(e) => setDarkMode(e.target.checked)}
-                      sx={{
-                        '& .MuiSwitch-switchBase.Mui-checked': {
-                          color: '#D4AF37',
-                        },
-                        '& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track': {
-                          backgroundColor: '#D4AF37',
-                        },
-                      }}
-                    />
-                  }
-                  label={
-                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                      <Brightness4Icon sx={{ color: '#D4AF37', fontSize: 20 }} />
-                      <Typography sx={{ color: '#F5F5DC' }}>Modo Escuro</Typography>
-                    </Box>
-                  }
+          {/* Card 3: Atividade Recente */}
+          <Card sx={{ 
+            bgcolor: '#2F4F4F',
+            border: '2px solid #D4AF37',
+            borderRadius: 2,
+            p: 3,
+            height: '100%',
+            minHeight: '500px',
+            display: 'flex',
+            flexDirection: 'column',
+          }}>
+            <Typography variant="h6" sx={{ color: '#F5F5DC', mb: 2, fontWeight: 'bold', textAlign: 'left' }}>
+              Atividade Recente
+            </Typography>
+            <List sx={{ p: 0, flexGrow: 1 }}>
+              <ListItem sx={{ px: 0, py: 1.5 }}>
+                <ListItemText
+                  primary="Você criou a coleção X"
+                  secondary="Há 2 dias"
+                  primaryTypographyProps={{ color: '#F5F5DC', fontSize: '0.95rem' }}
+                  secondaryTypographyProps={{ color: 'rgba(245, 245, 220, 0.6)', fontSize: '0.85rem' }}
                 />
-                <Divider sx={{ borderColor: '#D4AF37' }} />
-                <Button
-                  variant="outlined"
-                  startIcon={<LockIcon />}
-                  fullWidth
-                  sx={{
-                    color: '#D4AF37',
-                    borderColor: '#D4AF37',
-                    justifyContent: 'flex-start',
-                    '&:hover': {
-                      borderColor: '#e5c55a',
-                      bgcolor: 'rgba(212, 175, 55, 0.1)',
-                    }
-                  }}
-                >
-                  Alterar Senha
-                </Button>
-                <Button
-                  variant="outlined"
-                  startIcon={<SecurityIcon />}
-                  fullWidth
-                  sx={{
-                    color: '#D4AF37',
-                    borderColor: '#D4AF37',
-                    justifyContent: 'flex-start',
-                    '&:hover': {
-                      borderColor: '#e5c55a',
-                      bgcolor: 'rgba(212, 175, 55, 0.1)',
-                    }
-                  }}
-                >
-                  Preferências de Privacidade
-                </Button>
-                <Button
-                  variant="outlined"
-                  startIcon={<NotificationsIcon />}
-                  fullWidth
-                  sx={{
-                    color: '#D4AF37',
-                    borderColor: '#D4AF37',
-                    justifyContent: 'flex-start',
-                    '&:hover': {
-                      borderColor: '#e5c55a',
-                      bgcolor: 'rgba(212, 175, 55, 0.1)',
-                    }
-                  }}
-                >
-                  Notificações
-                </Button>
-              </Box>
+              </ListItem>
+              <Divider sx={{ borderColor: '#D4AF37' }} />
+              <ListItem sx={{ px: 0, py: 1.5 }}>
+                <ListItemText
+                  primary="Você adicionou um novo item"
+                  secondary="Há 5 dias"
+                  primaryTypographyProps={{ color: '#F5F5DC', fontSize: '0.95rem' }}
+                  secondaryTypographyProps={{ color: 'rgba(245, 245, 220, 0.6)', fontSize: '0.85rem' }}
+                />
+              </ListItem>
+              <Divider sx={{ borderColor: '#D4AF37' }} />
+              <ListItem sx={{ px: 0, py: 1.5 }}>
+                <ListItemText
+                  primary="Você atualizou seu perfil"
+                  secondary="Há 1 semana"
+                  primaryTypographyProps={{ color: '#F5F5DC', fontSize: '0.95rem' }}
+                  secondaryTypographyProps={{ color: 'rgba(245, 245, 220, 0.6)', fontSize: '0.85rem' }}
+                />
+              </ListItem>
+            </List>
             </Card>
-          </Grid>
-        </Grid>
-
-        {/* Card 4: Atividade Recente */}
-        <Grid container spacing={3}>
-          <Grid item xs={12}>
-            <Card sx={{ 
-              bgcolor: '#2F4F4F',
-              border: '2px solid #D4AF37',
-              borderRadius: 2,
-              p: 3
-            }}>
-              <Typography variant="h6" sx={{ color: '#F5F5DC', mb: 3, fontWeight: 'bold' }}>
-                Atividade Recente
-              </Typography>
-              <List sx={{ p: 0 }}>
-                <ListItem sx={{ px: 0, py: 2 }}>
-                  <ListItemText
-                    primary="Você criou a coleção X"
-                    secondary="Há 2 dias"
-                    primaryTypographyProps={{ color: '#F5F5DC' }}
-                    secondaryTypographyProps={{ color: 'rgba(245, 245, 220, 0.6)' }}
-                  />
-                </ListItem>
-                <Divider sx={{ borderColor: '#D4AF37' }} />
-                <ListItem sx={{ px: 0, py: 2 }}>
-                  <ListItemText
-                    primary="Você adicionou um novo item"
-                    secondary="Há 5 dias"
-                    primaryTypographyProps={{ color: '#F5F5DC' }}
-                    secondaryTypographyProps={{ color: 'rgba(245, 245, 220, 0.6)' }}
-                  />
-                </ListItem>
-                <Divider sx={{ borderColor: '#D4AF37' }} />
-                <ListItem sx={{ px: 0, py: 2 }}>
-                  <ListItemText
-                    primary="Você atualizou seu perfil"
-                    secondary="Há 1 semana"
-                    primaryTypographyProps={{ color: '#F5F5DC' }}
-                    secondaryTypographyProps={{ color: 'rgba(245, 245, 220, 0.6)' }}
-                  />
-                </ListItem>
-              </List>
-            </Card>
-          </Grid>
-        </Grid>
-      </Container>
+        </Box>
+      </Box>
     </Box>
   );
 };
