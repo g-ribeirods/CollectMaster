@@ -8,6 +8,7 @@ import Login from './pages/Auth/Login';
 import Dashboard from './pages/Dashboard/Dashboard';
 import Social from './pages/Social/Social';
 import ProfilePage from './pages/Profile/ProfilePage';
+import CollectionDetails from './pages/Collections/details/CollectionDetails';
 
 const theme = createTheme({
   palette: {
@@ -65,6 +66,7 @@ function App() {
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/social" element={<Social />} />
         <Route path="/perfil" element={<ProfilePage />} />
+        <Route path="/collections/:id" element={<CollectionDetails />} />
       </Routes>
     </ThemeProvider>
   )
