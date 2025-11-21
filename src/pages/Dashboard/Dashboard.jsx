@@ -9,9 +9,9 @@ import {
   Search as SearchIcon, Add as AddIcon, PhotoCamera,
   Collections as CollectionsIcon, Logout as LogoutIcon, People as PeopleIcon
 } from '@mui/icons-material';
+
 import { useNavigate, Link as RouterLink, useLocation } from 'react-router-dom';
 
-import { useNavigate, Link as RouterLink } from 'react-router-dom';
 import { useDashboard } from '../../hooks/useDashboard';
 import CollectionCard from '../../components/CollectionCard/CollectionCard';
 
@@ -35,7 +35,6 @@ const DashboardView = ({
   const location = useLocation();
   const hideSearch = location.pathname === '/dashboard';
 
-  const navigate = useNavigate();
   const handleLogout = () => {
     localStorage.removeItem('user');
     navigate('/login');
