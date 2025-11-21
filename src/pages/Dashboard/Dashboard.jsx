@@ -9,6 +9,8 @@ import {
   Search as SearchIcon, Add as AddIcon, PhotoCamera,
   Collections as CollectionsIcon, Logout as LogoutIcon, People as PeopleIcon
 } from '@mui/icons-material';
+import { useNavigate, Link as RouterLink, useLocation } from 'react-router-dom';
+
 import { useNavigate, Link as RouterLink } from 'react-router-dom';
 import { useDashboard } from '../../hooks/useDashboard';
 import CollectionCard from '../../components/CollectionCard/CollectionCard';
@@ -17,13 +19,21 @@ const ModalTransition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const DashboardView = (props) => {
-  const {
-    user, collections,
-    openCreateModal, newCollectionName, setNewCollectionName,
-    isPublic, setIsPublic,
-    handleOpenCreateModal, handleCloseCreateModal, handleSubmitCollection
-  } = props;
+const DashboardView = ({
+  user,
+  collections,
+  openCreateModal,
+  newCollectionName,
+  setNewCollectionName,
+  isPublic,
+  setIsPublic,
+  handleOpenCreateModal,
+  handleCloseCreateModal,
+  handleSubmitCollection,
+}) => {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const hideSearch = location.pathname === '/dashboard';
 
   const navigate = useNavigate();
   const handleLogout = () => {
@@ -48,6 +58,36 @@ const DashboardView = (props) => {
                   <LogoutIcon />
                 </IconButton>
             </Box>
+
+            {/* 6. Ícone de Busca */}
+            {!hideSearch && (
+              <IconButton 
+                sx={{ 
+                  color: '#D4AF37',
+                  display: { xs: 'none', sm: 'flex' },
+                  ml: 1,
+                  '&:hover': { 
+                    bgcolor: 'rgba(212, 175, 55, 0.1)',
+                  }
+                }}
+              >
+                <SearchIcon />
+              </IconButton>
+            )}
+
+            {/* 7. Botão de Logout */}
+            <IconButton 
+              onClick={handleLogout}
+              sx={{ 
+                color: '#D4AF37',
+                ml: 1,
+                '&:hover': { 
+                  bgcolor: 'rgba(212, 175, 55, 0.1)',
+                }
+              }}
+            >
+              <LogoutIcon />
+            </IconButton>
           </Toolbar>
         </Container>
       </AppBar>
