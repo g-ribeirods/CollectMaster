@@ -12,12 +12,15 @@ import {
   Edit as EditIcon,
   PhotoCamera as PhotoCameraIcon
 } from '@mui/icons-material';
-import { useNavigate, Link as RouterLink } from 'react-router-dom';
+import { useNavigate, Link as RouterLink, useLocation } from 'react-router-dom';
 import { useDashboard } from '../../hooks/useDashboard';
 
 const ProfilePage = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const { user, collections } = useDashboard();
+  const hideSearch = location.pathname !== '/social';
+  const [darkMode, setDarkMode] = useState(true);
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -162,18 +165,20 @@ const ProfilePage = () => {
             </Box>
 
             {/* Ícone de Busca */}
-            <IconButton 
-              sx={{ 
-                color: '#D4AF37',
-                display: { xs: 'none', sm: 'flex' },
-                ml: 1,
-                '&:hover': { 
-                  bgcolor: 'rgba(212, 175, 55, 0.1)',
-                }
-              }}
-            >
-              <SearchIcon />
-            </IconButton>
+            {!hideSearch && (
+              <IconButton 
+                sx={{ 
+                  color: '#D4AF37',
+                  display: { xs: 'none', sm: 'flex' },
+                  ml: 1,
+                  '&:hover': { 
+                    bgcolor: 'rgba(212, 175, 55, 0.1)',
+                  }
+                }}
+              >
+                <SearchIcon />
+              </IconButton>
+            )}
 
             {/* Botão de Logout */}
             <IconButton 

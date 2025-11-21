@@ -157,7 +157,6 @@ const RegisterView = ({
                     </InputAdornment>
                   ),
                 }}
-                placeholder="Digite seu nome completo"
                 sx={{
                   '& .MuiOutlinedInput-root': {
                     bgcolor: '#ffffff',
@@ -170,6 +169,9 @@ const RegisterView = ({
                     '&.Mui-focused fieldset': {
                       borderColor: '#D4AF37',
                     },
+                  },
+                  '& .MuiOutlinedInput-input': {
+                    color: '#000000',
                   },
                   '& .MuiInputLabel-root': {
                     color: '#2F4F4F',
@@ -196,7 +198,6 @@ const RegisterView = ({
                     </InputAdornment>
                   ),
                 }}
-                placeholder="seu@email.com"
                 sx={{
                   '& .MuiOutlinedInput-root': {
                     bgcolor: '#ffffff',
@@ -209,6 +210,9 @@ const RegisterView = ({
                     '&.Mui-focused fieldset': {
                       borderColor: '#D4AF37',
                     },
+                  },
+                  '& .MuiOutlinedInput-input': {
+                    color: '#000000',
                   },
                   '& .MuiInputLabel-root': {
                     color: '#2F4F4F',
@@ -246,9 +250,8 @@ const RegisterView = ({
                         </IconButton>
                       </InputAdornment>
                     ),
-                  }}
-                  placeholder="Mínimo 6 caracteres"
-                  sx={{
+                }}
+                sx={{
                     '& .MuiOutlinedInput-root': {
                       bgcolor: '#ffffff',
                       '& fieldset': {
@@ -260,6 +263,9 @@ const RegisterView = ({
                       '&.Mui-focused fieldset': {
                         borderColor: '#D4AF37',
                       },
+                    },
+                    '& .MuiOutlinedInput-input': {
+                      color: '#000000',
                     },
                     '& .MuiInputLabel-root': {
                       color: '#2F4F4F',
@@ -285,9 +291,8 @@ const RegisterView = ({
                         <Lock sx={{ color: '#2F4F4F' }} />
                       </InputAdornment>
                     ),
-                  }}
-                  placeholder="Digite novamente"
-                  sx={{
+                }}
+                sx={{
                     '& .MuiOutlinedInput-root': {
                       bgcolor: '#ffffff',
                       '& fieldset': {
@@ -299,6 +304,9 @@ const RegisterView = ({
                       '&.Mui-focused fieldset': {
                         borderColor: '#D4AF37',
                       },
+                    },
+                    '& .MuiOutlinedInput-input': {
+                      color: '#000000',
                     },
                     '& .MuiInputLabel-root': {
                       color: '#2F4F4F',

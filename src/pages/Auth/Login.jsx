@@ -12,14 +12,12 @@ import {
   Alert,
   InputAdornment,
   IconButton,
-  Divider,
 } from '@mui/material';
 import {
   Visibility,
   VisibilityOff,
   Email,
   Lock,
-  Google,
   ArrowBack,
 } from '@mui/icons-material';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
@@ -151,7 +149,6 @@ const LoginView = ({
                     </InputAdornment>
                   ),
                 }}
-                placeholder="seu@email.com"
                 sx={{
                   '& .MuiOutlinedInput-root': {
                     bgcolor: '#ffffff',
@@ -164,6 +161,9 @@ const LoginView = ({
                     '&.Mui-focused fieldset': {
                       borderColor: '#D4AF37',
                     },
+                  },
+                  '& .MuiOutlinedInput-input': {
+                    color: '#000000',
                   },
                   '& .MuiInputLabel-root': {
                     color: '#2F4F4F',
@@ -201,7 +201,6 @@ const LoginView = ({
                     </InputAdornment>
                   ),
                 }}
-                placeholder="Sua senha"
                 sx={{
                   '& .MuiOutlinedInput-root': {
                     bgcolor: '#ffffff',
@@ -214,6 +213,9 @@ const LoginView = ({
                     '&.Mui-focused fieldset': {
                       borderColor: '#D4AF37',
                     },
+                  },
+                  '& .MuiOutlinedInput-input': {
+                    color: '#000000',
                   },
                   '& .MuiInputLabel-root': {
                     color: '#2F4F4F',
@@ -266,32 +268,6 @@ const LoginView = ({
               Entrar
             </Button>
           </Box>
-
-          <Box sx={{ my: 3 }}>
-            <Divider>
-              <Typography variant="body2" sx={{ color: '#2F4F4F' }}>
-                ou
-              </Typography>
-            </Divider>
-          </Box>
-
-          {/* Botão Google (exemplo) */}
-          <Button
-            fullWidth
-            variant="outlined"
-            startIcon={<Google />}
-            sx={{ 
-              py: 1.5, 
-              borderColor: '#2F4F4F',
-              color: '#2F4F4F',
-              '&:hover': {
-                borderColor: '#D4AF37',
-                bgcolor: 'rgba(212, 175, 55, 0.1)',
-              }
-            }}
-          >
-            Continuar com Google
-          </Button>
 
           {/* Link para Cadastro */}
           <Box textAlign="center" mt={3}>
