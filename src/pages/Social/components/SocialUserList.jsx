@@ -1,22 +1,62 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { Box, Typography } from '@mui/material';
 import SocialUserCard from './SocialUserCard';
-import { getAllUsers } from '../../../services/userService';
+import { getAllUsers, searchUsers } from '../../../services/userService';
 
-const SocialUserList = () => {
+const SocialUserList = ({ searchQuery = '' }) => {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [debouncedSearchQuery, setDebouncedSearchQuery] = useState('');
 
+  // Debounce do searchQuery (300ms)
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDebouncedSearchQuery(searchQuery);
+    }, 300);
+
+    return () => clearTimeout(timer);
+  }, [searchQuery]);
+
+  // Buscar usuários
   useEffect(() => {
     const fetchUsers = async () => {
-      const allUsers = await getAllUsers();
-      // Filtrar o usuário atual (opcional, se necessário)
-      setUsers(allUsers);
-      setLoading(false);
+      setLoading(true);
+      try {
+        let allUsers;
+        
+        if (debouncedSearchQuery.trim()) {
+          // Buscar com filtro
+          allUsers = await searchUsers(debouncedSearchQuery);
+        } else {
+          // Buscar todos
+          allUsers = await getAllUsers();
+        }
+        
+        setUsers(allUsers || []);
+      } catch (error) {
+        console.error('Erro ao buscar usuários:', error);
+        setUsers([]);
+      } finally {
+        setLoading(false);
+      }
     };
 
     fetchUsers();
-  }, []);
+  }, [debouncedSearchQuery]);
+
+  // Filtrar usuários localmente (fallback caso a API não tenha busca)
+  const filteredUsers = useMemo(() => {
+    if (!debouncedSearchQuery.trim()) {
+      return users;
+    }
+
+    const query = debouncedSearchQuery.toLowerCase().trim();
+    return users.filter((user) => {
+      const name = (user.name || '').toLowerCase();
+      const username = (user.username || '').toLowerCase();
+      return name.includes(query) || username.includes(query);
+    });
+  }, [users, debouncedSearchQuery]);
 
   if (loading) {
     return (
@@ -28,7 +68,7 @@ const SocialUserList = () => {
     );
   }
 
-  if (users.length === 0) {
+  if (filteredUsers.length === 0) {
     return (
       <Box
         sx={{
@@ -49,7 +89,7 @@ const SocialUserList = () => {
           }}
           gutterBottom
         >
-          Nenhum usuário encontrado
+          {debouncedSearchQuery.trim() ? 'Nenhum usuário encontrado' : 'Nenhum usuário encontrado'}
         </Typography>
         <Typography
           variant="body1"
@@ -57,7 +97,9 @@ const SocialUserList = () => {
             color: 'rgba(245, 245, 220, 0.8)',
           }}
         >
-          Não há outros usuários na plataforma ainda.
+          {debouncedSearchQuery.trim()
+            ? `Não encontramos usuários com "${debouncedSearchQuery}".`
+            : 'Não há outros usuários na plataforma ainda.'}
         </Typography>
       </Box>
     );
@@ -77,7 +119,7 @@ const SocialUserList = () => {
         width: '100%',
       }}
     >
-      {users.map((user) => (
+      {filteredUsers.map((user) => (
         <SocialUserCard key={user.id} user={user} />
       ))}
     </Box>

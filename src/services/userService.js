@@ -53,3 +53,33 @@ export const getUserById = async (userId) => {
   }
 };
 
+export const searchUsers = async (searchQuery) => {
+  // ============================================
+  // MOCKS - REMOVER APÓS INTEGRAÇÃO
+  // ============================================
+  if (USE_MOCKS) {
+    console.log('📦 Buscando usuários mockados com query:', searchQuery);
+    // Filtrar usuários mockados localmente
+    const allUsers = getMockUsers();
+    const query = searchQuery.toLowerCase().trim();
+    return allUsers.filter((user) => {
+      const name = (user.name || '').toLowerCase();
+      const username = (user.username || user.email || '').toLowerCase();
+      return name.includes(query) || username.includes(query);
+    });
+  }
+  // ============================================
+
+  try {
+    const response = await fetch(`${API_URL}/users?search=${encodeURIComponent(searchQuery)}`);
+    if (response.ok) {
+      return await response.json();
+    }
+    console.error('Erro ao buscar usuários:', await response.json());
+    return [];
+  } catch (error) {
+    console.error('Erro de conexão ao buscar usuários:', error);
+    return [];
+  }
+};
+

@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   AppBar, Toolbar, Typography, IconButton, Avatar, Box, Container,
-  Button,
+  Button, TextField, InputAdornment,
 } from '@mui/material';
 import { 
   Search as SearchIcon, 
@@ -15,10 +15,15 @@ import SocialUserList from './components/SocialUserList';
 const Social = () => {
   const navigate = useNavigate();
   const user = JSON.parse(localStorage.getItem('user') || 'null');
+  const [searchQuery, setSearchQuery] = useState('');
 
   const handleLogout = () => {
     localStorage.removeItem('user');
     navigate('/login');
+  };
+
+  const handleSearchChange = (event) => {
+    setSearchQuery(event.target.value);
   };
 
   return (
@@ -134,19 +139,45 @@ const Social = () => {
               </Avatar>
             </Box>
 
-            {/* Ícone de Busca */}
-            <IconButton 
-              sx={{ 
-                color: '#D4AF37',
+            {/* Campo de Busca */}
+            <TextField
+              placeholder="Buscar usuários..."
+              variant="outlined"
+              size="small"
+              value={searchQuery}
+              onChange={handleSearchChange}
+              sx={{
                 display: { xs: 'none', sm: 'flex' },
                 ml: 1,
-                '&:hover': { 
-                  bgcolor: 'rgba(212, 175, 55, 0.1)',
-                }
+                minWidth: '250px',
+                '& .MuiOutlinedInput-root': {
+                  color: '#F5F5DC',
+                  '& fieldset': {
+                    borderColor: '#D4AF37',
+                  },
+                  '&:hover fieldset': {
+                    borderColor: '#e5c55a',
+                  },
+                  '&.Mui-focused fieldset': {
+                    borderColor: '#D4AF37',
+                  },
+                },
+                '& .MuiInputLabel-root': {
+                  color: 'rgba(245, 245, 220, 0.7)',
+                },
+                '& .MuiInputBase-input::placeholder': {
+                  color: 'rgba(245, 245, 220, 0.5)',
+                  opacity: 1,
+                },
               }}
-            >
-              <SearchIcon />
-            </IconButton>
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <SearchIcon sx={{ color: '#D4AF37' }} />
+                  </InputAdornment>
+                ),
+              }}
+            />
 
             {/* Botão de Logout */}
             <IconButton 
@@ -184,15 +215,55 @@ const Social = () => {
             variant="body1" 
             sx={{ 
               color: 'rgba(245, 245, 220, 0.8)',
-              mb: 4 
+              mb: 3 
             }}
           >
             Conecte-se com outros colecionadores e descubra novas coleções
           </Typography>
+
+          {/* Campo de Busca (Mobile e Desktop) */}
+          <TextField
+            fullWidth
+            placeholder="Buscar usuários por nome..."
+            variant="outlined"
+            size="medium"
+            value={searchQuery}
+            onChange={handleSearchChange}
+            sx={{
+              mb: 3,
+              '& .MuiOutlinedInput-root': {
+                color: '#F5F5DC',
+                bgcolor: 'rgba(245, 245, 220, 0.1)',
+                '& fieldset': {
+                  borderColor: '#D4AF37',
+                },
+                '&:hover fieldset': {
+                  borderColor: '#e5c55a',
+                },
+                '&.Mui-focused fieldset': {
+                  borderColor: '#D4AF37',
+                },
+              },
+              '& .MuiInputLabel-root': {
+                color: 'rgba(245, 245, 220, 0.7)',
+              },
+              '& .MuiInputBase-input::placeholder': {
+                color: 'rgba(245, 245, 220, 0.5)',
+                opacity: 1,
+              },
+            }}
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <SearchIcon sx={{ color: '#D4AF37' }} />
+                </InputAdornment>
+              ),
+            }}
+          />
         </Box>
 
         {/* Lista de Usuários */}
-        <SocialUserList />
+        <SocialUserList searchQuery={searchQuery} />
       </Container>
     </Box>
   );
