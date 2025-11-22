@@ -1,6 +1,23 @@
+// ============================================
+// MOCKS - REMOVER APÓS INTEGRAÇÃO
+// ============================================
+// Para remover os mocks: delete a linha de import abaixo
+import { getMockCollectionsByUserId } from '../mocks/users/collections';
+import { getMockItemsByCollectionId } from '../mocks/users/items';
+
 const API_URL = 'http://localhost:8000/api';
+const USE_MOCKS = true; // Mude para false quando integrar com backend real
 
 export const getCollections = async (userId) => {
+  // ============================================
+  // MOCKS - REMOVER APÓS INTEGRAÇÃO
+  // ============================================
+  if (USE_MOCKS) {
+    console.log('📦 Usando dados mockados de coleções para usuário:', userId);
+    return getMockCollectionsByUserId(userId);
+  }
+  // ============================================
+
   try {
     const response = await fetch(`${API_URL}/collections/${userId}`);
     if (response.ok) return await response.json();
@@ -35,6 +52,15 @@ export const createCollection = async (name, isPublic, userId) => {
 };
 
 export const getCollectionItems = async (collectionId) => {
+  // ============================================
+  // MOCKS - REMOVER APÓS INTEGRAÇÃO
+  // ============================================
+  if (USE_MOCKS) {
+    console.log('📦 Usando dados mockados de itens para coleção:', collectionId);
+    return getMockItemsByCollectionId(collectionId);
+  }
+  // ============================================
+
   try {
     const response = await fetch(`${API_URL}/items/collection/${collectionId}`);
     if (response.ok) return await response.json();
