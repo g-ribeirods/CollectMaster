@@ -1,16 +1,16 @@
 import React from 'react';
 import {
   AppBar, Toolbar, Typography, IconButton, Avatar, Box, Container,
-  Card, CardContent, Button, Grid
+  Button,
 } from '@mui/material';
 import { 
   Search as SearchIcon, 
   Collections as CollectionsIcon,
   Logout as LogoutIcon,
   People as PeopleIcon,
-  ArrowBack as ArrowBackIcon
 } from '@mui/icons-material';
 import { useNavigate, Link as RouterLink } from 'react-router-dom';
+import SocialUserList from './components/SocialUserList';
 
 const Social = () => {
   const navigate = useNavigate();
@@ -191,27 +191,8 @@ const Social = () => {
           </Typography>
         </Box>
 
-        {/* Placeholder Content */}
-        <Grid container spacing={3}>
-          <Grid item xs={12}>
-            <Card sx={{ 
-              bgcolor: '#2F4F4F',
-              border: '2px solid #D4AF37',
-              p: 4,
-              textAlign: 'center'
-            }}>
-              <CardContent>
-                <PeopleIcon sx={{ fontSize: 64, color: '#D4AF37', mb: 2 }} />
-                <Typography variant="h5" sx={{ color: '#F5F5DC', mb: 2 }}>
-                  Em breve
-                </Typography>
-                <Typography variant="body1" sx={{ color: 'rgba(245, 245, 220, 0.8)' }}>
-                  Esta página está em desenvolvimento. Em breve você poderá conectar-se com outros colecionadores!
-                </Typography>
-              </CardContent>
-            </Card>
-          </Grid>
-        </Grid>
+        {/* Lista de Usuários */}
+        <SocialUserList />
       </Container>
     </Box>
   );

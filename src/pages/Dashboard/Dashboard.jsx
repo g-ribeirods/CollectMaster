@@ -6,11 +6,11 @@ import {
   Button, FormControlLabel, Checkbox, Slide, Grid
 } from '@mui/material';
 import { 
-  Search as SearchIcon, Add as AddIcon, PhotoCamera,
+  Add as AddIcon, PhotoCamera,
   Collections as CollectionsIcon, Logout as LogoutIcon, People as PeopleIcon
 } from '@mui/icons-material';
 
-import { useNavigate, Link as RouterLink, useLocation } from 'react-router-dom';
+import { useNavigate, Link as RouterLink } from 'react-router-dom';
 
 import { useDashboard } from '../../hooks/useDashboard';
 import CollectionCard from '../../components/CollectionCard/CollectionCard';
@@ -32,8 +32,6 @@ const DashboardView = ({
   handleSubmitCollection,
 }) => {
   const navigate = useNavigate();
-  const location = useLocation();
-  const hideSearch = location.pathname === '/dashboard';
 
   const handleLogout = () => {
     localStorage.removeItem('user');
@@ -42,47 +40,121 @@ const DashboardView = ({
 
   return (
     <Box sx={{ flexGrow: 1, minHeight: '100vh', bgcolor: '#2F4F4F' }}>
-      {/* Header */}
+      {/* Header - Padronizado com CollectionDetails */}
       <AppBar position="static" elevation={0} sx={{ bgcolor: '#2F4F4F' }}>
         <Container maxWidth="lg">
-          <Toolbar sx={{ py: 2, justifyContent: 'space-between' }}>
-            <Typography variant="h4" sx={{ color: '#F5F5DC', fontWeight: 'bold' }}>
-              🏆 CollectMaster
+          <Toolbar sx={{ py: 2, justifyContent: 'space-between', alignItems: 'center' }}>
+            {/* Logo CollectMaster */}
+            <Typography
+              variant="h4"
+              component={RouterLink}
+              to="/dashboard"
+              sx={{
+                fontWeight: 'bold',
+                display: 'flex',
+                alignItems: 'center',
+                gap: 1,
+                color: '#F5F5DC',
+                textDecoration: 'none',
+                '&::before': {
+                  content: '"🏆"',
+                  fontSize: '2rem',
+                  filter: 'drop-shadow(0 0 8px #D4AF37)',
+                },
+                '&:hover': {
+                  opacity: 0.9,
+                },
+              }}
+            >
+              CollectMaster
             </Typography>
-            <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                <Avatar sx={{ bgcolor: '#D4AF37', color: '#2F4F4F' }}>
-                  {user?.name?.[0]?.toUpperCase()}
-                </Avatar>
-                <IconButton onClick={handleLogout} sx={{ color: '#D4AF37', ml: 1 }}>
-                  <LogoutIcon />
-                </IconButton>
-            </Box>
 
-            {/* 6. Ícone de Busca */}
-            {!hideSearch && (
-              <IconButton 
-                sx={{ 
-                  color: '#D4AF37',
-                  display: { xs: 'none', sm: 'flex' },
-                  ml: 1,
-                  '&:hover': { 
-                    bgcolor: 'rgba(212, 175, 55, 0.1)',
-                  }
+            {/* Espaço vazio */}
+            <Box sx={{ flex: 1 }} />
+
+            {/* Botão Suas Coleções */}
+            <Button
+              variant="outlined"
+              startIcon={<CollectionsIcon />}
+              component={RouterLink}
+              to="/dashboard"
+              sx={{
+                color: '#F5F5DC',
+                borderColor: '#D4AF37',
+                px: 2,
+                py: 1,
+                minWidth: 'auto',
+                '&:hover': {
+                  borderColor: '#D4AF37',
+                  bgcolor: 'rgba(212, 175, 55, 0.1)',
+                },
+                display: { xs: 'none', sm: 'flex' },
+              }}
+            >
+              Suas coleções
+            </Button>
+
+            {/* Botão Social */}
+            <Button
+              variant="outlined"
+              startIcon={<PeopleIcon />}
+              component={RouterLink}
+              to="/social"
+              sx={{
+                color: '#F5F5DC',
+                borderColor: '#D4AF37',
+                px: 2,
+                py: 1,
+                minWidth: 'auto',
+                ml: 1,
+                '&:hover': {
+                  borderColor: '#D4AF37',
+                  bgcolor: 'rgba(212, 175, 55, 0.1)',
+                },
+                display: { xs: 'none', sm: 'flex' },
+              }}
+            >
+              Social
+            </Button>
+
+            {/* Avatar do Usuário */}
+            <Box
+              component={RouterLink}
+              to="/perfil"
+              sx={{
+                display: 'flex',
+                alignItems: 'center',
+                textDecoration: 'none',
+                cursor: 'pointer',
+                ml: 1,
+                '&:hover': {
+                  opacity: 0.9,
+                },
+              }}
+            >
+              <Avatar
+                sx={{
+                  width: { xs: 36, sm: 40 },
+                  height: { xs: 36, sm: 40 },
+                  bgcolor: '#D4AF37',
+                  color: '#2F4F4F',
+                  fontWeight: 'bold',
+                  fontSize: { xs: '0.9rem', sm: '1rem' },
                 }}
               >
-                <SearchIcon />
-              </IconButton>
-            )}
+                {user?.name ? user.name[0].toUpperCase() : '?'}
+              </Avatar>
+            </Box>
 
-            {/* 7. Botão de Logout */}
-            <IconButton 
+            {/* Botão de Logout */}
+            <IconButton
               onClick={handleLogout}
-              sx={{ 
+              sx={{
                 color: '#D4AF37',
                 ml: 1,
-                '&:hover': { 
+                '&:hover': {
                   bgcolor: 'rgba(212, 175, 55, 0.1)',
-                }
+                },
               }}
             >
               <LogoutIcon />
