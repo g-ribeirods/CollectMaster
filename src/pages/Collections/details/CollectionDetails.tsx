@@ -1,20 +1,8 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
-  Box,
-  Container,
-  Typography,
-  AppBar,
-  Toolbar,
-  IconButton,
-  Button,
-  Avatar,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
-  TextField,
-  Grid
+  Box, Container, Typography, AppBar, Toolbar, IconButton, Button, Avatar,
+  Dialog, DialogTitle, DialogContent, DialogActions, TextField, Grid
 } from '@mui/material';
 import {
   ArrowBack as ArrowBackIcon,
@@ -27,26 +15,26 @@ import {
 import { Link as RouterLink } from 'react-router-dom';
 import CollectionDetailsHeader from './CollectionDetailsHeader';
 import CollectionItemsGrid from './CollectionItemsGrid';
-
-// 1. Importamos o Hook
 import { useCollectionDetails } from '../../../hooks/useCollectionDetails';
 
 const CollectionDetails: React.FC = () => {
   const navigate = useNavigate();
   
-  // 2. Usamos o Hook para pegar TUDO (incluindo o 'user' para o header)
   const {
     user,
     collection,
     items,
     loading,
-    // Props do Modal
     openItemModal,
     newItemData,
+    editingItem, // Pegamos o estado de edição
     handleOpenItemModal,
     handleCloseItemModal,
     handleInputChange,
-    handleSubmitItem
+    handleSubmitItem,
+    // Pegamos as novas funções de ação
+    handleEditItem,
+    handleDeleteItem
   } = useCollectionDetails();
 
   const handleLogout = () => {
@@ -54,10 +42,8 @@ const CollectionDetails: React.FC = () => {
     navigate('/login');
   };
 
-  // Handlers para ações nos cards (por enquanto apenas logs, para não quebrar)
+  // Função de visualização (pode ficar vazia por enquanto)
   const handleViewItemDetails = (item: any) => console.log('Ver:', item);
-  const handleEditItem = (item: any) => console.log('Editar:', item);
-  const handleDeleteItem = (item: any) => console.log('Deletar:', item);
 
   if (loading) {
     return (
@@ -77,127 +63,40 @@ const CollectionDetails: React.FC = () => {
 
   return (
     <Box sx={{ flexGrow: 1, minHeight: '100vh', bgcolor: '#2F4F4F' }}>
-      {/* --- SEU HEADER ORIGINAL (PRESERVADO) --- */}
+      {/* HEADER (IGUAL AO ANTERIOR) */}
       <AppBar position="static" elevation={0} sx={{ bgcolor: '#2F4F4F' }}>
         <Container maxWidth="lg">
           <Toolbar sx={{ py: 2, justifyContent: 'space-between', alignItems: 'center' }}>
-            <Typography
-              variant="h4"
-              component={RouterLink}
-              to="/dashboard"
-              sx={{
-                fontWeight: 'bold',
-                display: 'flex',
-                alignItems: 'center',
-                gap: 1,
-                color: '#F5F5DC',
-                textDecoration: 'none',
-                '&::before': {
-                  content: '"🏆"',
-                  fontSize: '2rem',
-                  filter: 'drop-shadow(0 0 8px #D4AF37)',
-                },
-                '&:hover': { opacity: 0.9 },
-              }}
-            >
+            <Typography variant="h4" component={RouterLink} to="/dashboard" sx={{ fontWeight: 'bold', display: 'flex', alignItems: 'center', gap: 1, color: '#F5F5DC', textDecoration: 'none', '&::before': { content: '"🏆"', fontSize: '2rem', filter: 'drop-shadow(0 0 8px #D4AF37)' }, '&:hover': { opacity: 0.9 } }}>
               CollectMaster
             </Typography>
-
             <Box sx={{ flex: 1 }} />
-
-            <Button
-              variant="outlined"
-              startIcon={<CollectionsIcon />}
-              component={RouterLink}
-              to="/dashboard"
-              sx={{
-                color: '#F5F5DC',
-                borderColor: '#D4AF37',
-                px: 2, py: 1,
-                minWidth: 'auto',
-                '&:hover': { borderColor: '#D4AF37', bgcolor: 'rgba(212, 175, 55, 0.1)' },
-                display: { xs: 'none', sm: 'flex' },
-              }}
-            >
+            <Button variant="outlined" startIcon={<CollectionsIcon />} component={RouterLink} to="/dashboard" sx={{ color: '#F5F5DC', borderColor: '#D4AF37', px: 2, py: 1, minWidth: 'auto', '&:hover': { borderColor: '#D4AF37', bgcolor: 'rgba(212, 175, 55, 0.1)' }, display: { xs: 'none', sm: 'flex' } }}>
               Suas coleções
             </Button>
-
-            <Button
-              variant="outlined"
-              startIcon={<PeopleIcon />}
-              component={RouterLink}
-              to="/social"
-              sx={{
-                color: '#F5F5DC',
-                borderColor: '#D4AF37',
-                px: 2, py: 1,
-                minWidth: 'auto', ml: 1,
-                '&:hover': { borderColor: '#D4AF37', bgcolor: 'rgba(212, 175, 55, 0.1)' },
-                display: { xs: 'none', sm: 'flex' },
-              }}
-            >
+            <Button variant="outlined" startIcon={<PeopleIcon />} component={RouterLink} to="/social" sx={{ color: '#F5F5DC', borderColor: '#D4AF37', px: 2, py: 1, minWidth: 'auto', ml: 1, '&:hover': { borderColor: '#D4AF37', bgcolor: 'rgba(212, 175, 55, 0.1)' }, display: { xs: 'none', sm: 'flex' } }}>
               Social
             </Button>
-
-            <Box
-              component={RouterLink}
-              to="/perfil"
-              sx={{
-                display: 'flex', alignItems: 'center', textDecoration: 'none',
-                cursor: 'pointer', ml: 1, '&:hover': { opacity: 0.9 },
-              }}
-            >
-              <Avatar
-                sx={{
-                  width: { xs: 36, sm: 40 },
-                  height: { xs: 36, sm: 40 },
-                  bgcolor: '#D4AF37', color: '#2F4F4F',
-                  fontWeight: 'bold', fontSize: { xs: '0.9rem', sm: '1rem' },
-                }}
-              >
+            <Box component={RouterLink} to="/perfil" sx={{ display: 'flex', alignItems: 'center', textDecoration: 'none', cursor: 'pointer', ml: 1, '&:hover': { opacity: 0.9 } }}>
+              <Avatar sx={{ width: { xs: 36, sm: 40 }, height: { xs: 36, sm: 40 }, bgcolor: '#D4AF37', color: '#2F4F4F', fontWeight: 'bold', fontSize: { xs: '0.9rem', sm: '1rem' } }}>
                 {user?.name ? user.name[0].toUpperCase() : '?'}
               </Avatar>
             </Box>
-
-            <IconButton
-              sx={{
-                color: '#D4AF37',
-                display: { xs: 'none', sm: 'flex' }, ml: 1,
-                '&:hover': { bgcolor: 'rgba(212, 175, 55, 0.1)' },
-              }}
-            >
-              <SearchIcon />
-            </IconButton>
-
-            <IconButton
-              onClick={handleLogout}
-              sx={{
-                color: '#D4AF37', ml: 1,
-                '&:hover': { bgcolor: 'rgba(212, 175, 55, 0.1)' },
-              }}
-            >
+            <IconButton onClick={handleLogout} sx={{ color: '#D4AF37', ml: 1, '&:hover': { bgcolor: 'rgba(212, 175, 55, 0.1)' } }}>
               <LogoutIcon />
             </IconButton>
           </Toolbar>
         </Container>
       </AppBar>
 
-      {/* --- CONTEÚDO PRINCIPAL --- */}
+      {/* CONTEÚDO */}
       <Container maxWidth="lg" sx={{ py: 5 }}>
-        <Button
-          startIcon={<ArrowBackIcon />}
-          onClick={() => navigate('/dashboard')}
-          sx={{
-            color: '#F5F5DC', mb: 3,
-            '&:hover': { bgcolor: 'rgba(212, 175, 55, 0.1)' },
-          }}
-        >
+        <Button startIcon={<ArrowBackIcon />} onClick={() => navigate('/dashboard')} sx={{ color: '#F5F5DC', mb: 3, '&:hover': { bgcolor: 'rgba(212, 175, 55, 0.1)' } }}>
           Voltar
         </Button>
 
         <CollectionDetailsHeader collection={collection} />
 
-        {/* Barra de Título e Botão NOVO ITEM */}
         <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
           <Box>
             <Typography variant="h4" component="h2" gutterBottom sx={{ fontWeight: 'bold', color: '#F5F5DC', mb: 1 }}>
@@ -208,33 +107,26 @@ const CollectionDetails: React.FC = () => {
             </Typography>
           </Box>
           
-          {/* Botão Adicionar Item */}
           <Button
             variant="contained"
             startIcon={<AddIcon />}
             onClick={handleOpenItemModal}
-            sx={{
-              bgcolor: '#D4AF37',
-              color: '#2F4F4F',
-              fontWeight: 'bold',
-              px: 3,
-              '&:hover': { bgcolor: '#e5c55a', transform: 'translateY(-2px)' },
-              transition: 'all 0.3s ease'
-            }}
+            sx={{ bgcolor: '#D4AF37', color: '#2F4F4F', fontWeight: 'bold', px: 3, '&:hover': { bgcolor: '#e5c55a', transform: 'translateY(-2px)' }, transition: 'all 0.3s ease' }}
           >
             Adicionar Item
           </Button>
         </Box>
 
+        {/* AQUI ESTÁ A MÁGICA: Passamos as funções reais para o Grid */}
         <CollectionItemsGrid
           items={items}
           onViewDetails={handleViewItemDetails}
-          onEdit={handleEditItem}
-          onDelete={handleDeleteItem}
+          onEdit={handleEditItem}     // <--- Conectado!
+          onDelete={handleDeleteItem} // <--- Conectado!
         />
       </Container>
 
-      {/* --- MODAL DE NOVO ITEM --- */}
+      {/* MODAL */}
       <Dialog 
         open={openItemModal} 
         onClose={handleCloseItemModal}
@@ -242,9 +134,11 @@ const CollectionDetails: React.FC = () => {
         maxWidth="sm"
         fullWidth
       >
+        {/* Título Dinâmico: "Novo Item" ou "Editar Item" */}
         <DialogTitle sx={{ color: '#2F4F4F', fontWeight: 'bold', textAlign: 'center', pt: 3, fontSize: '1.5rem' }}>
-          Novo Item
+          {editingItem ? 'Editar Item' : 'Novo Item'}
         </DialogTitle>
+        
         <DialogContent>
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2.5, mt: 1 }}>
             <TextField
@@ -313,7 +207,7 @@ const CollectionDetails: React.FC = () => {
               '&.Mui-disabled': { bgcolor: 'rgba(212, 175, 55, 0.3)' }
             }}
           >
-            Salvar
+            {editingItem ? 'Atualizar' : 'Salvar'}
           </Button>
         </DialogActions>
       </Dialog>
@@ -321,7 +215,6 @@ const CollectionDetails: React.FC = () => {
   );
 };
 
-// Estilos consistentes com seu tema
 const inputStyles = {
   '& .MuiOutlinedInput-root': {
     bgcolor: '#ffffff',

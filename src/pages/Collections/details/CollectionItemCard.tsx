@@ -15,13 +15,19 @@ import {
   Image as ImageIcon,
 } from '@mui/icons-material';
 
+// Atualizamos a interface para aceitar os formatos do Backend
 interface CollectionItem {
   id: number | string;
   name: string;
   description?: string;
   quantity?: number;
+  
+  // Aceita tanto o formato do Frontend quanto do Backend
   estimatedValue?: number;
+  estimated_value?: number; 
+  
   image?: string;
+  image_url?: string;
 }
 
 interface CollectionItemCardProps {
@@ -37,6 +43,15 @@ const CollectionItemCard: React.FC<CollectionItemCardProps> = ({
   onEdit,
   onDelete,
 }) => {
+  
+  // --- CORREÇÃO DE DADOS ---
+  // O Backend manda 'estimated_value' e 'image_url'
+  // O Frontend antigo usava 'estimatedValue' e 'image'
+  // Aqui normalizamos para usar o que estiver disponível
+  const displayValue = item.estimated_value ?? item.estimatedValue ?? 0;
+  const displayImage = item.image_url ?? item.image;
+  // -------------------------
+
   return (
     <Card
       sx={{
@@ -69,10 +84,10 @@ const CollectionItemCard: React.FC<CollectionItemCardProps> = ({
           overflow: 'hidden',
         }}
       >
-        {item.image ? (
+        {displayImage ? (
           <CardMedia
             component="img"
-            image={item.image}
+            image={displayImage} // Usando a variável normalizada
             alt={item.name}
             sx={{
               width: '100%',
@@ -201,12 +216,11 @@ const CollectionItemCard: React.FC<CollectionItemCardProps> = ({
               }}
             >
               R${' '}
-              {item.estimatedValue && item.estimatedValue > 0
-                ? item.estimatedValue.toLocaleString('pt-BR', {
-                    minimumFractionDigits: 2,
-                    maximumFractionDigits: 2,
-                  })
-                : '0,00'}
+              {/* Usando a variável normalizada displayValue */}
+              {displayValue.toLocaleString('pt-BR', {
+                  minimumFractionDigits: 2,
+                  maximumFractionDigits: 2,
+                })}
             </Typography>
           </Box>
         </Box>
@@ -282,4 +296,3 @@ const CollectionItemCard: React.FC<CollectionItemCardProps> = ({
 };
 
 export default CollectionItemCard;
-
