@@ -7,6 +7,8 @@ import {
   Button,
   Chip,
   CardActions,
+  useTheme,
+  useMediaQuery,
 } from '@mui/material'
 import {
   Visibility as ViewIcon,
@@ -15,12 +17,20 @@ import {
 } from '@mui/icons-material'
 import { useNavigate } from 'react-router-dom'
 
-function CollectionCard({ collection }) {
+function CollectionCard({ collection, onEdit }) { // Recebe onEdit
+  const theme = useTheme()
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
   const navigate = useNavigate()
 
   const handleViewDetails = () => {
     navigate(`/collections/${collection.id}`)
   }
+
+  // --- CORREÇÃO AQUI ---
+  // O backend manda 'image_url', mas o frontend antigo pode ter 'image'.
+  // Usamos o que estiver disponível.
+  const displayImage = collection.image_url || collection.image || `https://via.placeholder.com/300x200/2F4F4F/F5F5DC?text=${encodeURIComponent(collection.name)}`;
+  // ---------------------
 
   return (
     <Card sx={{ 
@@ -44,7 +54,7 @@ function CollectionCard({ collection }) {
     }}>
       <CardMedia
         component="img"
-        image={collection.image || `https://via.placeholder.com/300x200/2F4F4F/F5F5DC?text=Sem+Foto`}
+        image={displayImage} // Usamos a variável corrigida
         alt={collection.name}
         sx={{ 
           height: 200,
@@ -80,15 +90,15 @@ function CollectionCard({ collection }) {
         
         <Box sx={{ display: 'flex', justifyContent: 'center' }}>
           <Chip 
-            label={collection.category || 'Sem Categoria'} 
+            label={collection.category || (collection.is_public ? 'Pública' : 'Privada')} 
             variant="outlined"
             size="medium"
             sx={{ 
               fontSize: '0.85rem',
               height: 32,
               borderColor: '#D4AF37',
-              color: collection.category ? '#2F4F4F' : 'rgba(47, 79, 79, 0.6)',
-              bgcolor: collection.category ? 'rgba(212, 175, 55, 0.1)' : 'transparent',
+              color: '#2F4F4F',
+              bgcolor: 'rgba(212, 175, 55, 0.1)',
             }}
           />
         </Box>
@@ -206,6 +216,7 @@ function CollectionCard({ collection }) {
             variant="outlined" 
             size="small"
             fullWidth
+            onClick={() => onEdit && onEdit(collection)}
             sx={{ 
               fontSize: '0.85rem',
               borderColor: '#2F4F4F',

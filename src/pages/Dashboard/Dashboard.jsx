@@ -11,6 +11,7 @@ import {
 } from '@mui/icons-material';
 
 import { useNavigate, Link as RouterLink } from 'react-router-dom';
+import { Link as LinkIcon } from '@mui/icons-material';
 
 import { useDashboard } from '../../hooks/useDashboard';
 import CollectionCard from '../../components/CollectionCard/CollectionCard';
@@ -20,22 +21,27 @@ const ModalTransition = React.forwardRef(function Transition(props, ref) {
 });
 
 const DashboardView = ({
-  user,
-  collections,
-  openCreateModal,
-  newCollectionName,
-  setNewCollectionName,
-  isPublic,
-  setIsPublic,
-  handleOpenCreateModal,
-  handleCloseCreateModal,
-  handleSubmitCollection,
+  user, collections,
+  openCreateModal, formData, editingCollection, 
+  handleOpenCreateModal, handleCloseCreateModal, handleSubmitCollection, 
+  handleInputChange, handleEditCollection 
 }) => {
   const navigate = useNavigate();
 
   const handleLogout = () => {
     localStorage.removeItem('user');
     navigate('/login');
+  };
+
+  const inputStyles = {
+    '& .MuiOutlinedInput-root': {
+      bgcolor: '#ffffff',
+      '& fieldset': { borderColor: '#2F4F4F' },
+      '&:hover fieldset': { borderColor: '#D4AF37' },
+      '&.Mui-focused fieldset': { borderColor: '#D4AF37' },
+    },
+    '& .MuiInputLabel-root': { color: '#2F4F4F' },
+    '& .MuiInputLabel-root.Mui-focused': { color: '#D4AF37' },
   };
 
   return (
@@ -185,61 +191,95 @@ const DashboardView = ({
           </Card>
 
           {/* Lista de Coleções Existentes */}
-          {collections.map((col) => (
-            <CollectionCard key={col.id} collection={col} />
-          ))}
+          {collections.map((collection) => (
+              <CollectionCard 
+                key={collection.id} 
+                collection={collection}
+                onEdit={handleEditCollection} // <--- CONECTADO!
+              />
+            ))}
         </Box>
       </Container>
 
       {/* --- O MODAL --- */}
-      <Dialog
+<Dialog
         open={openCreateModal}
         onClose={handleCloseCreateModal}
         TransitionComponent={ModalTransition}
         maxWidth="sm"
         fullWidth
-        PaperProps={{ sx: { bgcolor: '#F5F5DC', borderRadius: 3 } }}
+        PaperProps={{ sx: { borderRadius: 3, bgcolor: '#F5F5DC' } }}
       >
-        <DialogTitle sx={{ textAlign: 'center', fontWeight: 'bold', color: '#2F4F4F' }}>
-          Nova Coleção
+        <DialogTitle sx={{ textAlign: 'center', fontWeight: 'bold', color: '#2F4F4F', pt: 3 }}>
+          {editingCollection ? 'Editar Coleção' : 'Nova Coleção'}
         </DialogTitle>
+        
         <DialogContent>
-          <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3, mt: 1 }}>
+          <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2.5, mt: 1, px: 1 }}>
+            {/* Nome */}
             <TextField
-              autoFocus
               label="Nome da Coleção"
+              name="name"
               fullWidth
-              value={newCollectionName}
-              onChange={(e) => setNewCollectionName(e.target.value)}
+              value={formData.name}
+              onChange={handleInputChange}
+              variant="outlined"
+              sx={inputStyles}
+            />
+
+            {/* Descrição */}
+            <TextField
+              label="Descrição"
+              name="description"
+              fullWidth
+              multiline
+              rows={3}
+              value={formData.description}
+              onChange={handleInputChange}
+              variant="outlined"
+              sx={inputStyles}
             />
             
-            <Box textAlign="center">
-              <IconButton sx={{ border: '2px dashed #D4AF37', p: 4 }}>
-                <PhotoCamera sx={{ fontSize: 40, color: '#D4AF37' }} />
-              </IconButton>
-              <Typography variant="caption" display="block">Inserir Foto</Typography>
-            </Box>
+            {/* URL da Imagem (Substituindo o botão de arquivo antigo) */}
+            <TextField
+              label="URL da Imagem (opcional)"
+              name="imageUrl"
+              fullWidth
+              value={formData.imageUrl}
+              onChange={handleInputChange}
+              variant="outlined"
+              placeholder="https://exemplo.com/minha-foto.jpg"
+              InputProps={{
+                startAdornment: <LinkIcon sx={{ color: '#2F4F4F', mr: 1, opacity: 0.7 }} />,
+              }}
+              sx={inputStyles}
+            />
 
+            {/* Checkbox Pública */}
             <FormControlLabel
               control={
                 <Checkbox 
-                  checked={isPublic} 
-                  onChange={(e) => setIsPublic(e.target.checked)} 
+                  checked={formData.isPublic}
+                  onChange={handleInputChange}
+                  name="isPublic"
                   sx={{ color: '#2F4F4F', '&.Mui-checked': { color: '#D4AF37' } }}
                 />
               }
-              label="Coleção Pública"
+              label={<Typography sx={{ color: '#2F4F4F' }}>Coleção Pública</Typography>}
             />
           </Box>
         </DialogContent>
-        <DialogActions sx={{ p: 3 }}>
-          <Button onClick={handleCloseCreateModal} color="inherit">Cancelar</Button>
+        <DialogActions sx={{ p: 3, gap: 2 }}>
+          <Button onClick={handleCloseCreateModal} variant="outlined" sx={{ color: '#2F4F4F', borderColor: '#2F4F4F' }}>
+            Cancelar
+          </Button>
           <Button 
             onClick={handleSubmitCollection} 
             variant="contained" 
-            sx={{ bgcolor: '#D4AF37', color: '#2F4F4F', fontWeight: 'bold' }}
+            disabled={!formData.name}
+            sx={{ bgcolor: '#D4AF37', color: '#2F4F4F', fontWeight: 'bold', '&:hover': { bgcolor: '#e5c55a' } }}
           >
-            Criar
+            {editingCollection ? 'Salvar Alterações' : 'Criar Coleção'}
           </Button>
         </DialogActions>
       </Dialog>

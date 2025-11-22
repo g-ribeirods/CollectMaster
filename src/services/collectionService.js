@@ -14,27 +14,52 @@ export const getCollections = async (userId) => {
   }
 };
 
-export const createCollection = async (name, isPublic, userId) => {
+export const createCollection = async (collectionData) => { // Agora recebe um objeto
   try {
     const response = await fetch(`${API_URL}/collections/`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        name: name,
-        is_public: isPublic,
-        owner_id: userId
+        name: collectionData.name,
+        description: collectionData.description,
+        image_url: collectionData.imageUrl, // Frontend usa camelCase, Backend snake_case
+        is_public: collectionData.isPublic,
+        owner_id: collectionData.ownerId
       }),
     });
 
     if (response.ok) return await response.json();
-    
-    console.error('Erro API ao criar coleção:', await response.json());
+    console.error('Erro API criar coleção:', await response.json());
     return null;
   } catch (error) {
-    console.error('Erro de conexão ao criar coleção:', error);
+    console.error('Erro conexão criar coleção:', error);
     return null;
   }
 };
+
+export const updateCollection = async (id, collectionData) => {
+  try {
+    const response = await fetch(`${API_URL}/collections/${id}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        name: collectionData.name,
+        description: collectionData.description,
+        image_url: collectionData.imageUrl,
+        is_public: collectionData.isPublic,
+      }),
+    });
+
+    if (response.ok) return await response.json();
+    console.error('Erro API atualizar coleção:', await response.json());
+    return null;
+  } catch (error) {
+    console.error('Erro conexão atualizar coleção:', error);
+    return null;
+  }
+};
+
+
 
 // --- ITENS ---
 
