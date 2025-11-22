@@ -17,7 +17,7 @@ import {
 } from '@mui/icons-material'
 import { useNavigate } from 'react-router-dom'
 
-function CollectionCard({ collection, onEdit }) { // Recebe onEdit
+function CollectionCard({ collection, onEdit }) {
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
   const navigate = useNavigate()
@@ -26,16 +26,12 @@ function CollectionCard({ collection, onEdit }) { // Recebe onEdit
     navigate(`/collections/${collection.id}`)
   }
 
-  // --- CORREÇÃO AQUI ---
-  // O backend manda 'image_url', mas o frontend antigo pode ter 'image'.
-  // Usamos o que estiver disponível.
   const displayImage = collection.image_url || collection.image || `https://via.placeholder.com/300x200/2F4F4F/F5F5DC?text=${encodeURIComponent(collection.name)}`;
-  // ---------------------
 
   return (
     <Card sx={{ 
       width: '100%',
-      height: '480px',
+      height: '480px',      // Altura fixa do cartão
       minHeight: '480px',
       maxHeight: '480px',
       display: 'flex', 
@@ -46,6 +42,7 @@ function CollectionCard({ collection, onEdit }) { // Recebe onEdit
       border: '1px solid rgba(212, 175, 55, 0.3)',
       boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
       boxSizing: 'border-box',
+      overflow: 'hidden', // Garante que nada vaze do card
       '&:hover': {
         transform: 'translateY(-4px)',
         boxShadow: '0 8px 24px rgba(212, 175, 55, 0.3)',
@@ -54,48 +51,54 @@ function CollectionCard({ collection, onEdit }) { // Recebe onEdit
     }}>
       <CardMedia
         component="img"
-        image={displayImage} // Usamos a variável corrigida
+        image={displayImage}
         alt={collection.name}
         sx={{ 
-          height: 200,
-          objectFit: 'cover'
+          height: 180,       // FIXO: Altura exata
+          minHeight: 180,    // FIXO: Não diminui
+          maxHeight: 180,    // FIXO: Não aumenta
+          objectFit: 'cover',
+          flexShrink: 0      // FIXO: Não deixa o flexbox esmagar a imagem
         }}
       />
       
       <CardContent sx={{ 
         flexGrow: 1, 
-        p: 2.5,
+        p: 2,
         display: 'flex',
         flexDirection: 'column',
-        gap: 1.5,
+        gap: 1,
         textAlign: 'center',
+        overflow: 'hidden' // Importante para o texto não empurrar layout
       }}>
         <Typography 
           variant="h6" 
           component="h3" 
           gutterBottom
           sx={{ 
-            fontSize: '1.25rem',
-            lineHeight: 1.3,
+            fontSize: '1.2rem',
+            lineHeight: 1.2,
             fontWeight: 'bold',
             color: '#2F4F4F',
-            minHeight: '3rem',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
+            // Limita a 2 linhas para não ocupar muito espaço
+            display: '-webkit-box',
+            WebkitLineClamp: 2,
+            WebkitBoxOrient: 'vertical',
+            overflow: 'hidden',
+            minHeight: '2.4rem', // Reserva espaço para 2 linhas
           }}
         >
           {collection.name}
         </Typography>
         
-        <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+        <Box sx={{ display: 'flex', justifyContent: 'center', mb: 1 }}>
           <Chip 
             label={collection.category || (collection.is_public ? 'Pública' : 'Privada')} 
             variant="outlined"
-            size="medium"
+            size="small"
             sx={{ 
-              fontSize: '0.85rem',
-              height: 32,
+              fontSize: '0.75rem',
+              height: 24,
               borderColor: '#D4AF37',
               color: '#2F4F4F',
               bgcolor: 'rgba(212, 175, 55, 0.1)',
@@ -107,14 +110,13 @@ function CollectionCard({ collection, onEdit }) { // Recebe onEdit
           variant="body2" 
           sx={{
             display: '-webkit-box',
-            WebkitLineClamp: 2,
+            WebkitLineClamp: 2, // Limita descrição a 2 linhas
             WebkitBoxOrient: 'vertical',
             overflow: 'hidden',
-            fontSize: '0.9rem',
-            lineHeight: 1.5,
+            fontSize: '0.85rem',
+            lineHeight: 1.4,
             flexGrow: 1,
             color: 'rgba(47, 79, 79, 0.8)',
-            minHeight: '2.7rem',
           }}
         >
           {collection.description || 'Sem descrição'}
@@ -124,56 +126,25 @@ function CollectionCard({ collection, onEdit }) { // Recebe onEdit
         <Box sx={{ 
           display: 'flex', 
           justifyContent: 'space-between', 
-          py: 1.5, 
-          mt: 'auto',
+          pt: 1.5,
+          mt: 'auto', // Empurra para o fundo do CardContent
           borderTop: 1, 
-          borderBottom: 1, 
           borderColor: 'rgba(47, 79, 79, 0.2)',
           gap: 1
         }}>
           <Box textAlign="center" sx={{ flex: 1 }}>
-            <Typography 
-              variant="caption" 
-              display="block"
-              sx={{ 
-                fontSize: '0.75rem',
-                color: 'rgba(47, 79, 79, 0.7)',
-                mb: 0.5,
-              }}
-            >
+            <Typography variant="caption" display="block" sx={{ fontSize: '0.7rem', color: 'rgba(47, 79, 79, 0.7)' }}>
               Itens
             </Typography>
-            <Typography 
-              variant="h6" 
-              fontWeight="bold" 
-              sx={{ 
-                fontSize: '1.1rem',
-                color: '#2F4F4F',
-              }}
-            >
+            <Typography variant="subtitle1" fontWeight="bold" sx={{ fontSize: '1rem', color: '#2F4F4F' }}>
               {collection.itemCount ?? 0}
             </Typography>
           </Box>
           <Box textAlign="center" sx={{ flex: 1 }}>
-            <Typography 
-              variant="caption" 
-              display="block"
-              sx={{ 
-                fontSize: '0.75rem',
-                color: 'rgba(47, 79, 79, 0.7)',
-                mb: 0.5,
-              }}
-            >
+            <Typography variant="caption" display="block" sx={{ fontSize: '0.7rem', color: 'rgba(47, 79, 79, 0.7)' }}>
               Valor
             </Typography>
-            <Typography 
-              variant="h6" 
-              fontWeight="bold" 
-              sx={{ 
-                fontSize: '1.1rem',
-                color: '#D4AF37',
-              }}
-            >
+            <Typography variant="subtitle1" fontWeight="bold" sx={{ fontSize: '1rem', color: '#D4AF37' }}>
               {collection.value && collection.value > 0 
                 ? `R$ ${collection.value.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
                 : 'R$ 0,00'
@@ -183,10 +154,13 @@ function CollectionCard({ collection, onEdit }) { // Recebe onEdit
         </Box>
       </CardContent>
 
+      {/* Ações: FlexShrink 0 garante que esta área nunca suma */}
       <CardActions sx={{ 
         p: 2,
         gap: 1,
         bgcolor: 'rgba(47, 79, 79, 0.05)',
+        flexDirection: 'column',
+        flexShrink: 0 // <--- ISSO PROTEGE OS BOTÕES
       }}>
         <Button 
           startIcon={<ViewIcon />} 
@@ -199,18 +173,12 @@ function CollectionCard({ collection, onEdit }) { // Recebe onEdit
             color: '#2F4F4F',
             fontWeight: 'bold',
             fontSize: '0.85rem',
-            '&:hover': {
-              bgcolor: '#e5c55a',
-            }
+            '&:hover': { bgcolor: '#e5c55a' }
           }}
         >
           Ver Detalhes
         </Button>
-        <Box sx={{ 
-          display: 'flex', 
-          gap: 1,
-          width: '100%'
-        }}>
+        <Box sx={{ display: 'flex', gap: 1, width: '100%' }}>
           <Button 
             startIcon={<EditIcon />} 
             variant="outlined" 
@@ -221,10 +189,7 @@ function CollectionCard({ collection, onEdit }) { // Recebe onEdit
               fontSize: '0.85rem',
               borderColor: '#2F4F4F',
               color: '#2F4F4F',
-              '&:hover': {
-                borderColor: '#D4AF37',
-                bgcolor: 'rgba(212, 175, 55, 0.1)',
-              }
+              '&:hover': { borderColor: '#D4AF37', bgcolor: 'rgba(212, 175, 55, 0.1)' }
             }}
           >
             Editar
@@ -238,10 +203,7 @@ function CollectionCard({ collection, onEdit }) { // Recebe onEdit
               fontSize: '0.85rem',
               borderColor: '#d32f2f',
               color: '#d32f2f',
-              '&:hover': {
-                borderColor: '#c62828',
-                bgcolor: 'rgba(211, 47, 47, 0.1)',
-              }
+              '&:hover': { borderColor: '#c62828', bgcolor: 'rgba(211, 47, 47, 0.1)' }
             }}
           >
             Excluir

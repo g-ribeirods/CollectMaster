@@ -10,7 +10,8 @@ import {
   Logout as LogoutIcon,
   People as PeopleIcon,
   Search as SearchIcon,
-  Add as AddIcon
+  Add as AddIcon,
+  Link as LinkIcon
 } from '@mui/icons-material';
 import { Link as RouterLink } from 'react-router-dom';
 import CollectionDetailsHeader from './CollectionDetailsHeader';
@@ -150,6 +151,21 @@ const CollectionDetails: React.FC = () => {
               variant="outlined"
               sx={inputStyles}
             />
+
+            <TextField
+              label="URL da Imagem (opcional)"
+              name="imageUrl"
+              value={newItemData.imageUrl}
+              onChange={handleInputChange}
+              fullWidth
+              variant="outlined"
+              placeholder="https://exemplo.com/foto.jpg"
+              InputProps={{
+                startAdornment: <LinkIcon sx={{ color: '#2F4F4F', mr: 1, opacity: 0.7 }} />,
+              }}
+              sx={inputStyles}
+            />
+            
             <TextField
               label="Descrição"
               name="description"

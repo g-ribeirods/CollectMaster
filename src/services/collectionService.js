@@ -85,7 +85,8 @@ export const createItem = async (itemData) => {
         description: itemData.description,
         quantity: parseInt(itemData.quantity),
         estimated_value: parseFloat(itemData.estimatedValue),
-        collection_id: parseInt(itemData.collectionId)
+        collection_id: parseInt(itemData.collectionId),
+        image_url: itemData.imageUrl // <--- NOVO CAMPO
       }),
     });
 
@@ -108,6 +109,7 @@ export const updateItem = async (itemId, itemData) => {
         description: itemData.description,
         quantity: parseInt(itemData.quantity),
         estimated_value: parseFloat(itemData.estimatedValue),
+        image_url: itemData.imageUrl // <--- NOVO CAMPO
       }),
     });
 

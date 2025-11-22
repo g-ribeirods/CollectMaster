@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-// Importe updateItem e deleteItem aqui!
 import { 
   getCollections, 
   getCollectionItems, 
@@ -25,7 +24,8 @@ export const useCollectionDetails = () => {
     name: '',
     description: '',
     quantity: 1,
-    estimatedValue: ''
+    estimatedValue: '',
+    imageUrl: '' 
   });
 
   useEffect(() => {
@@ -61,10 +61,18 @@ export const useCollectionDetails = () => {
 
   // --- HANDLERS ---
 
+  
+
   // Abre para CRIAR (Limpa tudo)
-  const handleOpenItemModal = () => {
+const handleOpenItemModal = () => {
     setEditingItem(null); 
-    setNewItemData({ name: '', description: '', quantity: 1, estimatedValue: '' });
+    setNewItemData({ 
+      name: '', 
+      description: '', 
+      quantity: 1, 
+      estimatedValue: '', 
+      imageUrl: '' // <--- RESET
+    });
     setOpenItemModal(true);
   };
 
