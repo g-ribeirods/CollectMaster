@@ -43,12 +43,16 @@ function Header() {
 
   const isAuthenticated = !!user;
   const currentPath = location.pathname;
+  const isHomePage = currentPath === '/';
+  const isLoginPage = currentPath === '/login';
+  const isRegisterPage = currentPath === '/register';
+  const isPublicPage = isHomePage || isLoginPage || isRegisterPage;
   const isSocialPage = currentPath.startsWith('/social');
   const isDashboardPage = currentPath === '/dashboard' || currentPath.startsWith('/collections');
   const isProfilePage = currentPath === '/perfil';
 
-  // Header Público (para página Home)
-  if (!isAuthenticated) {
+  // Header Simplificado (para Home, Login e Cadastro)
+  if (isPublicPage) {
     return (
       <AppBar
         position="static"
@@ -72,6 +76,79 @@ function Header() {
                   content: '"🏆"',
                   fontSize: '2rem',
                   filter: 'drop-shadow(0 0 8px #D4AF37)',
+                },
+              }}
+            >
+              CollectMaster
+            </Typography>
+
+            <Box sx={{ display: 'flex', gap: 1 }}>
+              <Button
+                variant="outlined"
+                component={RouterLink}
+                to="/login"
+                sx={{
+                  color: '#F5F5DC',
+                  borderColor: '#D4AF37',
+                  '&:hover': {
+                    borderColor: '#D4AF37',
+                    bgcolor: 'rgba(212, 175, 55, 0.1)',
+                  },
+                }}
+              >
+                Entrar
+              </Button>
+              <Button
+                variant="contained"
+                component={RouterLink}
+                to="/register"
+                sx={{
+                  bgcolor: '#D4AF37',
+                  color: '#2F4F4F',
+                  '&:hover': {
+                    bgcolor: '#e5c55a',
+                  },
+                }}
+              >
+                Cadastrar
+              </Button>
+            </Box>
+          </Toolbar>
+        </Container>
+      </AppBar>
+    );
+  }
+
+  // Header Público (para outras páginas quando não autenticado)
+  if (!isAuthenticated) {
+    return (
+      <AppBar
+        position="static"
+        elevation={0}
+        sx={{
+          bgcolor: '#2F4F4F',
+        }}
+      >
+        <Container maxWidth="lg">
+          <Toolbar sx={{ py: 2, justifyContent: 'space-between' }}>
+            <Typography
+              variant="h4"
+              component={RouterLink}
+              to="/dashboard"
+              sx={{
+                fontWeight: 'bold',
+                display: 'flex',
+                alignItems: 'center',
+                gap: 1,
+                color: '#F5F5DC',
+                textDecoration: 'none',
+                '&::before': {
+                  content: '"🏆"',
+                  fontSize: '2rem',
+                  filter: 'drop-shadow(0 0 8px #D4AF37)',
+                },
+                '&:hover': {
+                  opacity: 0.9,
                 },
               }}
             >
