@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { getCollections, createCollection, updateCollection } from '../services/collectionService'; 
+import { getCollections, createCollection, updateCollection, deleteCollection } from '../services/collectionService'; 
 
 export const useDashboard = () => {
   const navigate = useNavigate();
@@ -100,6 +100,18 @@ export const useDashboard = () => {
     }
   };
 
+  const handleDeleteCollection = async (collection) => {
+    if (window.confirm(`Tem certeza que deseja excluir a coleção "${collection.name}"? Todos os itens dela também serão apagados.`)) {
+      const success = await deleteCollection(collection.id);
+      if (success) {
+        // Remove da lista localmente para atualizar a tela sem recarregar
+        setCollections(prev => prev.filter(c => c.id !== collection.id));
+      } else {
+        alert("Erro ao excluir a coleção.");
+      }
+    }
+  };
+
   return {
     user,
     collections,
@@ -110,6 +122,7 @@ export const useDashboard = () => {
     handleEditCollection, // Exportamos o novo handler
     handleCloseCreateModal,
     handleSubmitCollection,
-    handleInputChange // Handler genérico para inputs
+    handleInputChange, // Handler genérico para inputs
+    handleDeleteCollection
   };
 };

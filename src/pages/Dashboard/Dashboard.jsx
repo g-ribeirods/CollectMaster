@@ -22,7 +22,8 @@ const DashboardView = ({
   user, collections,
   openCreateModal, formData, editingCollection, 
   handleOpenCreateModal, handleCloseCreateModal, handleSubmitCollection, 
-  handleInputChange, handleEditCollection 
+  handleInputChange, handleEditCollection,
+  handleDeleteCollection
 }) => {
   const inputStyles = {
     '& .MuiOutlinedInput-root': {
@@ -64,6 +65,7 @@ const DashboardView = ({
                 key={collection.id} 
                 collection={collection}
                 onEdit={handleEditCollection} // <--- CONECTADO!
+                onDelete={handleDeleteCollection}
               />
             ))}
         </Box>

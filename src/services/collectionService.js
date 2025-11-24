@@ -133,3 +133,15 @@ export const deleteItem = async (itemId) => {
     return false;
   }
 };
+
+export const deleteCollection = async (id) => {
+  try {
+    const response = await fetch(`${API_URL}/collections/${id}`, {
+      method: 'DELETE',
+    });
+    return response.ok;
+  } catch (error) {
+    console.error('Erro ao deletar coleção:', error);
+    return false;
+  }
+};

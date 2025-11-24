@@ -5,6 +5,7 @@ import {
   Container,
   Typography,
   Button,
+  Avatar
 } from '@mui/material';
 import {
   ArrowBack as ArrowBackIcon,

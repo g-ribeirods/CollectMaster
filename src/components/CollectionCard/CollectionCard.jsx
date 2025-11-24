@@ -17,7 +17,7 @@ import {
 } from '@mui/icons-material'
 import { useNavigate } from 'react-router-dom'
 
-function CollectionCard({ collection, onEdit }) {
+function CollectionCard({ collection, onEdit, onDelete }) {
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
   const navigate = useNavigate()
@@ -199,6 +199,8 @@ function CollectionCard({ collection, onEdit }) {
             variant="outlined" 
             size="small"
             fullWidth
+            // ADICIONE O CLICK AQUI:
+            onClick={() => onDelete && onDelete(collection)}
             sx={{ 
               fontSize: '0.85rem',
               borderColor: '#d32f2f',
