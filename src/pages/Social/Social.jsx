@@ -139,46 +139,6 @@ const Social = () => {
               </Avatar>
             </Box>
 
-            {/* Campo de Busca */}
-            <TextField
-              placeholder="Buscar usuários..."
-              variant="outlined"
-              size="small"
-              value={searchQuery}
-              onChange={handleSearchChange}
-              sx={{
-                display: { xs: 'none', sm: 'flex' },
-                ml: 1,
-                minWidth: '250px',
-                '& .MuiOutlinedInput-root': {
-                  color: '#F5F5DC',
-                  '& fieldset': {
-                    borderColor: '#D4AF37',
-                  },
-                  '&:hover fieldset': {
-                    borderColor: '#e5c55a',
-                  },
-                  '&.Mui-focused fieldset': {
-                    borderColor: '#D4AF37',
-                  },
-                },
-                '& .MuiInputLabel-root': {
-                  color: 'rgba(245, 245, 220, 0.7)',
-                },
-                '& .MuiInputBase-input::placeholder': {
-                  color: 'rgba(245, 245, 220, 0.5)',
-                  opacity: 1,
-                },
-              }}
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <SearchIcon sx={{ color: '#D4AF37' }} />
-                  </InputAdornment>
-                ),
-              }}
-            />
-
             {/* Botão de Logout */}
             <IconButton 
               onClick={handleLogout}

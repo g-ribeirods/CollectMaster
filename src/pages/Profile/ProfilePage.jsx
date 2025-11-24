@@ -164,22 +164,6 @@ const ProfilePage = () => {
               </Avatar>
             </Box>
 
-            {/* Ícone de Busca */}
-            {!hideSearch && (
-              <IconButton 
-                sx={{ 
-                  color: '#D4AF37',
-                  display: { xs: 'none', sm: 'flex' },
-                  ml: 1,
-                  '&:hover': { 
-                    bgcolor: 'rgba(212, 175, 55, 0.1)',
-                  }
-                }}
-              >
-                <SearchIcon />
-              </IconButton>
-            )}
-
             {/* Botão de Logout */}
             <IconButton 
               onClick={handleLogout}
