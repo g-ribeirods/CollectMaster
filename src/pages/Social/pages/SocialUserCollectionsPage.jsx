@@ -12,7 +12,6 @@ import {
 import { getUserById } from '../../../services/userService';
 import { getCollections } from '../../../services/collectionService';
 import SocialCollectionCard from '../components/SocialCollectionCard';
-import Header from '../../../components/Header/Header';
 
 const SocialUserCollectionsPage = () => {
   const { id } = useParams();
@@ -82,8 +81,6 @@ const SocialUserCollectionsPage = () => {
 
   return (
     <Box sx={{ flexGrow: 1, minHeight: '100vh', bgcolor: '#2F4F4F' }}>
-      <Header />
-
       {/* Conteúdo Principal */}
       <Container maxWidth="lg" sx={{ py: 5 }}>
         {/* Botão Voltar */}

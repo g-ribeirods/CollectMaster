@@ -7,7 +7,6 @@ import {
   Search as SearchIcon, 
 } from '@mui/icons-material';
 import SocialUserList from './components/SocialUserList';
-import Header from '../../components/Header/Header';
 
 const Social = () => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -18,8 +17,6 @@ const Social = () => {
 
   return (
     <Box sx={{ flexGrow: 1, minHeight: '100vh', bgcolor: '#2F4F4F' }}>
-      <Header />
-
       {/* Conteúdo Principal */}
       <Container maxWidth="lg" sx={{ py: 5 }}>
         <Box sx={{ mb: 4 }}>

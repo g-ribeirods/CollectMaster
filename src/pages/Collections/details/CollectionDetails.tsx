@@ -12,7 +12,6 @@ import {
 import CollectionDetailsHeader from './CollectionDetailsHeader';
 import CollectionItemsGrid from './CollectionItemsGrid';
 import { useCollectionDetails } from '../../../hooks/useCollectionDetails';
-import Header from '../../../components/Header/Header';
 
 const CollectionDetails: React.FC = () => {
   const navigate = useNavigate();
@@ -55,8 +54,6 @@ const CollectionDetails: React.FC = () => {
 
   return (
     <Box sx={{ flexGrow: 1, minHeight: '100vh', bgcolor: '#2F4F4F' }}>
-      <Header />
-
       {/* CONTEÚDO */}
       <Container maxWidth="lg" sx={{ py: 5 }}>
         <Button startIcon={<ArrowBackIcon />} onClick={() => navigate('/dashboard')} sx={{ color: '#F5F5DC', mb: 3, '&:hover': { bgcolor: 'rgba(212, 175, 55, 0.1)' } }}>

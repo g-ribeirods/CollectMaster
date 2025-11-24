@@ -13,7 +13,6 @@ import { getUserById } from '../../../services/userService';
 import { getCollections, getCollectionItems } from '../../../services/collectionService';
 import CollectionDetailsHeader from '../../Collections/details/CollectionDetailsHeader';
 import SocialCollectionItemsGrid from '../components/SocialCollectionItemsGrid';
-import Header from '../../../components/Header/Header';
 
 const SocialUserCollectionDetailsPage = () => {
   const { userId, collectionId } = useParams();
@@ -111,8 +110,6 @@ const SocialUserCollectionDetailsPage = () => {
 
   return (
     <Box sx={{ flexGrow: 1, minHeight: '100vh', bgcolor: '#2F4F4F' }}>
-      <Header />
-
       {/* Conteúdo Principal */}
       <Box
         sx={{

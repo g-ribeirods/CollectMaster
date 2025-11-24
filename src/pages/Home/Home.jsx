@@ -88,8 +88,6 @@ const Home = () => {
 
   return (
     <Box sx={{ minHeight: '100vh', bgcolor: '#2F4F4F' }}>
-      <Header />
-
       {/* Hero Section */}
       <Box
         sx={{

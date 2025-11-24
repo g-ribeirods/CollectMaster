@@ -9,7 +9,6 @@ import {
   PhotoCamera as PhotoCameraIcon
 } from '@mui/icons-material';
 import { useDashboard } from '../../hooks/useDashboard';
-import Header from '../../components/Header/Header';
 
 const ProfilePage = () => {
   const { user, collections } = useDashboard();
@@ -42,8 +41,6 @@ const ProfilePage = () => {
 
   return (
     <Box sx={{ flexGrow: 1, minHeight: '100vh', bgcolor: '#2F4F4F' }}>
-      <Header />
-
       {/* Conteúdo Principal - Container centralizado para desktop */}
       <Box
         sx={{
