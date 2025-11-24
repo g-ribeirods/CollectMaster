@@ -1,163 +1,252 @@
+import React, { useState, useEffect } from 'react';
+import { useNavigate, useLocation, Link as RouterLink } from 'react-router-dom';
 import {
   AppBar,
   Toolbar,
   Typography,
   Button,
   Box,
-  Chip,
   Avatar,
   IconButton,
-  useMediaQuery,
-  useTheme,
-  Drawer,
-  List,
-  ListItem,
-  ListItemIcon,
-  ListItemText,
-} from '@mui/material'
+  Container,
+} from '@mui/material';
 import {
-  Dashboard as DashboardIcon,
   Collections as CollectionsIcon,
-  Inventory as ItemsIcon,
-  Person as PersonIcon,
-  Menu as MenuIcon,
-} from '@mui/icons-material'
-import { useState } from 'react'
+  Logout as LogoutIcon,
+  People as PeopleIcon,
+} from '@mui/icons-material';
+import './Header.css';
 
-function Header({ currentPage, onPageChange }) {
-  const theme = useTheme()
-  const isMobile = useMediaQuery(theme.breakpoints.down('md'))
-  const [drawerOpen, setDrawerOpen] = useState(false)
+function Header() {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const [user, setUser] = useState(null);
 
-  const menuItems = [
-    { key: 'dashboard', label: 'Dashboard', icon: <DashboardIcon /> },
-    { key: 'collections', label: 'Coleções', icon: <CollectionsIcon /> },
-    { key: 'items', label: 'Itens', icon: <ItemsIcon /> },
-  ]
+  useEffect(() => {
+    const storedUser = localStorage.getItem('user');
+    if (storedUser) {
+      try {
+        setUser(JSON.parse(storedUser));
+      } catch (error) {
+        console.error('Erro ao parsear usuário:', error);
+        setUser(null);
+      }
+    } else {
+      setUser(null);
+    }
+  }, [location.pathname]);
 
-  const NavigationContent = () => (
-    <Box sx={{ display: 'flex', gap: 1, flexDirection: isMobile ? 'column' : 'row' }}>
-      {menuItems.map((item) => (
-        <Button
-          key={item.key}
-          startIcon={!isMobile && item.icon}
-          onClick={() => {
-            onPageChange(item.key)
-            setDrawerOpen(false)
-          }}
-          sx={{
-            color: isMobile ? 'text.primary' : 'white',
-            bgcolor: currentPage === item.key 
-              ? (isMobile ? 'primary.light' : 'rgba(255,255,255,0.2)') 
-              : 'transparent',
-            '&:hover': {
-              bgcolor: isMobile ? 'primary.light' : 'rgba(255,255,255,0.1)',
-            },
-            justifyContent: isMobile ? 'flex-start' : 'center',
-          }}
-          fullWidth={isMobile}
-        >
-          {item.label}
-        </Button>
-      ))}
-    </Box>
-  )
+  const handleLogout = () => {
+    localStorage.removeItem('user');
+    navigate('/login');
+  };
 
-  return (
-    <>
-      <AppBar 
-        position="static" 
-        elevation={2}
-        sx={{ 
-          background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-          mb: { xs: 2, md: 4 }
-        }}
-      >
-        <Toolbar sx={{ 
-          justifyContent: 'space-between',
-          flexDirection: { xs: 'column', sm: 'row' },
-          gap: { xs: 2, sm: 0 },
-          py: { xs: 2, sm: 1 }
-        }}>
-          {/* Logo and Menu Button */}
-          <Box sx={{ 
-            display: 'flex', 
-            alignItems: 'center', 
-            gap: 2,
-            width: { xs: '100%', sm: 'auto' },
-            justifyContent: { xs: 'space-between', sm: 'flex-start' }
-          }}>
-            {isMobile && (
-              <IconButton 
-                color="inherit" 
-                onClick={() => setDrawerOpen(true)}
-                sx={{ mr: 1 }}
-              >
-                <MenuIcon />
-              </IconButton>
-            )}
-            
-            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-              <Typography variant="h5" component="h1" sx={{ fontWeight: 'bold' }}>
-                🏆 Collect Master
-              </Typography>
-              {!isMobile && (
-                <Chip 
-                  label="Gerencie suas coleções" 
-                  variant="outlined" 
-                  sx={{ color: 'white', borderColor: 'rgba(255,255,255,0.3)' }}
-                  size="small"
-                />
-              )}
-            </Box>
-          </Box>
+  const isAuthenticated = !!user;
+  const currentPath = location.pathname;
+  const isSocialPage = currentPath.startsWith('/social');
+  const isDashboardPage = currentPath === '/dashboard' || currentPath.startsWith('/collections');
+  const isProfilePage = currentPath === '/perfil';
 
-          {/* Navigation - Desktop */}
-          {!isMobile && <NavigationContent />}
-
-          {/* User Info */}
-          <Box sx={{ 
-            display: 'flex', 
-            alignItems: 'center', 
-            gap: 1,
-            width: { xs: '100%', sm: 'auto' },
-            justifyContent: { xs: 'center', sm: 'flex-end' }
-          }}>
-            <Avatar sx={{ 
-              width: { xs: 32, sm: 40 }, 
-              height: { xs: 32, sm: 40 }, 
-              bgcolor: 'rgba(255,255,255,0.2)' 
-            }}>
-              <PersonIcon fontSize={isMobile ? "small" : "medium"} />
-            </Avatar>
-            <Typography variant="body2" sx={{ color: 'white' }}>
-              Colecionador
-            </Typography>
-          </Box>
-        </Toolbar>
-      </AppBar>
-
-      {/* Mobile Navigation Drawer */}
-      <Drawer
-        anchor="left"
-        open={drawerOpen}
-        onClose={() => setDrawerOpen(false)}
+  // Header Público (para página Home)
+  if (!isAuthenticated) {
+    return (
+      <AppBar
+        position="static"
+        elevation={0}
         sx={{
-          '& .MuiDrawer-paper': {
-            boxSizing: 'border-box',
-            width: 280,
-          },
+          bgcolor: '#2F4F4F',
         }}
       >
-        <Box sx={{ p: 2 }}>
-          <Typography variant="h6" gutterBottom sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-            🏆 Collect Master
+        <Container maxWidth="lg">
+          <Toolbar sx={{ py: 2, justifyContent: 'space-between' }}>
+            <Typography
+              variant="h4"
+              component="div"
+              sx={{
+                fontWeight: 'bold',
+                display: 'flex',
+                alignItems: 'center',
+                gap: 1,
+                color: '#F5F5DC',
+                '&::before': {
+                  content: '"🏆"',
+                  fontSize: '2rem',
+                  filter: 'drop-shadow(0 0 8px #D4AF37)',
+                },
+              }}
+            >
+              CollectMaster
+            </Typography>
+
+            <Box sx={{ display: 'flex', gap: 1 }}>
+              <Button
+                variant="outlined"
+                component={RouterLink}
+                to="/login"
+                sx={{
+                  color: '#F5F5DC',
+                  borderColor: '#D4AF37',
+                  '&:hover': {
+                    borderColor: '#D4AF37',
+                    bgcolor: 'rgba(212, 175, 55, 0.1)',
+                  },
+                }}
+              >
+                Entrar
+              </Button>
+              <Button
+                variant="contained"
+                component={RouterLink}
+                to="/register"
+                sx={{
+                  bgcolor: '#D4AF37',
+                  color: '#2F4F4F',
+                  '&:hover': {
+                    bgcolor: '#e5c55a',
+                  },
+                }}
+              >
+                Registrar
+              </Button>
+            </Box>
+          </Toolbar>
+        </Container>
+      </AppBar>
+    );
+  }
+
+  // Header Autenticado
+  return (
+    <AppBar
+      position="static"
+      elevation={0}
+      sx={{
+        bgcolor: '#2F4F4F',
+      }}
+    >
+      <Container maxWidth="lg">
+        <Toolbar sx={{ py: 2, justifyContent: 'space-between', alignItems: 'center' }}>
+          {/* Logo CollectMaster */}
+          <Typography
+            variant="h4"
+            component={RouterLink}
+            to="/dashboard"
+            sx={{
+              fontWeight: 'bold',
+              display: 'flex',
+              alignItems: 'center',
+              gap: 1,
+              color: '#F5F5DC',
+              textDecoration: 'none',
+              '&::before': {
+                content: '"🏆"',
+                fontSize: '2rem',
+                filter: 'drop-shadow(0 0 8px #D4AF37)',
+              },
+              '&:hover': {
+                opacity: 0.9,
+              },
+            }}
+          >
+            CollectMaster
           </Typography>
-          <NavigationContent />
-        </Box>
-      </Drawer>
-    </>
-  )
+
+          {/* Espaço vazio */}
+          <Box sx={{ flex: 1 }} />
+
+          {/* Botão Suas Coleções */}
+          <Button
+            variant="outlined"
+            startIcon={<CollectionsIcon />}
+            component={RouterLink}
+            to="/dashboard"
+            sx={{
+              color: '#F5F5DC',
+              borderColor: '#D4AF37',
+              px: 2,
+              py: 1,
+              minWidth: 'auto',
+              bgcolor: isDashboardPage ? 'rgba(212, 175, 55, 0.1)' : 'transparent',
+              '&:hover': {
+                borderColor: '#D4AF37',
+                bgcolor: 'rgba(212, 175, 55, 0.1)',
+              },
+              display: { xs: 'none', sm: 'flex' },
+            }}
+          >
+            Suas coleções
+          </Button>
+
+          {/* Botão Social */}
+          <Button
+            variant="outlined"
+            startIcon={<PeopleIcon />}
+            component={RouterLink}
+            to="/social"
+            sx={{
+              color: '#F5F5DC',
+              borderColor: '#D4AF37',
+              px: 2,
+              py: 1,
+              minWidth: 'auto',
+              ml: 1,
+              bgcolor: isSocialPage ? 'rgba(212, 175, 55, 0.2)' : 'transparent',
+              '&:hover': {
+                borderColor: '#D4AF37',
+                bgcolor: isSocialPage ? 'rgba(212, 175, 55, 0.3)' : 'rgba(212, 175, 55, 0.1)',
+              },
+              display: { xs: 'none', sm: 'flex' },
+            }}
+          >
+            Social
+          </Button>
+
+          {/* Avatar do Usuário */}
+          <Box
+            component={RouterLink}
+            to="/perfil"
+            sx={{
+              display: 'flex',
+              alignItems: 'center',
+              textDecoration: 'none',
+              cursor: 'pointer',
+              ml: 1,
+              '&:hover': {
+                opacity: 0.9,
+              },
+            }}
+          >
+            <Avatar
+              sx={{
+                width: { xs: 36, sm: 40 },
+                height: { xs: 36, sm: 40 },
+                bgcolor: '#D4AF37',
+                color: '#2F4F4F',
+                fontWeight: 'bold',
+                fontSize: { xs: '0.9rem', sm: '1rem' },
+              }}
+            >
+              {user?.name ? user.name[0].toUpperCase() : '?'}
+            </Avatar>
+          </Box>
+
+          {/* Botão de Logout */}
+          <IconButton
+            onClick={handleLogout}
+            sx={{
+              color: '#D4AF37',
+              ml: 1,
+              '&:hover': {
+                bgcolor: 'rgba(212, 175, 55, 0.1)',
+              },
+            }}
+          >
+            <LogoutIcon />
+          </IconButton>
+        </Toolbar>
+      </Container>
+    </AppBar>
+  );
 }
 
-export default Header
+export default Header;

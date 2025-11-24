@@ -1,22 +1,18 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
-  Box, Container, Typography, AppBar, Toolbar, IconButton, Button, Avatar,
+  Box, Container, Typography, Button,
   Dialog, DialogTitle, DialogContent, DialogActions, TextField, Grid
 } from '@mui/material';
 import {
   ArrowBack as ArrowBackIcon,
-  Collections as CollectionsIcon,
-  Logout as LogoutIcon,
-  People as PeopleIcon,
-  Search as SearchIcon,
   Add as AddIcon,
   Link as LinkIcon
 } from '@mui/icons-material';
-import { Link as RouterLink } from 'react-router-dom';
 import CollectionDetailsHeader from './CollectionDetailsHeader';
 import CollectionItemsGrid from './CollectionItemsGrid';
 import { useCollectionDetails } from '../../../hooks/useCollectionDetails';
+import Header from '../../../components/Header/Header';
 
 const CollectionDetails: React.FC = () => {
   const navigate = useNavigate();
@@ -37,11 +33,6 @@ const CollectionDetails: React.FC = () => {
     handleEditItem,
     handleDeleteItem
   } = useCollectionDetails();
-
-  const handleLogout = () => {
-    localStorage.removeItem('user');
-    navigate('/login');
-  };
 
   // Função de visualização (pode ficar vazia por enquanto)
   const handleViewItemDetails = (item: any) => console.log('Ver:', item);
@@ -64,31 +55,7 @@ const CollectionDetails: React.FC = () => {
 
   return (
     <Box sx={{ flexGrow: 1, minHeight: '100vh', bgcolor: '#2F4F4F' }}>
-      {/* HEADER (IGUAL AO ANTERIOR) */}
-      <AppBar position="static" elevation={0} sx={{ bgcolor: '#2F4F4F' }}>
-        <Container maxWidth="lg">
-          <Toolbar sx={{ py: 2, justifyContent: 'space-between', alignItems: 'center' }}>
-            <Typography variant="h4" component={RouterLink} to="/dashboard" sx={{ fontWeight: 'bold', display: 'flex', alignItems: 'center', gap: 1, color: '#F5F5DC', textDecoration: 'none', '&::before': { content: '"🏆"', fontSize: '2rem', filter: 'drop-shadow(0 0 8px #D4AF37)' }, '&:hover': { opacity: 0.9 } }}>
-              CollectMaster
-            </Typography>
-            <Box sx={{ flex: 1 }} />
-            <Button variant="outlined" startIcon={<CollectionsIcon />} component={RouterLink} to="/dashboard" sx={{ color: '#F5F5DC', borderColor: '#D4AF37', px: 2, py: 1, minWidth: 'auto', '&:hover': { borderColor: '#D4AF37', bgcolor: 'rgba(212, 175, 55, 0.1)' }, display: { xs: 'none', sm: 'flex' } }}>
-              Suas coleções
-            </Button>
-            <Button variant="outlined" startIcon={<PeopleIcon />} component={RouterLink} to="/social" sx={{ color: '#F5F5DC', borderColor: '#D4AF37', px: 2, py: 1, minWidth: 'auto', ml: 1, '&:hover': { borderColor: '#D4AF37', bgcolor: 'rgba(212, 175, 55, 0.1)' }, display: { xs: 'none', sm: 'flex' } }}>
-              Social
-            </Button>
-            <Box component={RouterLink} to="/perfil" sx={{ display: 'flex', alignItems: 'center', textDecoration: 'none', cursor: 'pointer', ml: 1, '&:hover': { opacity: 0.9 } }}>
-              <Avatar sx={{ width: { xs: 36, sm: 40 }, height: { xs: 36, sm: 40 }, bgcolor: '#D4AF37', color: '#2F4F4F', fontWeight: 'bold', fontSize: { xs: '0.9rem', sm: '1rem' } }}>
-                {user?.name ? user.name[0].toUpperCase() : '?'}
-              </Avatar>
-            </Box>
-            <IconButton onClick={handleLogout} sx={{ color: '#D4AF37', ml: 1, '&:hover': { bgcolor: 'rgba(212, 175, 55, 0.1)' } }}>
-              <LogoutIcon />
-            </IconButton>
-          </Toolbar>
-        </Container>
-      </AppBar>
+      <Header />
 
       {/* CONTEÚDO */}
       <Container maxWidth="lg" sx={{ py: 5 }}>

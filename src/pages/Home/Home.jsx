@@ -8,8 +8,6 @@ import {
   Card,
   CardContent,
   Chip,
-  AppBar,
-  Toolbar,
   useTheme,
   useMediaQuery,
 } from '@mui/material'
@@ -90,73 +88,7 @@ const Home = () => {
 
   return (
     <Box sx={{ minHeight: '100vh', bgcolor: '#2F4F4F' }}>
-      {/* Header */}
-      <AppBar 
-        position="static" 
-        elevation={0}
-        sx={{ 
-          bgcolor: '#2F4F4F', // Verde Escuro Profundo
-        }}
-      >
-        <Container maxWidth="lg">
-          <Toolbar sx={{ py: 2, justifyContent: 'space-between' }}>
-            <Typography 
-              variant="h4" 
-              component="div" 
-              sx={{ 
-                fontWeight: 'bold',
-                display: 'flex',
-                alignItems: 'center',
-                gap: 1,
-                color: '#F5F5DC',
-                '&::before': {
-                  content: '"🏆"',
-                  fontSize: '2rem',
-                  filter: 'drop-shadow(0 0 8px #D4AF37)',
-                }
-              }}
-            >
-              CollectMaster
-            </Typography>
-
-            <Box sx={{ display: 'flex', gap: 1 }}>
-              <Button 
-                variant="outlined" 
-                component={RouterLink}
-                to="/login"
-                sx={{ 
-                  color: '#F5F5DC',
-                  borderColor: '#D4AF37',
-                  '&:hover': {
-                    borderColor: '#D4AF37',
-                    bgcolor: 'rgba(212, 175, 55, 0.1)',
-                  }
-                }}
-              >
-                Entrar
-              </Button>
-              <Button 
-                variant="contained" 
-                component={RouterLink}
-                to="/register"
-                sx={{ 
-                  bgcolor: '#D4AF37',
-                  color: '#2F4F4F',
-                  fontWeight: 'bold',
-                  '&:hover': {
-                    bgcolor: '#e5c55a',
-                    transform: 'translateY(-2px)',
-                    boxShadow: 4,
-                  },
-                  transition: 'all 0.3s ease',
-                }}
-              >
-                Cadastrar
-              </Button>
-            </Box>
-          </Toolbar>
-        </Container>
-      </AppBar>
+      <Header />
 
       {/* Hero Section */}
       <Box

@@ -11,6 +11,7 @@ import ProfilePage from './pages/Profile/ProfilePage';
 import CollectionDetails from './pages/Collections/details/CollectionDetails';
 import SocialUserCollectionsPage from './pages/Social/pages/SocialUserCollectionsPage';
 import SocialUserCollectionDetailsPage from './pages/Social/pages/SocialUserCollectionDetailsPage';
+import Header from './components/Header/Header';
 
 const theme = createTheme({
   palette: {
@@ -60,6 +61,7 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
+      <Header />
       {/* 3. Definir as rotas */}
       <Routes>
         <Route path="/" element={<Home />} />
