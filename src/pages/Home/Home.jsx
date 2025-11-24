@@ -589,7 +589,7 @@ const Home = () => {
           </Grid>
           <Box sx={{ borderTop: 1, borderColor: 'rgba(212, 175, 55, 0.3)', mt: 4, pt: 4, textAlign: 'center' }}>
             <Typography variant="body2" sx={{ color: 'rgba(245, 245, 220, 0.7)' }}>
-              © 2024 CollectMaster. Todos os direitos reservados.
+              © 2025 CollectMaster. Todos os direitos reservados.
             </Typography>
           </Box>
         </Container>

@@ -154,9 +154,6 @@ const ProfilePage = () => {
                   fullWidth
                   size="small"
                   variant="outlined"
-                  InputLabelProps={{
-                    shrink: false,
-                  }}
                   sx={{
                     '& .MuiOutlinedInput-root': {
                       bgcolor: '#F5F5DC',
@@ -170,26 +167,16 @@ const ProfilePage = () => {
                         borderColor: '#D4AF37',
                       },
                     },
+                    '& .MuiOutlinedInput-input': {
+                      color: '#1a1a1a',
+                      fontWeight: 500,
+                      padding: '12.5px 14px',
+                    },
                     '& .MuiInputLabel-root': {
-                      color: '#2F4F4F',
-                      position: 'absolute',
-                      left: '14px',
-                      top: '50%',
-                      transform: 'translateY(-50%)',
-                      pointerEvents: 'none',
-                      transition: 'all 0.2s',
+                      color: 'rgba(47, 79, 79, 0.6)',
                     },
                     '& .MuiInputLabel-root.Mui-focused': {
                       color: '#D4AF37',
-                      transform: 'translate(14px, -9px) scale(0.75)',
-                      top: '0',
-                    },
-                    '& .MuiInputLabel-root.MuiInputLabel-shrink': {
-                      transform: 'translate(14px, -9px) scale(0.75)',
-                      top: '0',
-                    },
-                    '& .MuiOutlinedInput-input': {
-                      padding: '8.5px 14px',
                     },
                   }}
                 />
@@ -201,9 +188,6 @@ const ProfilePage = () => {
                   fullWidth
                   size="small"
                   variant="outlined"
-                  InputLabelProps={{
-                    shrink: false,
-                  }}
                   sx={{
                     '& .MuiOutlinedInput-root': {
                       bgcolor: '#F5F5DC',
@@ -217,26 +201,16 @@ const ProfilePage = () => {
                         borderColor: '#D4AF37',
                       },
                     },
+                    '& .MuiOutlinedInput-input': {
+                      color: '#1a1a1a',
+                      fontWeight: 500,
+                      padding: '12.5px 14px',
+                    },
                     '& .MuiInputLabel-root': {
-                      color: '#2F4F4F',
-                      position: 'absolute',
-                      left: '14px',
-                      top: '50%',
-                      transform: 'translateY(-50%)',
-                      pointerEvents: 'none',
-                      transition: 'all 0.2s',
+                      color: 'rgba(47, 79, 79, 0.6)',
                     },
                     '& .MuiInputLabel-root.Mui-focused': {
                       color: '#D4AF37',
-                      transform: 'translate(14px, -9px) scale(0.75)',
-                      top: '0',
-                    },
-                    '& .MuiInputLabel-root.MuiInputLabel-shrink': {
-                      transform: 'translate(14px, -9px) scale(0.75)',
-                      top: '0',
-                    },
-                    '& .MuiOutlinedInput-input': {
-                      padding: '8.5px 14px',
                     },
                   }}
                 />
@@ -247,9 +221,6 @@ const ProfilePage = () => {
                   fullWidth
                   size="small"
                   variant="outlined"
-                  InputLabelProps={{
-                    shrink: false,
-                  }}
                   sx={{
                     '& .MuiOutlinedInput-root': {
                       bgcolor: '#F5F5DC',
@@ -263,26 +234,16 @@ const ProfilePage = () => {
                         borderColor: '#D4AF37',
                       },
                     },
+                    '& .MuiOutlinedInput-input': {
+                      color: '#1a1a1a',
+                      fontWeight: 500,
+                      padding: '12.5px 14px',
+                    },
                     '& .MuiInputLabel-root': {
-                      color: '#2F4F4F',
-                      position: 'absolute',
-                      left: '14px',
-                      top: '50%',
-                      transform: 'translateY(-50%)',
-                      pointerEvents: 'none',
-                      transition: 'all 0.2s',
+                      color: 'rgba(47, 79, 79, 0.6)',
                     },
                     '& .MuiInputLabel-root.Mui-focused': {
                       color: '#D4AF37',
-                      transform: 'translate(14px, -9px) scale(0.75)',
-                      top: '0',
-                    },
-                    '& .MuiInputLabel-root.MuiInputLabel-shrink': {
-                      transform: 'translate(14px, -9px) scale(0.75)',
-                      top: '0',
-                    },
-                    '& .MuiOutlinedInput-input': {
-                      padding: '8.5px 14px',
                     },
                   }}
                 />
@@ -310,14 +271,15 @@ const ProfilePage = () => {
                         borderColor: '#D4AF37',
                       },
                     },
+                    '& .MuiOutlinedInput-input': {
+                      color: '#1a1a1a',
+                      fontWeight: 500,
+                    },
                     '& .MuiInputLabel-root': {
-                      color: '#2F4F4F',
+                      color: 'rgba(47, 79, 79, 0.6)',
                     },
                     '& .MuiInputLabel-root.Mui-focused': {
                       color: '#D4AF37',
-                    },
-                    '& .MuiInputLabel-root.MuiInputLabel-shrink': {
-                      transform: 'translate(14px, -9px) scale(0.75)',
                     },
                     '& .MuiFormHelperText-root': {
                       color: 'rgba(245, 245, 220, 0.6)',

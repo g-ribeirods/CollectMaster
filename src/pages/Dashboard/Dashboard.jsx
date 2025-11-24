@@ -32,6 +32,17 @@ const DashboardView = ({
       '&:hover fieldset': { borderColor: '#D4AF37' },
       '&.Mui-focused fieldset': { borderColor: '#D4AF37' },
     },
+    '& .MuiOutlinedInput-input': {
+      color: '#000000',
+      '&:-webkit-autofill': {
+        WebkitTextFillColor: '#000000',
+        WebkitBoxShadow: '0 0 0 1000px #ffffff inset',
+      },
+      '&:-webkit-autofill:focus': {
+        WebkitTextFillColor: '#000000',
+        WebkitBoxShadow: '0 0 0 1000px #ffffff inset',
+      },
+    },
     '& .MuiInputLabel-root': { color: '#2F4F4F' },
     '& .MuiInputLabel-root.Mui-focused': { color: '#D4AF37' },
   };
