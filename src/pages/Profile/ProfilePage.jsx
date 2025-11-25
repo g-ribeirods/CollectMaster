@@ -173,7 +173,7 @@ const ProfilePage = () => {
                       padding: '12.5px 14px',
                     },
                     '& .MuiInputLabel-root': {
-                      color: 'rgba(47, 79, 79, 0.6)',
+                      color: '#D4AF37',
                     },
                     '& .MuiInputLabel-root.Mui-focused': {
                       color: '#D4AF37',
@@ -207,7 +207,7 @@ const ProfilePage = () => {
                       padding: '12.5px 14px',
                     },
                     '& .MuiInputLabel-root': {
-                      color: 'rgba(47, 79, 79, 0.6)',
+                      color: '#D4AF37',
                     },
                     '& .MuiInputLabel-root.Mui-focused': {
                       color: '#D4AF37',
@@ -240,7 +240,7 @@ const ProfilePage = () => {
                       padding: '12.5px 14px',
                     },
                     '& .MuiInputLabel-root': {
-                      color: 'rgba(47, 79, 79, 0.6)',
+                      color: '#D4AF37',
                     },
                     '& .MuiInputLabel-root.Mui-focused': {
                       color: '#D4AF37',
@@ -276,7 +276,7 @@ const ProfilePage = () => {
                       fontWeight: 500,
                     },
                     '& .MuiInputLabel-root': {
-                      color: 'rgba(47, 79, 79, 0.6)',
+                      color: '#D4AF37',
                     },
                     '& .MuiInputLabel-root.Mui-focused': {
                       color: '#D4AF37',

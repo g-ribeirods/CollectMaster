@@ -9,7 +9,6 @@ import {
   CardActions,
 } from '@mui/material';
 import {
-  Visibility as ViewIcon,
   Edit as EditIcon,
   Delete as DeleteIcon,
   Image as ImageIcon,
@@ -32,14 +31,12 @@ interface CollectionItem {
 
 interface CollectionItemCardProps {
   item: CollectionItem;
-  onViewDetails?: (item: CollectionItem) => void;
   onEdit?: (item: CollectionItem) => void;
   onDelete?: (item: CollectionItem) => void;
 }
 
 const CollectionItemCard: React.FC<CollectionItemCardProps> = ({
   item,
-  onViewDetails,
   onEdit,
   onDelete,
 }) => {
@@ -231,65 +228,44 @@ const CollectionItemCard: React.FC<CollectionItemCardProps> = ({
           p: 2,
           gap: 1,
           bgcolor: 'rgba(47, 79, 79, 0.05)',
-          flexDirection: 'column',
         }}
       >
         <Button
-          startIcon={<ViewIcon />}
-          variant="contained"
+          startIcon={<EditIcon />}
+          variant="outlined"
           size="small"
           fullWidth
-          onClick={() => onViewDetails?.(item)}
+          onClick={() => onEdit?.(item)}
           sx={{
-            bgcolor: '#D4AF37',
-            color: '#2F4F4F',
-            fontWeight: 'bold',
             fontSize: '0.85rem',
+            borderColor: '#2F4F4F',
+            color: '#2F4F4F',
             '&:hover': {
-              bgcolor: '#e5c55a',
+              borderColor: '#D4AF37',
+              bgcolor: 'rgba(212, 175, 55, 0.1)',
             },
           }}
         >
-          Ver Detalhes
+          Editar
         </Button>
-        <Box sx={{ display: 'flex', gap: 1, width: '100%' }}>
-          <Button
-            startIcon={<EditIcon />}
-            variant="outlined"
-            size="small"
-            fullWidth
-            onClick={() => onEdit?.(item)}
-            sx={{
-              fontSize: '0.85rem',
-              borderColor: '#2F4F4F',
-              color: '#2F4F4F',
-              '&:hover': {
-                borderColor: '#D4AF37',
-                bgcolor: 'rgba(212, 175, 55, 0.1)',
-              },
-            }}
-          >
-            Editar
-          </Button>
-          <Button
-            startIcon={<DeleteIcon />}
-            variant="outlined"
-            size="small"
-            fullWidth
-            onClick={() => onDelete?.(item)}
-            sx={{
-              fontSize: '0.85rem',
-              borderColor: '#d32f2f',
-              color: '#d32f2f',
-              '&:hover': {
-                borderColor: '#c62828',
-                bgcolor: 'rgba(211, 47, 47, 0.1)',
-              },
-            }}
-          >
-            Excluir
-          </Button>
-        </Box>
+        <Button
+          startIcon={<DeleteIcon />}
+          variant="outlined"
+          size="small"
+          fullWidth
+          onClick={() => onDelete?.(item)}
+          sx={{
+            fontSize: '0.85rem',
+            borderColor: '#d32f2f',
+            color: '#d32f2f',
+            '&:hover': {
+              borderColor: '#c62828',
+              bgcolor: 'rgba(211, 47, 47, 0.1)',
+            },
+          }}
+        >
+          Excluir
+        </Button>
       </CardActions>
     </Card>
   );

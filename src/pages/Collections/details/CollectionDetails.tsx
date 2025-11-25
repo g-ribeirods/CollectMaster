@@ -33,8 +33,6 @@ const CollectionDetails: React.FC = () => {
     handleDeleteItem
   } = useCollectionDetails();
 
-  // Função de visualização (pode ficar vazia por enquanto)
-  const handleViewItemDetails = (item: any) => console.log('Ver:', item);
 
   if (loading) {
     return (
@@ -85,7 +83,6 @@ const CollectionDetails: React.FC = () => {
         {/* AQUI ESTÁ A MÁGICA: Passamos as funções reais para o Grid */}
         <CollectionItemsGrid
           items={items}
-          onViewDetails={handleViewItemDetails}
           onEdit={handleEditItem}     // <--- Conectado!
           onDelete={handleDeleteItem} // <--- Conectado!
         />
@@ -201,6 +198,9 @@ const inputStyles = {
     '& fieldset': { borderColor: '#2F4F4F' },
     '&:hover fieldset': { borderColor: '#D4AF37' },
     '&.Mui-focused fieldset': { borderColor: '#D4AF37' },
+  },
+  '& .MuiOutlinedInput-input': {
+    color: '#1a1a1a',
   },
   '& .MuiInputLabel-root': { color: '#2F4F4F' },
   '& .MuiInputLabel-root.Mui-focused': { color: '#D4AF37' },

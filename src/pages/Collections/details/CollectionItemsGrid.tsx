@@ -13,14 +13,12 @@ interface CollectionItem {
 
 interface CollectionItemsGridProps {
   items: CollectionItem[];
-  onViewDetails?: (item: CollectionItem) => void;
   onEdit?: (item: CollectionItem) => void;
   onDelete?: (item: CollectionItem) => void;
 }
 
 const CollectionItemsGrid: React.FC<CollectionItemsGridProps> = ({
   items,
-  onViewDetails,
   onEdit,
   onDelete,
 }) => {
@@ -73,7 +71,6 @@ const CollectionItemsGrid: React.FC<CollectionItemsGridProps> = ({
         <Grid item xs={12} sm={6} lg={4} key={item.id}>
           <CollectionItemCard
             item={item}
-            onViewDetails={onViewDetails}
             onEdit={onEdit}
             onDelete={onDelete}
           />
