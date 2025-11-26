@@ -14,11 +14,17 @@ import {
 } from '@mui/icons-material';
 
 const SocialCollectionItemCard = ({ item, onViewDetails }) => {
+  
+  // 1. CORREÇÃO DE DADOS (Backend vs Frontend)
+  const displayImage = item.image_url || item.image;
+  const displayValue = item.estimated_value ?? item.estimatedValue ?? 0;
+
   return (
     <Card
       sx={{
         width: '100%',
         height: '100%',
+        minHeight: '420px',
         display: 'flex',
         flexDirection: 'column',
         bgcolor: '#F5F5DC',
@@ -26,6 +32,7 @@ const SocialCollectionItemCard = ({ item, onViewDetails }) => {
         transition: 'all 0.3s ease',
         border: '1px solid rgba(212, 175, 55, 0.3)',
         boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
+        overflow: 'hidden',
         '&:hover': {
           transform: 'translateY(-4px)',
           boxShadow: '0 8px 24px rgba(212, 175, 55, 0.3)',
@@ -37,19 +44,22 @@ const SocialCollectionItemCard = ({ item, onViewDetails }) => {
       <Box
         sx={{
           width: '100%',
-          height: 200,
+          height: 180,       
+          minHeight: 180,    
+          maxHeight: 180,    
           bgcolor: 'rgba(212, 175, 55, 0.1)',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
           position: 'relative',
           overflow: 'hidden',
+          flexShrink: 0      
         }}
       >
-        {item.image ? (
+        {displayImage ? (
           <CardMedia
             component="img"
-            image={item.image}
+            image={displayImage}
             alt={item.name}
             sx={{
               width: '100%',
@@ -78,10 +88,11 @@ const SocialCollectionItemCard = ({ item, onViewDetails }) => {
       <CardContent
         sx={{
           flexGrow: 1,
-          p: 2.5,
+          p: 2,
           display: 'flex',
           flexDirection: 'column',
-          gap: 1.5,
+          gap: 1,
+          overflow: 'hidden'
         }}
       >
         <Typography
@@ -92,7 +103,7 @@ const SocialCollectionItemCard = ({ item, onViewDetails }) => {
             fontSize: '1.1rem',
             fontWeight: 'bold',
             color: '#2F4F4F',
-            minHeight: '3rem',
+            minHeight: '2.4rem',
             display: '-webkit-box',
             WebkitLineClamp: 2,
             WebkitBoxOrient: 'vertical',
@@ -106,15 +117,15 @@ const SocialCollectionItemCard = ({ item, onViewDetails }) => {
           <Typography
             variant="body2"
             sx={{
-              fontSize: '0.9rem',
-              lineHeight: 1.5,
+              fontSize: '0.85rem',
+              lineHeight: 1.4,
               color: 'rgba(47, 79, 79, 0.8)',
               display: '-webkit-box',
               WebkitLineClamp: 2,
               WebkitBoxOrient: 'vertical',
               overflow: 'hidden',
               flexGrow: 1,
-              minHeight: '2.7rem',
+              minHeight: '2.4rem',
             }}
           >
             {item.description}
@@ -126,7 +137,7 @@ const SocialCollectionItemCard = ({ item, onViewDetails }) => {
           sx={{
             display: 'flex',
             justifyContent: 'space-between',
-            py: 1.5,
+            py: 1,
             mt: 'auto',
             borderTop: 1,
             borderBottom: 1,
@@ -141,7 +152,7 @@ const SocialCollectionItemCard = ({ item, onViewDetails }) => {
               sx={{
                 fontSize: '0.75rem',
                 color: 'rgba(47, 79, 79, 0.7)',
-                mb: 0.5,
+                mb: 0.2,
               }}
             >
               Quantidade
@@ -164,7 +175,7 @@ const SocialCollectionItemCard = ({ item, onViewDetails }) => {
               sx={{
                 fontSize: '0.75rem',
                 color: 'rgba(47, 79, 79, 0.7)',
-                mb: 0.5,
+                mb: 0.2,
               }}
             >
               Valor
@@ -178,12 +189,11 @@ const SocialCollectionItemCard = ({ item, onViewDetails }) => {
               }}
             >
               R${' '}
-              {item.estimatedValue && item.estimatedValue > 0
-                ? item.estimatedValue.toLocaleString('pt-BR', {
-                    minimumFractionDigits: 2,
-                    maximumFractionDigits: 2,
-                  })
-                : '0,00'}
+              {/* 2. USO DA VARIÁVEL NORMALIZADA */}
+              {displayValue.toLocaleString('pt-BR', {
+                  minimumFractionDigits: 2,
+                  maximumFractionDigits: 2,
+                })}
             </Typography>
           </Box>
         </Box>
@@ -194,6 +204,7 @@ const SocialCollectionItemCard = ({ item, onViewDetails }) => {
           p: 2,
           gap: 1,
           bgcolor: 'rgba(47, 79, 79, 0.05)',
+          flexShrink: 0
         }}
       >
         <Button
@@ -220,4 +231,3 @@ const SocialCollectionItemCard = ({ item, onViewDetails }) => {
 };
 
 export default SocialCollectionItemCard;
-

@@ -44,7 +44,7 @@ const SocialUserList = ({ searchQuery = '' }) => {
     fetchUsers();
   }, [debouncedSearchQuery]);
 
-  // Filtrar usuários localmente (fallback caso a API não tenha busca)
+  // Filtrar usuários localmente (fallback simples)
   const filteredUsers = useMemo(() => {
     if (!debouncedSearchQuery.trim()) {
       return users;
@@ -53,8 +53,8 @@ const SocialUserList = ({ searchQuery = '' }) => {
     const query = debouncedSearchQuery.toLowerCase().trim();
     return users.filter((user) => {
       const name = (user.name || '').toLowerCase();
-      const username = (user.username || '').toLowerCase();
-      return name.includes(query) || username.includes(query);
+      // REMOVIDO: Verificação por username
+      return name.includes(query);
     });
   }, [users, debouncedSearchQuery]);
 
@@ -127,4 +127,3 @@ const SocialUserList = ({ searchQuery = '' }) => {
 };
 
 export default SocialUserList;
-
