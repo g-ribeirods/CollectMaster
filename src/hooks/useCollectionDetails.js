@@ -8,6 +8,8 @@ import {
   deleteItem 
 } from '../services/collectionService';
 
+// Hook customizado que gerencia toda a lógica da página de detalhes de uma coleção
+// Retorna estados e funções para gerenciar a coleção, seus itens e modais
 export const useCollectionDetails = () => {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -19,7 +21,7 @@ export const useCollectionDetails = () => {
   
   // Estados do Modal
   const [openItemModal, setOpenItemModal] = useState(false);
-  const [editingItem, setEditingItem] = useState(null); // NOVO: Guarda o item sendo editado
+  const [editingItem, setEditingItem] = useState(null); // Guarda o item sendo editado
   const [newItemData, setNewItemData] = useState({
     name: '',
     description: '',
@@ -28,6 +30,8 @@ export const useCollectionDetails = () => {
     imageUrl: '' 
   });
 
+  // Carrega os dados da coleção e seus itens quando o componente é montado
+  // Verifica autenticação e busca a coleção pelo ID da URL
   useEffect(() => {
     const fetchData = async () => {
       const storedUser = localStorage.getItem('user');
@@ -61,22 +65,20 @@ export const useCollectionDetails = () => {
 
   // --- HANDLERS ---
 
-  
-
-  // Abre para CRIAR (Limpa tudo)
-const handleOpenItemModal = () => {
+  // Abre o modal para criar um novo item (limpa o formulário)
+  const handleOpenItemModal = () => {
     setEditingItem(null); 
     setNewItemData({ 
       name: '', 
       description: '', 
       quantity: 1, 
       estimatedValue: '', 
-      imageUrl: '' // <--- RESET
+      imageUrl: ''
     });
     setOpenItemModal(true);
   };
 
-  // Abre para EDITAR (Preenche com dados do item)
+  // Abre o modal preenchido com os dados do item para edição
   const handleEditItem = (item) => {
     setEditingItem(item);
     setNewItemData({
@@ -89,24 +91,27 @@ const handleOpenItemModal = () => {
     setOpenItemModal(true);
   };
   
+  // Fecha o modal e limpa o estado de edição
   const handleCloseItemModal = () => {
     setOpenItemModal(false);
     setEditingItem(null);
   };
 
+  // Atualiza os campos do formulário quando o usuário digita
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setNewItemData(prev => ({ ...prev, [name]: value }));
   };
 
-  // Função Inteligente: Salva ou Atualiza
+  // Salva ou atualiza um item (criação ou edição)
+  // Detecta automaticamente se está criando ou editando baseado no editingItem
   const handleSubmitItem = async () => {
     if (!newItemData.name) return;
 
     let result;
 
     if (editingItem) {
-      // MODO UPDATE
+      // MODO UPDATE: atualiza item existente
       result = await updateItem(editingItem.id, newItemData);
       
       if (result) {
@@ -116,7 +121,7 @@ const handleOpenItemModal = () => {
         ));
       }
     } else {
-      // MODO CREATE
+      // MODO CREATE: cria novo item
       result = await createItem({
         ...newItemData,
         collectionId: id
@@ -141,7 +146,7 @@ const handleOpenItemModal = () => {
     }
   };
 
-  // Função Deletar
+  // Exclui um item após confirmação do usuário
   const handleDeleteItem = async (item) => {
     if (window.confirm(`Tem certeza que deseja excluir "${item.name}"?`)) {
       const success = await deleteItem(item.id);

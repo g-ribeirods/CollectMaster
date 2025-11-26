@@ -2,6 +2,7 @@ const API_URL = 'http://localhost:8000/api';
 
 // --- COLEÇÕES ---
 
+// Busca todas as coleções de um usuário específico
 export const getCollections = async (userId) => {
   try {
     const response = await fetch(`${API_URL}/collections/${userId}`);
@@ -14,7 +15,9 @@ export const getCollections = async (userId) => {
   }
 };
 
-export const createCollection = async (collectionData) => { // Agora recebe um objeto
+// Cria uma nova coleção no sistema
+// Recebe um objeto com os dados da coleção e converte camelCase para snake_case
+export const createCollection = async (collectionData) => {
   try {
     const response = await fetch(`${API_URL}/collections/`, {
       method: 'POST',
@@ -37,6 +40,7 @@ export const createCollection = async (collectionData) => { // Agora recebe um o
   }
 };
 
+// Atualiza os dados de uma coleção existente
 export const updateCollection = async (id, collectionData) => {
   try {
     const response = await fetch(`${API_URL}/collections/${id}`, {
@@ -63,6 +67,7 @@ export const updateCollection = async (id, collectionData) => {
 
 // --- ITENS ---
 
+// Busca todos os itens de uma coleção específica
 export const getCollectionItems = async (collectionId) => {
   try {
     const response = await fetch(`${API_URL}/items/collection/${collectionId}`);
@@ -75,6 +80,8 @@ export const getCollectionItems = async (collectionId) => {
   }
 };
 
+// Cria um novo item em uma coleção
+// Converte os valores numéricos e associa o item à coleção
 export const createItem = async (itemData) => {
   try {
     const response = await fetch(`${API_URL}/items/`, {
@@ -86,7 +93,7 @@ export const createItem = async (itemData) => {
         quantity: parseInt(itemData.quantity),
         estimated_value: parseFloat(itemData.estimatedValue),
         collection_id: parseInt(itemData.collectionId),
-        image_url: itemData.imageUrl // <--- NOVO CAMPO
+        image_url: itemData.imageUrl
       }),
     });
 
@@ -99,6 +106,7 @@ export const createItem = async (itemData) => {
   }
 };
 
+// Atualiza os dados de um item existente
 export const updateItem = async (itemId, itemData) => {
   try {
     const response = await fetch(`${API_URL}/items/${itemId}`, {
@@ -109,7 +117,7 @@ export const updateItem = async (itemId, itemData) => {
         description: itemData.description,
         quantity: parseInt(itemData.quantity),
         estimated_value: parseFloat(itemData.estimatedValue),
-        image_url: itemData.imageUrl // <--- NOVO CAMPO
+        image_url: itemData.imageUrl
       }),
     });
 
@@ -122,6 +130,8 @@ export const updateItem = async (itemId, itemData) => {
   }
 };
 
+// Exclui um item do sistema
+// Retorna true se a exclusão foi bem-sucedida, false caso contrário
 export const deleteItem = async (itemId) => {
   try {
     const response = await fetch(`${API_URL}/items/${itemId}`, {
@@ -134,6 +144,8 @@ export const deleteItem = async (itemId) => {
   }
 };
 
+// Exclui uma coleção do sistema
+// Retorna true se a exclusão foi bem-sucedida, false caso contrário
 export const deleteCollection = async (id) => {
   try {
     const response = await fetch(`${API_URL}/collections/${id}`, {

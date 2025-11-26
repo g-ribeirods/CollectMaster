@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { registerUser } from '../services/authService';
 
+// Hook customizado que gerencia toda a lógica do formulário de registro
+// Retorna estados e funções para controlar o formulário e criação de conta
 export const useRegisterForm = () => {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
@@ -13,6 +15,8 @@ export const useRegisterForm = () => {
   });
   const [errors, setErrors] = useState({});
 
+  // Atualiza os campos do formulário quando o usuário digita
+  // Limpa erros específicos do campo quando o usuário começa a digitar
   const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -27,6 +31,9 @@ export const useRegisterForm = () => {
     }
   };
 
+  // Valida todos os campos do formulário de registro
+  // Verifica nome, email, senha e confirmação de senha
+  // Retorna true se todos os campos são válidos, false caso contrário
   const validateForm = () => {
     const newErrors = {};
 
@@ -58,6 +65,8 @@ export const useRegisterForm = () => {
     return Object.keys(newErrors).length === 0;
   };
 
+  // Processa o envio do formulário de registro
+  // Valida os campos e cria a conta do usuário
   const handleSubmit = async (e) => {
     e.preventDefault();
     

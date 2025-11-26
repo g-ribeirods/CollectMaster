@@ -13,6 +13,7 @@ import SocialUserCollectionsPage from './pages/Social/pages/SocialUserCollection
 import SocialUserCollectionDetailsPage from './pages/Social/pages/SocialUserCollectionDetailsPage';
 import Header from './components/Header/Header';
 
+// Configura o tema visual da aplicação com cores personalizadas
 const theme = createTheme({
   palette: {
     primary: {
@@ -57,12 +58,13 @@ const theme = createTheme({
   },
 })
 
+// Componente principal da aplicação que configura o tema e define as rotas
 function App() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <Header />
-      {/* 3. Definir as rotas */}
+      {/* Define todas as rotas da aplicação */}
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/register" element={<Register />} />

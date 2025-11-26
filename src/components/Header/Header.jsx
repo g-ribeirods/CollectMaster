@@ -17,11 +17,14 @@ import {
 } from '@mui/icons-material';
 import './Header.css';
 
+// Componente Header que exibe a barra de navegação superior
+// Adapta-se automaticamente baseado no estado de autenticação e página atual
 function Header() {
   const navigate = useNavigate();
   const location = useLocation();
   const [user, setUser] = useState(null);
 
+  // Carrega o usuário do localStorage sempre que a rota muda
   useEffect(() => {
     const storedUser = localStorage.getItem('user');
     if (storedUser) {
@@ -36,13 +39,16 @@ function Header() {
     }
   }, [location.pathname]);
 
+  // Realiza logout removendo o usuário do localStorage e redirecionando para login
   const handleLogout = () => {
     localStorage.removeItem('user');
     navigate('/login');
   };
 
+  // Verifica se o usuário está autenticado
   const isAuthenticated = !!user;
   const currentPath = location.pathname;
+  // Identifica qual página está sendo exibida para ajustar o header
   const isHomePage = currentPath === '/';
   const isLoginPage = currentPath === '/login';
   const isRegisterPage = currentPath === '/register';

@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getCollections, createCollection, updateCollection, deleteCollection } from '../services/collectionService'; 
 
+// Hook customizado que gerencia toda a lógica do Dashboard
+// Retorna estados e funções para gerenciar coleções, modais e formulários
 export const useDashboard = () => {
   const navigate = useNavigate();
   const [user, setUser] = useState(null);
@@ -19,6 +21,7 @@ export const useDashboard = () => {
     isPublic: true
   });
 
+  // Verifica se há usuário autenticado, redireciona para login se não houver
   useEffect(() => {
     const storedUser = localStorage.getItem('user');
     if (!storedUser) {
@@ -28,6 +31,7 @@ export const useDashboard = () => {
     }
   }, [navigate]);
 
+  // Busca as coleções do usuário quando o usuário é carregado
   useEffect(() => {
     if (user) { 
       const fetchCollections = async () => {
@@ -38,14 +42,14 @@ export const useDashboard = () => {
     }
   }, [user]);
 
-  // Handlers do Modal
+  // Abre o modal para criar uma nova coleção (limpa o formulário)
   const handleOpenCreateModal = () => {
     setEditingCollection(null); // Garante modo criação
     setFormData({ name: '', description: '', imageUrl: '', isPublic: true });
     setOpenCreateModal(true);
   };
 
-  // Novo: Abre modal preenchido para editar
+  // Abre o modal preenchido com os dados da coleção para edição
   const handleEditCollection = (collection) => {
     setEditingCollection(collection);
     setFormData({
@@ -57,11 +61,13 @@ export const useDashboard = () => {
     setOpenCreateModal(true);
   };
 
+  // Fecha o modal e limpa o estado de edição
   const handleCloseCreateModal = () => {
     setOpenCreateModal(false);
     setEditingCollection(null);
   };
 
+  // Atualiza os campos do formulário quando o usuário digita
   const handleInputChange = (e) => {
     const { name, value, checked, type } = e.target;
     setFormData(prev => ({
@@ -70,6 +76,7 @@ export const useDashboard = () => {
     }));
   };
 
+  // Salva ou atualiza uma coleção (criação ou edição)
   const handleSubmitCollection = async () => {
     if (!formData.name.trim()) return;
     if (!user) return;
@@ -77,13 +84,13 @@ export const useDashboard = () => {
     let result;
 
     if (editingCollection) {
-        // MODO EDIÇÃO
+        // MODO EDIÇÃO: atualiza coleção existente
         result = await updateCollection(editingCollection.id, formData);
         if (result) {
             setCollections(prev => prev.map(col => col.id === editingCollection.id ? result : col));
         }
     } else {
-        // MODO CRIAÇÃO
+        // MODO CRIAÇÃO: cria nova coleção
         result = await createCollection({
             ...formData,
             ownerId: user.id
@@ -100,6 +107,7 @@ export const useDashboard = () => {
     }
   };
 
+  // Exclui uma coleção após confirmação do usuário
   const handleDeleteCollection = async (collection) => {
     if (window.confirm(`Tem certeza que deseja excluir a coleção "${collection.name}"? Todos os itens dela também serão apagados.`)) {
       const success = await deleteCollection(collection.id);

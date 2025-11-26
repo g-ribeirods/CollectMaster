@@ -14,9 +14,12 @@ import {
 import { Add as AddIcon } from '@mui/icons-material'
 import CollectionCard from '../../components/CollectionCard/CollectionCard'
 
+// Componente que exibe e gerencia a lista de coleções
+// Permite criar novas coleções através de um diálogo
 function Collections({ collections, setCollections }) {
 
   const [openDialog, setOpenDialog] = useState(false)
+  // Estado que armazena os dados da nova coleção sendo criada
   const [newCollection, setNewCollection] = useState({
     name: '',
     category: '',
@@ -24,6 +27,7 @@ function Collections({ collections, setCollections }) {
     value: 0
   })
 
+  // Lista de categorias disponíveis para as coleções
   const categories = [
     'Brinquedos',
     'Numismática',
@@ -35,6 +39,7 @@ function Collections({ collections, setCollections }) {
     'Outros'
   ]
 
+  // Adiciona uma nova coleção à lista e fecha o diálogo
   const handleAddCollection = () => {
     const collection = {
       id: collections.length + 1,

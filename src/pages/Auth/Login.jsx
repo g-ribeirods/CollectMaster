@@ -22,10 +22,11 @@ import {
 } from '@mui/icons-material';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 
-// 1. Importe o novo Hook de LÓGICA
+// Importa o hook que gerencia a lógica do formulário de login
 import { useLoginForm } from '../../hooks/useLoginForm';
 
-// 2. Componente "burro" (apenas VISUAL)
+// Componente visual do formulário de login
+// Recebe todas as props do hook useLoginForm
 const LoginView = ({
   formData,
   errors,
@@ -297,7 +298,7 @@ const LoginView = ({
   );
 };
 
-// 3. Componente "Pai" (Container) que junta Lógica e Visual
+// Componente principal de Login que conecta a lógica com a visualização
 const Login = () => {
   const logic = useLoginForm();
   

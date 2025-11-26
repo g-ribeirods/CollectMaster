@@ -13,9 +13,12 @@ import CollectionDetailsHeader from './CollectionDetailsHeader';
 import CollectionItemsGrid from './CollectionItemsGrid';
 import { useCollectionDetails } from '../../../hooks/useCollectionDetails';
 
+// Componente da página de detalhes de uma coleção
+// Exibe informações da coleção e permite gerenciar seus itens
 const CollectionDetails: React.FC = () => {
   const navigate = useNavigate();
   
+  // Obtém todos os estados e funções do hook useCollectionDetails
   const {
     user,
     collection,
@@ -23,12 +26,12 @@ const CollectionDetails: React.FC = () => {
     loading,
     openItemModal,
     newItemData,
-    editingItem, // Pegamos o estado de edição
+    editingItem, // Estado que indica qual item está sendo editado
     handleOpenItemModal,
     handleCloseItemModal,
     handleInputChange,
     handleSubmitItem,
-    // Pegamos as novas funções de ação
+    // Funções para editar e excluir itens
     handleEditItem,
     handleDeleteItem
   } = useCollectionDetails();

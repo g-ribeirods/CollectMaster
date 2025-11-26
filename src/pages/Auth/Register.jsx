@@ -26,8 +26,11 @@ import {
 } from '@mui/icons-material';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 
+// Importa o hook que gerencia a lógica do formulário de registro
 import { useRegisterForm } from '../../hooks/useRegisterForm.js';
 
+// Componente visual do formulário de registro
+// Recebe todas as props do hook useRegisterForm
 const RegisterView = ({
   formData,
   errors,
@@ -352,6 +355,7 @@ const RegisterView = ({
 };
 
 
+// Componente principal de Registro que conecta a lógica com a visualização
 const Register = () => {
   const logic = useRegisterForm();
   

@@ -14,10 +14,13 @@ import { Link as LinkIcon } from '@mui/icons-material';
 import { useDashboard } from '../../hooks/useDashboard';
 import CollectionCard from '../../components/CollectionCard/CollectionCard';
 
+// Componente de transição para o modal (animação de slide para cima)
 const ModalTransition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
+// Componente visual do Dashboard que exibe as coleções do usuário
+// Recebe todas as props do hook useDashboard
 const DashboardView = ({
   user, collections,
   openCreateModal, formData, editingCollection, 
@@ -168,6 +171,7 @@ const DashboardView = ({
   );
 };
 
+// Componente principal do Dashboard que conecta a lógica com a visualização
 const Dashboard = () => {
   const logic = useDashboard();
   return <DashboardView {...logic} />;

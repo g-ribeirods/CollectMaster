@@ -17,11 +17,14 @@ import {
 } from '@mui/icons-material'
 import { useNavigate } from 'react-router-dom'
 
+// Componente que exibe um card de coleção
+// Mostra informações da coleção e permite visualizar, editar ou excluir
 function CollectionCard({ collection, onEdit, onDelete }) {
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
   const navigate = useNavigate()
 
+  // Navega para a página de detalhes da coleção
   const handleViewDetails = () => {
     navigate(`/collections/${collection.id}`)
   }

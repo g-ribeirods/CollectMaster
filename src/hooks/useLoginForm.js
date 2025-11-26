@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { loginUser } from '../services/authService';
 
+// Hook customizado que gerencia toda a lógica do formulário de login
+// Retorna estados e funções para controlar o formulário e autenticação
 export const useLoginForm = () => {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
@@ -11,6 +13,8 @@ export const useLoginForm = () => {
   });
   const [errors, setErrors] = useState({});
 
+  // Atualiza os campos do formulário quando o usuário digita
+  // Limpa erros quando o usuário começa a digitar novamente
   const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -22,6 +26,8 @@ export const useLoginForm = () => {
     }
   };
 
+  // Processa o envio do formulário de login
+  // Valida os campos e tenta autenticar o usuário
   const handleSubmit = async (e) => {
     e.preventDefault();
     setErrors({}); // Limpa erros antigos

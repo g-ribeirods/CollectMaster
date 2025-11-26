@@ -1,3 +1,5 @@
+// Registra um novo usuário no sistema
+// Retorna um objeto com success: true/false e data ou error
 export const registerUser = async (name, email, password) => {
   try {
     const response = await fetch('http://localhost:8000/api/auth/register', {
@@ -25,6 +27,8 @@ export const registerUser = async (name, email, password) => {
   }
 };
 
+// Realiza login do usuário e salva os dados no localStorage
+// Retorna um objeto com success: true/false e data ou error
 export const loginUser = async (email, password) => {
   try {
     const response = await fetch('http://localhost:8000/api/auth/login', {
