@@ -2,22 +2,7 @@ import React from 'react';
 import { Box, Grid, Typography } from '@mui/material';
 import CollectionItemCard from './CollectionItemCard';
 
-interface CollectionItem {
-  id: number | string;
-  name: string;
-  description?: string;
-  quantity?: number;
-  estimatedValue?: number;
-  image?: string;
-}
-
-interface CollectionItemsGridProps {
-  items: CollectionItem[];
-  onEdit?: (item: CollectionItem) => void;
-  onDelete?: (item: CollectionItem) => void;
-}
-
-const CollectionItemsGrid: React.FC<CollectionItemsGridProps> = ({
+const CollectionItemsGrid = ({
   items,
   onEdit,
   onDelete,

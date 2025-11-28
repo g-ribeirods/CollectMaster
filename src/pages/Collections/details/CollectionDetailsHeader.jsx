@@ -9,19 +9,7 @@ import {
 } from '@mui/material';
 import { Collections as CollectionsIcon } from '@mui/icons-material';
 
-interface CollectionDetailsHeaderProps {
-  collection: {
-    id: number | string;
-    name: string;
-    category?: string;
-    description?: string;
-    image?: string;
-    itemCount?: number;
-    value?: number;
-  };
-}
-
-const CollectionDetailsHeader: React.FC<CollectionDetailsHeaderProps> = ({ collection }) => {
+const CollectionDetailsHeader = ({ collection }) => {
   return (
     <Card
       sx={{

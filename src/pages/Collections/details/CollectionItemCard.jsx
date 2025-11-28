@@ -14,28 +14,7 @@ import {
   Image as ImageIcon,
 } from '@mui/icons-material';
 
-// Atualizamos a interface para aceitar os formatos do Backend
-interface CollectionItem {
-  id: number | string;
-  name: string;
-  description?: string;
-  quantity?: number;
-  
-  // Aceita tanto o formato do Frontend quanto do Backend
-  estimatedValue?: number;
-  estimated_value?: number; 
-  
-  image?: string;
-  image_url?: string;
-}
-
-interface CollectionItemCardProps {
-  item: CollectionItem;
-  onEdit?: (item: CollectionItem) => void;
-  onDelete?: (item: CollectionItem) => void;
-}
-
-const CollectionItemCard: React.FC<CollectionItemCardProps> = ({
+const CollectionItemCard = ({
   item,
   onEdit,
   onDelete,
@@ -272,3 +251,4 @@ const CollectionItemCard: React.FC<CollectionItemCardProps> = ({
 };
 
 export default CollectionItemCard;
+

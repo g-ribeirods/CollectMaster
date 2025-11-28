@@ -1,14 +1,5 @@
-interface CollectionItem {
-  id: number | string;
-  name: string;
-  description: string;
-  quantity: number;
-  estimatedValue: number;
-  image?: string;
-}
-
 // Mocks específicos para diferentes tipos de coleções
-const collectionMocks: Record<string, CollectionItem[]> = {
+const collectionMocks = {
   carrinhos: [
     {
       id: 1,
@@ -187,8 +178,8 @@ const collectionMocks: Record<string, CollectionItem[]> = {
 };
 
 // Função para gerar itens genéricos
-const generateGenericItems = (collectionName: string, count: number = 5): CollectionItem[] => {
-  const items: CollectionItem[] = [];
+const generateGenericItems = (collectionName, count = 5) => {
+  const items = [];
   for (let i = 1; i <= count; i++) {
     items.push({
       id: i,
@@ -202,7 +193,7 @@ const generateGenericItems = (collectionName: string, count: number = 5): Collec
 };
 
 // Função para normalizar o nome da coleção para busca
-const normalizeCollectionName = (name: string): string => {
+const normalizeCollectionName = (name) => {
   return name
     .toLowerCase()
     .normalize('NFD')
@@ -212,9 +203,9 @@ const normalizeCollectionName = (name: string): string => {
 
 // Função principal para obter itens de uma coleção
 export const getCollectionItems = (
-  collectionId: string | number,
-  collectionName: string
-): CollectionItem[] => {
+  collectionId,
+  collectionName
+) => {
   const normalizedName = normalizeCollectionName(collectionName);
 
   // Verificar se existe mock específico

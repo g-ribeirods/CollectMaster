@@ -15,7 +15,7 @@ import { useCollectionDetails } from '../../../hooks/useCollectionDetails';
 
 // Componente da página de detalhes de uma coleção
 // Exibe informações da coleção e permite gerenciar seus itens
-const CollectionDetails: React.FC = () => {
+const CollectionDetails = () => {
   const navigate = useNavigate();
   
   // Obtém todos os estados e funções do hook useCollectionDetails
@@ -210,3 +210,4 @@ const inputStyles = {
 };
 
 export default CollectionDetails;
+
